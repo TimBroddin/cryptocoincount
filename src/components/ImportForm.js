@@ -2,7 +2,6 @@ import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import { Row, Col, Input, Button, message } from 'antd';
 import JSON5 from 'json5';
-import Instascan from 'instascan';
 import {importCoins} from '../actions';
 
 class ImportForm extends PureComponent {
@@ -15,32 +14,7 @@ class ImportForm extends PureComponent {
   }
 
   scan() {
-    const {importCoins, hide} = this.props;
-    this.setState({ showVideo: true });
-
-    let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-         scanner.addListener('scan', function (content) {
-           try {
-             const coins = JSON5.parse(content);
-             importCoins(coins);
-
-             message.success(`Import completed`);
-             hide();
-
-           } catch (e) {
-
-           }
-
-         });
-         Instascan.Camera.getCameras().then( (cameras) => {
-           if (cameras.length > 0) {
-             scanner.start(cameras[0]);
-           } else {
-             console.error('No cameras found.');
-           }
-         }).catch(function (e) {
-           console.error(e);
-         });
+  
   }
 
   importCode() {
