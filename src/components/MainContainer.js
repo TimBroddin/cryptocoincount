@@ -40,15 +40,6 @@ class MainContainer extends PureComponent {
             <h1 style={{
               color: 'white'
             }}>CryptocoinCount</h1>
-            <Menu theme="dark" mode="horizontal" style={{
-              lineHeight: '64px',
-              marginLeft: '30px'
-            }} selectedKeys={['1']}>
-              <Menu.Item key="1">Home</Menu.Item>
-              <Menu.Item key="2">About</Menu.Item>
-              <Menu.Item key="3">Donate</Menu.Item>
-
-            </Menu>
           </div>
 
           <div>
