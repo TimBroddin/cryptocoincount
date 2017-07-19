@@ -28,7 +28,7 @@ class ImportForm extends PureComponent {
         message.success(`Import completed`);
       } catch(e) {
         hide();
-        message.error('Something went wrong');
+        message.error(`Something went wrong: ${e.message}`);
       }
     }
   }
@@ -69,6 +69,7 @@ class ImportForm extends PureComponent {
             onScan={this.scan.bind(this)}
             onError={(err) => console.log(err)}
             legacyMode={this.state.legacy}
+            facingMode="rear" 
             ref="qrReader"
             >
 
