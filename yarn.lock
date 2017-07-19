@@ -3911,6 +3911,10 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.3.6"
 
+"jsqr@git+https://github.com/JodusNodus/jsQR.git":
+  version "0.2.2"
+  resolved "git+https://github.com/JodusNodus/jsQR.git#5ba1acefa1cbb9b2bc92b49f503f2674e2ec212b"
+
 jstransform@~3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/jstransform/-/jstransform-3.0.0.tgz#a2591ab6cee8d97bf3be830dbfa2313b87cd640b"
@@ -5568,6 +5572,14 @@ react-lazy-load@^3.0.10:
     lodash.throttle "^4.0.0"
     prop-types "^15.5.8"
 
+react-qr-reader@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/react-qr-reader/-/react-qr-reader-1.1.3.tgz#7439a766fc993cb8f5eeefc72c29db961d40b302"
+  dependencies:
+    jsqr "https://github.com/JodusNodus/jsQR.git"
+    prop-types "^15.5.8"
+    webrtc-adapter "^2.0.8"
+
 react-qr-svg@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-qr-svg/-/react-qr-svg-2.0.1.tgz#24bf25bb84e58b317149a7846a8783f4bf198beb"
@@ -6912,6 +6924,12 @@ webpack@2.6.1:
 webrtc-adapter@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/webrtc-adapter/-/webrtc-adapter-1.4.0.tgz#58289a63d054c65b36fb0ef389ea2f6d0c7f5d98"
+  dependencies:
+    sdp "^1.0.0"
+
+webrtc-adapter@^2.0.8:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/webrtc-adapter/-/webrtc-adapter-2.1.0.tgz#612b5bc6ce8e73c9d0660038a21f9255a867bf3e"
   dependencies:
     sdp "^1.0.0"
 

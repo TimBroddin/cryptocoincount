@@ -3,60 +3,32 @@ import {connect} from 'react-redux';
 import { Row, Col, Input, Button, message } from 'antd';
 import JSON5 from 'json5';
 import {importCoins} from '../actions';
-import QrCode from 'qrcode-reader';
+import QrReader from 'react-qr-reader'
+
 
 class ImportForm extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       showVideo: false,
-      importCode: ''
+      importCode: '',
+      legacy: (navigator && !navigator.mediaDevices)
     }
   }
 
-  scan(evt) {
+
+
+  scan(result) {
     const {hide, importCoins} = this.props;
-
-    if (window.File && window.FileReader && window.FileList && window.Blob) {
-      const f = evt.target.files[0];
-
-           // Only process image files.
-           if (!f.type.match('image.*')) {
-             return;
-           }
-
-           var reader = new FileReader();
-
-           // Closure to capture the file information.
-           reader.onload = ((theFile) => {
-             return (e) => {
-               const qr = new QrCode();
-               qr.callback = (error, result) => {
-                 if(error) {
-                   message.error(error);
-                   return;
-                 }
-
-                 try {
-                   importCoins(JSON5.parse(result.result));
-                   hide();
-                   message.success(`Import completed`);
-                 } catch(e) {
-                   hide();
-                   message.error('Something went wrong');
-                 }
-
-
-               }
-               qr.decode(e.target.result);
-
-             };
-           })(f);
-
-           // Read in the image file as a data URL.
-           reader.readAsDataURL(f);
-
-
+    if(result) {
+    try {
+      importCoins(JSON5.parse(result.result));
+      hide();
+      message.success(`Import completed`);
+    } catch(e) {
+      hide();
+      message.error('Something went wrong');
+    }
     }
   }
 
@@ -79,14 +51,31 @@ class ImportForm extends PureComponent {
   }
 
   render() {
+    const previewStyle = {
+          height: 100,
+          width: '100%',
+        }
+
 
     return <div>
       <Row gutter={16}>
-        <Col className="gutter-row" span={12}>
+        <Col className="gutter-row" span={12} >
+          <p>Scan QR-code:</p>
+          <div>
+          <QrReader
+            delay={100}
+            style={previewStyle}
+            onScan={this.scan.bind(this)}
+            onError={(err) => console.log(err)}
+            legacyMode={this.state.legacy}
+            ref="qrReader"
+            >
 
-          <input type="file" capture="camera" accept="image/*" onChange={this.scan.bind(this)}  />
+            </QrReader>
 
+            {(this.state.legacy) ? <Button type="primary" onClick={() => this.refs.qrReader.openImageDialog()}>Take QR-code</Button> : null}
 
+          </div>
         </Col>
         <Col className="gutter-row" span={12}>
           <p>Or paste your code:</p>
