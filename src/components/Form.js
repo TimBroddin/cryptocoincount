@@ -49,7 +49,7 @@ class CoinForm extends PureComponent {
             width: 200
           }} placeholder="Select a coin" optionFilterProp="children" filterOption={(input, option) => option.props.children.join(' ').toLowerCase().indexOf(input.toLowerCase()) >= 0}>
             {data.map((coin) => {
-              return <Option value={coin.id} key={`coin-${coin.id}`}>{coin.name}
+              return <Option value={coin.id} key={`coin-${coin.id}`}>{coin.name}{" "}
                 ({coin.symbol})</Option>
             })}
           </Select>
