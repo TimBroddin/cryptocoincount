@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
-import {LocaleProvider, Layout, Menu, Modal, Button} from 'antd';
+import {LocaleProvider, Layout, Modal, Button} from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 
 import CurrencyPicker from './CurrencyPicker';

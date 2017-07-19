@@ -13,7 +13,7 @@ class Export extends PureComponent {
       json[coin.id] = coin.amount;
     });
 
-    const qrCodeString = JSON.stringify(json);
+    const qrCodeString = JSON5.stringify(json);
     return <div>
       <Row gutter={16}>
         <Col className="gutter-row" span={12}>

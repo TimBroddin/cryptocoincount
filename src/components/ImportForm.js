@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import { Row, Col, Input, Button, message } from 'antd';
 import JSON5 from 'json5';
 import {importCoins} from '../actions';
+import QrCode from 'qrcode-reader';
 
 class ImportForm extends PureComponent {
   constructor(props) {
@@ -13,8 +14,50 @@ class ImportForm extends PureComponent {
     }
   }
 
-  scan() {
-  
+  scan(evt) {
+    const {hide, importCoins} = this.props;
+
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+      const f = evt.target.files[0];
+
+           // Only process image files.
+           if (!f.type.match('image.*')) {
+             return;
+           }
+
+           var reader = new FileReader();
+
+           // Closure to capture the file information.
+           reader.onload = ((theFile) => {
+             return (e) => {
+               const qr = new QrCode();
+               qr.callback = (error, result) => {
+                 if(error) {
+                   message.error(error);
+                   return;
+                 }
+
+                 try {
+                   importCoins(JSON5.parse(result.result));
+                   hide();
+                   message.success(`Import completed`);
+                 } catch(e) {
+                   hide();
+                   message.error('Something went wrong');
+                 }
+
+
+               }
+               qr.decode(e.target.result);
+
+             };
+           })(f);
+
+           // Read in the image file as a data URL.
+           reader.readAsDataURL(f);
+
+
+    }
   }
 
   importCode() {
@@ -41,9 +84,9 @@ class ImportForm extends PureComponent {
       <Row gutter={16}>
         <Col className="gutter-row" span={12}>
 
-          <video id="preview" style={{ width: '100%', display: (this.state.showVideo) ? 'block' : 'none' }}></video>
+          <input type="file" capture="camera" accept="image/*" onChange={this.scan.bind(this)}  />
 
-          <Button type="primary" onClick={() => this.scan()}>Scan QR-code</Button>
+
         </Col>
         <Col className="gutter-row" span={12}>
           <p>Or paste your code:</p>

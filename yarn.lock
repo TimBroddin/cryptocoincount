@@ -5136,6 +5136,10 @@ q@^1.1.2:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.0.tgz#dd01bac9d06d30e6f219aecb8253ee9ebdc308f1"
 
+qcode-decoder@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/qcode-decoder/-/qcode-decoder-0.1.0.tgz#03872f637a06bd63c79559b97179eed0c9adb79e"
+
 qr.js@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/qr.js/-/qr.js-0.0.0.tgz#cace86386f59a0db8050fa90d9b6b0e88a1e364f"
@@ -5143,6 +5147,10 @@ qr.js@0.0.0:
 qrcode-js@^0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/qrcode-js/-/qrcode-js-0.0.2.tgz#dfe7f93488fd56f4735cf24075d63f182c7f8534"
+
+qrcode-reader@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/qrcode-reader/-/qrcode-reader-1.0.2.tgz#28b6a5fa1dae5854fff291268af1b5dfa4b77aae"
 
 qs@6.4.0, qs@~6.4.0:
   version "6.4.0"
