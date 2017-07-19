@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
-import {Layout, Menu} from 'antd';
+import {LocaleProvider, Layout, Menu} from 'antd';
+import enUS from 'antd/lib/locale-provider/en_US';
 
 import CurrencyPicker from './CurrencyPicker';
 import TotalWorth from './TotalWorth';
@@ -18,7 +19,8 @@ class MainContainer extends PureComponent {
   }
 
   render() {
-    return <Layout>
+    return <LocaleProvider locale={enUS}>
+      <Layout>
       <Header style={{
         display: 'flex',
         justifyContent: 'space-between'
@@ -57,6 +59,7 @@ class MainContainer extends PureComponent {
       </Content>
       <Footer>&copy; 2017 Tim Broddin</Footer>
     </Layout>
+  </LocaleProvider>
   }
 }
 
