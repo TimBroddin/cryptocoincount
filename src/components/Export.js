@@ -7,13 +7,16 @@ import JSON5 from 'json5';
 class Export extends PureComponent {
   render() {
     const { coins } = this.props;
+    let str = [];
     let json = {};
 
+
     coins.forEach((coin) => {
+      str.push(`${coin.id}:${coin.amount}`);
       json[coin.id] = coin.amount;
+
     });
 
-    const qrCodeString = JSON.stringify(json);
     return <div>
       <Row gutter={16}>
         <Col className="gutter-row" span={12}>
@@ -23,7 +26,7 @@ class Export extends PureComponent {
                               fgColor="#000000"
                               level="L"
                               style={{ width: 256 }}
-                              value={qrCodeString}
+                              value={str.join('|')}
                           />
         </Col>
         <Col className="gutter-row" span={12}>

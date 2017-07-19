@@ -20,15 +20,22 @@ class ImportForm extends PureComponent {
 
   scan(result) {
     const {hide, importCoins} = this.props;
-    console.log(result);
+    let coins = {}
     if(result) {
       try {
-        importCoins(JSON5.parse(result.result));
+        let pairs = result.result.split('|');
+        pairs.forEach((pair) => {
+          let s = pair.split(':');
+          coins[s[0]] = parseFloat(s[1]);
+        })
+
+
+        importCoins(coins);
         hide();
         message.success(`Import completed`);
       } catch(e) {
         hide();
-        message.error(`Something went wrong: ${e.message}`);
+        message.error(`Something went wrong: ${result.result} ${e.message}`);
       }
     }
   }
@@ -69,7 +76,7 @@ class ImportForm extends PureComponent {
             onScan={this.scan.bind(this)}
             onError={(err) => console.log(err)}
             legacyMode={this.state.legacy}
-            facingMode="rear" 
+            facingMode="rear"
             ref="qrReader"
             >
 
