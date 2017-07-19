@@ -100,7 +100,7 @@ class DataTable extends PureComponent {
   key: 'action',
   render: (text, record) => (
     <span>
-      <Popconfirm title={ `Are you sure you want to delete ${record.name}?` }onConfirm={this.removeCoin.bind(this, record.id)}  okText="Yes" cancelText="No">
+      <Popconfirm title={ `Are you sure you want to delete ${record.name}?` }onConfirm={this.removeCoin.bind(this, record)}  okText="Yes" cancelText="No">
         <a href="#delete">Remove</a>
       </Popconfirm>
     </span>
