@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
-import {Layout} from 'antd';
+import {Layout, Menu} from 'antd';
 
 import CurrencyPicker from './CurrencyPicker';
 import TotalWorth from './TotalWorth';
@@ -23,10 +23,25 @@ class MainContainer extends PureComponent {
         display: 'flex',
         justifyContent: 'space-between'
       }}>
+        <div style={{ display: 'flex'}}>
         <h1 style={{
           color: 'white'
-        }}>CryptoCounter</h1>
+        }}>CryptocoinCount</h1>
+        <Menu
+                theme="dark"
+                mode="horizontal"
+                style={{ lineHeight: '64px', marginLeft: '30px' }}
+                selectedKeys={['1']}
+              >
+                <Menu.Item key="1">Home</Menu.Item>
+                <Menu.Item key="2">About</Menu.Item>
+                <Menu.Item key="3">Donate</Menu.Item>
+
+              </Menu>
+            </div>
+
         <div>
+
           <CurrencyPicker/>
         </div>
       </Header>

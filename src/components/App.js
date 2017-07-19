@@ -2,6 +2,9 @@ import React, { PureComponent } from 'react';
 
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
+import localForage from 'localforage';
+import createCompressor from 'redux-persist-transform-compress';
+
 import { persistStore, autoRehydrate } from 'redux-persist';
 
 import thunk from 'redux-thunk';
@@ -18,7 +21,7 @@ function configureStore(initialState, reducer) {
 }
 
 const store = configureStore({}, reducers);
-persistStore(store)
+const compressor = createCompressor();
 
 
 class App extends PureComponent {
@@ -30,7 +33,7 @@ class App extends PureComponent {
   }
 
   componentWillMount(){
-    persistStore(store, {  }, () => {
+    persistStore(store, {storage: localForage,  transforms: [compressor]} , () => {
       this.setState({ rehydrated: true });
     });
 }
