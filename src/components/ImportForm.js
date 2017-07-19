@@ -23,7 +23,7 @@ class ImportForm extends PureComponent {
     let coins = {}
     if(result) {
       try {
-        let pairs = result.result.split('|');
+        let pairs = result.split('|');
         pairs.forEach((pair) => {
           let s = pair.split(':');
           coins[s[0]] = parseFloat(s[1]);
@@ -35,7 +35,7 @@ class ImportForm extends PureComponent {
         message.success(`Import completed`);
       } catch(e) {
         hide();
-        message.error(`Something went wrong: ${result.result} ${e.message}`);
+        message.error(`Something went wrong: ${result} ${e.message}`);
       }
     }
   }
