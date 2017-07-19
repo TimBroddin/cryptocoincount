@@ -10,7 +10,7 @@ class ImportForm extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      showVideo: false,
+      imported: false,
       importCode: '',
       legacy: (navigator && !navigator.mediaDevices)
     }
@@ -20,6 +20,11 @@ class ImportForm extends PureComponent {
 
   scan(result) {
     const {hide, importCoins} = this.props;
+
+    if(this.state.imported) {
+      return;
+    }
+
     let coins = {}
     if(result) {
       try {
@@ -28,6 +33,7 @@ class ImportForm extends PureComponent {
           let s = pair.split(':');
           coins[s[0]] = parseFloat(s[1]);
         })
+        this.setState({ imported: true });
 
 
         importCoins(coins);
@@ -71,7 +77,7 @@ class ImportForm extends PureComponent {
           <p>Scan QR-code:</p>
           <div>
           <QrReader
-            delay={100}
+            delay={500}
             style={previewStyle}
             onScan={this.scan.bind(this)}
             onError={(err) => console.log(err)}
