@@ -4,7 +4,13 @@ import { Row, Col, Input, Button, message } from 'antd';
 import JSON5 from 'json5';
 import {importCoins} from '../actions';
 import QrReader from 'react-qr-reader'
+import { StyleSheet, css } from 'aphrodite';
 
+const styles = StyleSheet.create({
+  p: {
+    marginBottom: '10px'
+  }
+})
 
 class ImportForm extends PureComponent {
   constructor(props) {
@@ -66,15 +72,14 @@ class ImportForm extends PureComponent {
 
   render() {
     const previewStyle = {
-          height: 100,
           width: '100%',
         }
 
 
     return <div>
       <Row gutter={16}>
-        <Col className="gutter-row" span={12} >
-          <p>Scan QR-code:</p>
+        <Col md={24} lg={12} >
+          <p className={css(styles.p)}>Scan QR-code:</p>
           <div>
           <QrReader
             delay={500}
@@ -84,6 +89,7 @@ class ImportForm extends PureComponent {
             legacyMode={this.state.legacy}
             facingMode="rear"
             ref="qrReader"
+            className={css(styles.p)}
             >
 
             </QrReader>
@@ -92,9 +98,9 @@ class ImportForm extends PureComponent {
 
           </div>
         </Col>
-        <Col className="gutter-row" span={12}>
-          <p>Or paste your code:</p>
-          <p><Input
+        <Col md={24} lg={12}>
+          <p className={css(styles.p)}>Or paste your code:</p>
+          <p className={css(styles.p)}><Input
                       type="textarea" placeholder="Code" value={this.state.importField} onChange={(e) =>this.setState({ importField: e.currentTarget.value })} autosize={{
                         minRows: 6,
                         maxRows: 10,

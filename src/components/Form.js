@@ -1,5 +1,7 @@
 import React, {PureComponent} from 'react';
 import {Form, Icon, Input, Button, Select} from 'antd';
+import { StyleSheet, css } from 'aphrodite';
+
 import {connect} from 'react-redux';
 import {addCoin} from '../actions';
 
@@ -9,6 +11,15 @@ const Option = Select.Option;
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
+
+const styles = StyleSheet.create({
+  select: {
+    width: '200px',
+    '@media (max-width: 600px)': {
+      width: '100px'
+    }
+  }
+});
 
 
 class CoinForm extends PureComponent {
@@ -45,9 +56,7 @@ class CoinForm extends PureComponent {
             }
           ]
         })(
-          <Select showSearch style={{
-            width: 200
-          }} placeholder="Select a coin" optionFilterProp="children" filterOption={(input, option) => option.props.children.join(' ').toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+          <Select showSearch className={css(styles.select)} placeholder="Select a coin" optionFilterProp="children" filterOption={(input, option) => option.props.children.join(' ').toLowerCase().indexOf(input.toLowerCase()) >= 0}>
             {data.map((coin) => {
               return <Option value={coin.id} key={`coin-${coin.id}`}>{coin.name}{" "}
                 ({coin.symbol})</Option>

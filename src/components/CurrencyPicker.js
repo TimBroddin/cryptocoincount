@@ -12,7 +12,7 @@ class CurrencyPicker extends PureComponent {
 
       return (
         <div>
-          <span style={{ color: 'white' }}>Your currency: </span>&nbsp;
+          <span style={{ color: 'white' }}>Currency: </span>&nbsp;
           <Select style={{ width: 120 }} onChange={setCurrency} value={currency}>
             {config.currencies.map((currency) => <Option value={currency} key={`currency-${currency}`}>{currency}</Option>)}
           </Select>

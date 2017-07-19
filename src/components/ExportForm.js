@@ -3,8 +3,15 @@ import {connect} from 'react-redux';
 import { QRCode } from 'react-qr-svg';
 import { Row, Col, Input } from 'antd';
 import JSON5 from 'json5';
+import { StyleSheet, css } from 'aphrodite';
 
-class Export extends PureComponent {
+const styles = StyleSheet.create({
+  p: {
+    marginBottom: '10px'
+  }
+})
+
+class ExportForm extends PureComponent {
   render() {
     const { coins } = this.props;
     let str = [];
@@ -19,18 +26,19 @@ class Export extends PureComponent {
 
     return <div>
       <Row gutter={16}>
-        <Col className="gutter-row" span={12}>
-          <p>Scan this QR-code:</p>
+        <Col md={24} lg={12}>
+          <p className={css(styles.p)}>Scan this QR-code:</p>
           <QRCode
                               bgColor="#FFFFFF"
                               fgColor="#000000"
                               level="L"
                               style={{ width: 256 }}
                               value={str.join('|')}
+                               className={css(styles.p)}
                           />
         </Col>
-        <Col className="gutter-row" span={12}>
-          <p>Or copy this code:</p>
+        <Col  md={24} lg={12}>
+          <p className={css(styles.p)}>Or copy this code:</p>
           <Input
                       type="textarea" placeholder="Code" value={JSON5.stringify(json, null, 4)} autosize={{
                         minRows: 6,
@@ -54,4 +62,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(Export);
+export default connect(mapStateToProps)(ExportForm);

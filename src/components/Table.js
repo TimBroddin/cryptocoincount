@@ -1,7 +1,19 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import { Table, Input, Icon, Button, Popconfirm, message } from 'antd';
+import { StyleSheet, css } from 'aphrodite';
+
 import { changeCoinAmount, removeCoin } from '../actions';
+
+const styles = StyleSheet.create({
+  symbol: {
+    display: 'inline-block',
+    '@media (max-width: 600px)': {
+      display: 'none',
+    }
+  }
+})
+
 
 class EditField extends PureComponent {
   constructor(props) {
@@ -64,6 +76,9 @@ class DataTable extends PureComponent {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
+      render: (text, record) => {
+        return <div>{record.name} <span className={css(styles.symbol)}>({record.symbol})</span></div>
+      }
     }, {
       title: 'Amount',
       dataIndex: 'amount',
@@ -82,26 +97,26 @@ class DataTable extends PureComponent {
       key: 'total',
     },
     {
-      title: 'Change (7D/24H/1H)',
+      title: <span>Change<br />(7D/24H/1H)</span>,
       dataIndex: 'change',
       render: (text, record) => {
         return <div>
           {(record.percent_change_7d > 0) ? <span style={{ color: 'green'}}>{record.percent_change_7d}%</span> : <span style={{ color: 'red'}}>{record.percent_change_7d}%</span> }
-          { " / " }
+          <br />
           {(record.percent_change_24h > 0) ? <span style={{ color: 'green'}}>{record.percent_change_24h}%</span> : <span style={{ color: 'red'}}>{record.percent_change_24h}%</span> }
-          { " / " }
+           <br />
           {(record.percent_change_1h > 0) ? <span style={{ color: 'green'}}>{record.percent_change_1h}%</span> : <span style={{ color: 'red'}}>{record.percent_change_1h}%</span> }
         </div>
       }
 
     },
     {
-  title: 'Action',
+  title: '',
   key: 'action',
   render: (text, record) => (
     <span>
       <Popconfirm title={ `Are you sure you want to delete ${record.name}?` }onConfirm={this.removeCoin.bind(this, record)}  okText="Yes" cancelText="No">
-        <a href="#delete">Remove</a>
+        <a href="#delete"><Icon type="delete" /></a>
       </Popconfirm>
     </span>
   ),
@@ -115,10 +130,11 @@ class DataTable extends PureComponent {
         if(coin && coin.id === d.id) {
             dataSource.push({
               id: d.id,
-              name: `${d.name} (${d.symbol})`,
+              name: d.name,
+              symbol: d.symbol,
               amount: parseFloat(coin.amount),
               price: parseFloat(d[`price_${currency.toLowerCase()}`]),
-              total: coin.amount * parseFloat(d[`price_${currency.toLowerCase()}`]),
+              total: (coin.amount * parseFloat(d[`price_${currency.toLowerCase()}`])).toFixed(2),
               percent_change_1h: parseFloat(d.percent_change_1h),
               percent_change_24h: parseFloat(d.percent_change_24h),
               percent_change_7d: parseFloat(d.percent_change_7d),

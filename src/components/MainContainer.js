@@ -2,17 +2,47 @@ import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import {LocaleProvider, Layout, Modal, Button} from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
+import { StyleSheet, css } from 'aphrodite';
+
 
 import CurrencyPicker from './CurrencyPicker';
 import TotalWorth from './TotalWorth';
 import Form from './Form';
 import Table from './Table';
-import Export from './Export';
+import ExportForm from './ExportForm';
 import ImportForm from './ImportForm';
 
 import {fetchData} from '../actions';
 
 const {Header, Content, Footer} = Layout;
+
+const styles = StyleSheet.create({
+  header: {
+    background: '#404040',
+    padding: '0 50px',
+    height: '64px',
+    lineHeight: '64px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    '@media (max-width: 600px)': {
+      padding: '0 10px'
+    }
+  },
+  content: {
+    padding: '50px',
+    minHeight: '80vh',
+    '@media (max-width: 600px)': {
+      padding: '10px'
+    }
+  },
+  h1: {
+    color: 'white',
+    fontSize: '24px',
+    '@media (max-width: 600px)': {
+      fontSize: '16px'
+    }
+  }
+})
 
 class MainContainer extends PureComponent {
   constructor(props) {
@@ -30,28 +60,16 @@ class MainContainer extends PureComponent {
   render() {
     return <LocaleProvider locale={enUS}>
       <Layout>
-        <Header style={{
-          display: 'flex',
-          justifyContent: 'space-between'
-        }}>
-          <div style={{
-            display: 'flex'
-          }}>
-            <h1 style={{
-              color: 'white'
-            }}>CryptocoinCount</h1>
-          </div>
+        <Header className={css(styles.header)}>
+
+          <h1 className={css(styles.h1)}>CryptocoinCount</h1>
 
           <div>
-
             <CurrencyPicker/>
           </div>
         </Header>
         <Content>
-          <div style={{
-            padding: '50px',
-            minHeight: '80vh'
-          }}>
+          <div className={css(styles.content)}>
             <TotalWorth/>
             <Form/>
             <Table/>
@@ -68,7 +86,7 @@ class MainContainer extends PureComponent {
         </Content>
 
         <Modal title="Export" visible={this.state.showExport} footer={null} onCancel={() => this.setState({showExport: false})} width="600">
-          <Export/>
+          <ExportForm />
         </Modal>
 
         <Modal title="Import" visible={this.state.showImport} footer={null} onCancel={() => this.setState({showImport: false})} width="600">
