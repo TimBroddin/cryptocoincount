@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import { Layout } from 'antd';
 
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
@@ -9,8 +8,6 @@ import thunk from 'redux-thunk';
 import reducers from '../reducers';
 
 import MainContainer from './MainContainer';
-
-const { Header, Content, Footer } = Layout;
 
 
 function configureStore(initialState, reducer) {

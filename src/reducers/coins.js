@@ -1,3 +1,5 @@
+import compact from 'lodash/compact';
+
 const coins = (state = [], action) => {
   const clone = state.slice();
 
@@ -5,7 +7,7 @@ const coins = (state = [], action) => {
     case 'ADD_COIN':
       let found = false;
       clone.forEach((coin, k) => {
-        if(coin.id === action.coin) {
+        if(coin && coin.id === action.coin) {
           found = true;
           clone[k].amount += action.amount;
         }
@@ -16,7 +18,7 @@ const coins = (state = [], action) => {
       return clone;
     case 'CHANGE_COIN_AMOUNT':
       clone.forEach((coin, k) => {
-        if(coin.id === action.coin) {
+        if(coin && coin.id === action.coin) {
           found = true;
           clone[k].amount = action.amount;
         }
@@ -24,11 +26,11 @@ const coins = (state = [], action) => {
       return clone;
     case 'REMOVE_COIN':
     clone.forEach((coin, k) => {
-      if(coin.id === action.coin) {
+      if(coin && coin.id === action.coin) {
         delete clone[k];
       }
     });
-    return clone;
+    return compact(clone);
     default:
       return state;
   }

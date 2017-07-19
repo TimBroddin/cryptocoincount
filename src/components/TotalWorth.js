@@ -16,7 +16,7 @@ class TotalWorth extends PureComponent {
     });
 
     return <div>
-      <h1 style={{ textAlign: 'center', fontSize: '36px'}}>Your total worth is: {totalWorth.toFixed(2)} {currency}</h1>
+      <h1 style={{ textAlign: 'center', fontSize: '36px'}}>Your total crypto worth is: {totalWorth.toFixed(2)} {currency}</h1>
     </div>
   }
 }

@@ -1,28 +1,58 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
-import { Table, Input } from 'antd';
+import { Table, Input, Icon, Button, Popconfirm, message } from 'antd';
 import { changeCoinAmount, removeCoin } from '../actions';
 
-class DataTable extends PureComponent {
+class EditField extends PureComponent {
   constructor(props) {
     super(props);
-
+    this.state = {
+      editing: false,
+      editAmount: props.amount
+    }
   }
 
-  handleChange(coin, e) {
-    const {changeCoinAmount} = this.props;
-    changeCoinAmount(coin, parseFloat(e.currentTarget.value.replace(',', '.')));
-  }
-
-  removeCoin(coin, e) {
-    const {removeCoin} = this.props;
+  startEdit(e) {
     e.preventDefault();
+    this.setState({ editing: true });
+  }
 
-    removeCoin(coin);
+  handleChange(e) {
+    this.setState({ editAmount: e.currentTarget.value });
+  }
+
+  save() {
+    const {changeCoinAmount, coin} = this.props;
+    changeCoinAmount(coin, this.state.editAmount);
+    this.setState({ editing: false });
   }
 
   render() {
-    const { data, coins, currency } = this.props;
+      const { amount } = this.props;
+      const { editing, editAmount } = this.state;
+
+      if(editing) {
+         return <span><Input value={editAmount} onChange={this.handleChange.bind(this)} style={{ width: '200px'}} /> <Button type="primary" onClick={this.save.bind(this)}><Icon type="check" /></Button></span>
+      } else {
+        return <span>{amount} <a href="#edit"><Icon type="edit" onClick={this.startEdit.bind(this)} /></a></span>
+      }
+
+  }
+}
+
+
+class DataTable extends PureComponent {
+  removeCoin(coin, e) {
+    const {removeCoin} = this.props;
+    e.preventDefault();
+    removeCoin(coin.id);
+
+    message.success(`${coin.name} has been removed.`);
+
+  }
+
+  render() {
+    const { data, coins, currency, changeCoinAmount } = this.props;
     const dataSource = [];
     const columns = [{
       title: 'Name',
@@ -33,7 +63,7 @@ class DataTable extends PureComponent {
       dataIndex: 'amount',
       key: 'amount',
       render: (text, record) => {
-        return <Input value={text} onChange={this.handleChange.bind(this, record.id)} />
+        return <EditField amount={text} coin={record.id} changeCoinAmount={changeCoinAmount} />
       }
     }, {
       title: 'Price',
@@ -45,7 +75,6 @@ class DataTable extends PureComponent {
       dataIndex: 'total',
       key: 'total',
     },
-    ,
     {
       title: 'Change (7D/24H/1H)',
       dataIndex: 'change',
@@ -65,7 +94,9 @@ class DataTable extends PureComponent {
   key: 'action',
   render: (text, record) => (
     <span>
-      <a href="#" onClick={this.removeCoin.bind(this, record.id)}>Delete</a>
+      <Popconfirm title={ `Are you sure you want to delete ${record.name}?` }onConfirm={this.removeCoin.bind(this, record.id)}  okText="Yes" cancelText="No">
+        <a href="#delete">Remove</a>
+      </Popconfirm>
     </span>
   ),
 }
@@ -79,7 +110,7 @@ class DataTable extends PureComponent {
             dataSource.push({
               id: d.id,
               name: `${d.name} (${d.symbol})`,
-              amount: parseFloat(coin.amount).toFixed(10),
+              amount: parseFloat(coin.amount),
               price: parseFloat(d[`price_${currency.toLowerCase()}`]),
               total: coin.amount * parseFloat(d[`price_${currency.toLowerCase()}`]),
               percent_change_1h: parseFloat(d.percent_change_1h),
