@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   select: {
     width: '200px',
     '@media (max-width: 600px)': {
-      width: '100px'
+      width: '80px'
     }
   }
 });
