@@ -48,4 +48,11 @@ const changeCoinAmount = (coin, amount) => {
   }
 }
 
-export { setCurrency, fetchData, addCoin, changeCoinAmount, removeCoin };
+const importCoins = (coins) => {
+  return {
+    type: 'IMPORT_COINS',
+    coins
+  }
+}
+
+export { setCurrency, fetchData, addCoin, changeCoinAmount, removeCoin, importCoins };

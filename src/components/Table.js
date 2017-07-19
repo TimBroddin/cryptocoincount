@@ -12,6 +12,12 @@ class EditField extends PureComponent {
     }
   }
 
+  componentWillReceiveProps(newProps) {
+    if(newProps.amount !== this.props.amount) {
+      this.setState({ editAmount: newProps.amount });
+    }
+  }
+
   startEdit(e) {
     e.preventDefault();
     this.setState({ editing: true });
