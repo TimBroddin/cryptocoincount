@@ -20,15 +20,16 @@ class ImportForm extends PureComponent {
 
   scan(result) {
     const {hide, importCoins} = this.props;
+    console.log(result);
     if(result) {
-    try {
-      importCoins(JSON5.parse(result.result));
-      hide();
-      message.success(`Import completed`);
-    } catch(e) {
-      hide();
-      message.error('Something went wrong');
-    }
+      try {
+        importCoins(JSON5.parse(result.result));
+        hide();
+        message.success(`Import completed`);
+      } catch(e) {
+        hide();
+        message.error('Something went wrong');
+      }
     }
   }
 
