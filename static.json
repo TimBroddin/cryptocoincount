@@ -4,7 +4,7 @@
     "/**": "index.html"
   },
   "headers": {
-    "service-worker.js": {
+    "/service-worker.js": {
       "Cache-Control": "no-store, no-cache, max-age=0"
     }
   }
