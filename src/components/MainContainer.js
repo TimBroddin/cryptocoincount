@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   h1: {
     color: 'white',
     fontSize: '24px',
-    '@media (max-width: 600px)': {
+    '@media (max-width: 1000px)': {
       display: 'none'
     },
     display: 'flex',
