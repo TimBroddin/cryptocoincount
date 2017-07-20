@@ -33,6 +33,8 @@ class SyncPage extends PureComponent {
 
 
   render() {
+    const {history} = this.props;
+    
     return <div className={css(styles.sync)}>
       <Alert
         message="Everything is safe!"
@@ -50,7 +52,7 @@ class SyncPage extends PureComponent {
             <div className={css(styles.part)}>
 
             <h1>Import your currencies from another device</h1>
-            <ImportForm />
+            <ImportForm history={history} />
             </div>
           </div>
 
