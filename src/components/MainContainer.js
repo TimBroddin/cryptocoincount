@@ -10,10 +10,6 @@ import {
 } from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory'
 
-import ReactGA from 'react-ga';
-
-
-
 import CurrencyPicker from './CurrencyPicker';
 import ListPage from '../pages/List';
 import SyncPage from '../pages/Sync';
@@ -22,7 +18,6 @@ import AboutPage from '../pages/About';
 import {fetchData} from '../actions';
 
 const {Header, Content, Footer} = Layout;
-ReactGA.initialize('UA-102915004-1');
 
 
 const styles = StyleSheet.create({
@@ -97,8 +92,9 @@ const styles = StyleSheet.create({
 
 const history = createHistory()
 history.listen((location, action) => {
-  ReactGA.set({ page: location.pathname });
-  ReactGA.pageview(location.pathname);
+  if(window.ga) {
+    window.ga('send', 'pageview');
+  }
 });
 
 
@@ -107,9 +103,6 @@ class MainContainer extends PureComponent {
     const {fetchData, currency} = this.props;
     fetchData(currency);
 
-    ReactGA.set({ page: window.location.pathname });
-    ReactGA.pageview(window.location.pathname);
-
     if(window.FB) {
       window.FB.XFBML.parse();
     }
@@ -117,9 +110,6 @@ class MainContainer extends PureComponent {
     if(window.twttr && window.twttr.widgets) {
       window.twttr.widgets.load();
     }
-
-
-
   }
 
   render() {
