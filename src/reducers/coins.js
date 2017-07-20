@@ -1,5 +1,4 @@
 import compact from 'lodash/compact';
-import sortBy from 'lodash/sortBy';
 
 const coins = (state = [], action) => {
   let clone = state.slice();
@@ -16,7 +15,7 @@ const coins = (state = [], action) => {
       if(!found) {
         clone.push({ id: action.coin, amount: action.amount });
       }
-      return sortBy(clone, 'id');
+      return clone;
     case 'CHANGE_COIN_AMOUNT':
       clone.forEach((coin, k) => {
         if(coin && coin.id === action.coin) {
@@ -24,7 +23,7 @@ const coins = (state = [], action) => {
           clone[k].amount = action.amount;
         }
       });
-      return sortBy(clone, 'id');
+      return clone;
     case 'REMOVE_COIN':
       clone.forEach((coin, k) => {
         if(coin && coin.id === action.coin) {
@@ -37,7 +36,7 @@ const coins = (state = [], action) => {
       for(let id in action.coins) {
         clone.push({ id, amount: action.coins[id] })
       }
-      return sortBy(clone, 'id');
+      return clone;
     default:
       return state;
   }

@@ -25,7 +25,7 @@ class ImportForm extends PureComponent {
 
 
   scan(result) {
-    const {hide, importCoins, setScanning, isScanning} = this.props;
+    const {importCoins, setScanning, isScanning} = this.props;
 
     if(!isScanning) return;
 
@@ -51,7 +51,7 @@ class ImportForm extends PureComponent {
 
   importCode() {
     const {importField} = this.state;
-    const {hide, importCoins} = this.props;
+    const {importCoins} = this.props;
 
     try {
       console.log(importField);
