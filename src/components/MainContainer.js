@@ -93,7 +93,11 @@ const styles = StyleSheet.create({
 const history = createHistory()
 history.listen((location, action) => {
   if(window.ga) {
-    window.ga('send', 'pageview');
+    setTimeout(() => {
+      window.ga('gtm1.set', 'location', window.location.href);
+      window.ga('gtm1.set', 'page', location.pathname);
+      window.ga("gtm1.send", "pageview", location.pathname);
+    }, 500)
   }
 });
 

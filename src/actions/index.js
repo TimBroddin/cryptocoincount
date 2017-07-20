@@ -20,7 +20,7 @@ const fetchData = (currency='USD') => {
   return (dispatch) => {
     fetch(`https://api.coinmarketcap.com/v1/ticker/?convert=${currency}`).then(res => res.json()).then((data) => {
       dispatch(setData(data));
-    })
+    }).catch(err => console.log(err))
   }
 }
 
