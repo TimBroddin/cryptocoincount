@@ -107,7 +107,6 @@ class MainContainer extends PureComponent {
     const {fetchData, currency} = this.props;
     fetchData(currency);
 
-    console.log('Sending GA');
     ReactGA.set({ page: window.location.pathname });
     ReactGA.pageview(window.location.pathname);
 
