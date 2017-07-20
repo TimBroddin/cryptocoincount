@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Icon } from 'antd';
 import {StyleSheet, css} from 'aphrodite';
 
 const styles = StyleSheet.create({
@@ -41,7 +41,7 @@ class AboutPage extends PureComponent {
         <p className={css(styles.p)}>All the data displayed is sourced from
           <a href="https://coinmarketcap.com" target="_blank" rel="noopener noreferrer">Coinmarketcap</a>.</p>
 
-        <p className={css(styles.p)}>Created with React and Redux.</p>
+        <p className={css(styles.p)}>Created with React, Redux and <Icon type="heart" style={{ color: '#af1313'}} />.</p>
       </div>
       <div className={css(styles.part, styles.line)}>
 
