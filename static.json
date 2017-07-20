@@ -3,7 +3,7 @@
   "routes": {
     "/": "index.html",
     "/sync": "index.html",
-    "/about": "index.html",
+    "/about": "index.html"
 
   },
   "headers": {
