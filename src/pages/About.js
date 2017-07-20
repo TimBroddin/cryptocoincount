@@ -38,8 +38,7 @@ class AboutPage extends PureComponent {
         <p className={css(styles.p)}>
           <strong>CryptocoinCount</strong> is created by me, Tim Broddin, a creative developer from Belgium. I was unhappy with the solutions I've found on the Internet and decided to create my own.</p>
 
-        <p className={css(styles.p)}>All the data displayed is sourced from
-          <a href="https://coinmarketcap.com" target="_blank" rel="noopener noreferrer">Coinmarketcap</a>.</p>
+        <p className={css(styles.p)}>All the data displayed is sourced from <a href="https://coinmarketcap.com" target="_blank" rel="noopener noreferrer">Coinmarketcap</a>.</p>
 
         <p className={css(styles.p)}>Created with React, Redux and <Icon type="heart" style={{ color: '#af1313'}} />.</p>
       </div>
