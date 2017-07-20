@@ -41,7 +41,6 @@ class ImportForm extends PureComponent {
 
 
         importCoins(coins);
-        hide();
         message.success(`Import completed`);
       } catch(e) {
         setScanning(false);
@@ -60,7 +59,6 @@ class ImportForm extends PureComponent {
       importCoins(coins);
 
       message.success(`Import completed`);
-      hide();
 
     } catch (e) {
       console.log(e);
