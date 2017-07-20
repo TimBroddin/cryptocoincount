@@ -151,7 +151,7 @@ class MainContainer extends PureComponent {
         <Content>
           <div className={css(styles.content)}>
             <Route exact path="/" component={ListPage}/>
-            <Route path="/sync" component={SyncPage}/>
+            <Route path="/sync" history={history} component={SyncPage}/>
             <Route path="/about" component={AboutPage}/>
 
           </div>

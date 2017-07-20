@@ -25,7 +25,7 @@ class ImportForm extends PureComponent {
 
 
   scan(result) {
-    const {importCoins, setScanning, isScanning} = this.props;
+    const {importCoins, setScanning, isScanning, history} = this.props;
 
     if(!isScanning) return;
 
@@ -41,6 +41,8 @@ class ImportForm extends PureComponent {
 
 
         importCoins(coins);
+        history.push('/');
+
         message.success(`Import completed`);
       } catch(e) {
         setScanning(false);
@@ -51,14 +53,15 @@ class ImportForm extends PureComponent {
 
   importCode() {
     const {importField} = this.state;
-    const {importCoins} = this.props;
+    const {importCoins, history} = this.props;
+
 
     try {
-      console.log(importField);
       const coins = JSON5.parse(importField);
       importCoins(coins);
 
       message.success(`Import completed`);
+      history.push('/');
 
     } catch (e) {
       console.log(e);
