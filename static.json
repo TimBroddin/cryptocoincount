@@ -2,5 +2,10 @@
   "root": "build/",
   "routes": {
     "/**": "index.html"
+  },
+  "headers": {
+    "service-worker.js": {
+      "Cache-Control": "no-store, no-cache, max-age=0"
+    },
   }
 }
