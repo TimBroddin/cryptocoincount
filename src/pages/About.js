@@ -36,8 +36,7 @@ class AboutPage extends PureComponent {
         <h1>About</h1>
 
         <p className={css(styles.p)}>
-          <strong>CryptocoinCount</strong>
-          is created by me, Tim Broddin, a creative developer from Belgium. I was unhappy with the solutions I've found on the Internet and decided to create my own.</p>
+          <strong>CryptocoinCount</strong> is created by me, Tim Broddin, a creative developer from Belgium. I was unhappy with the solutions I've found on the Internet and decided to create my own.</p>
 
         <p className={css(styles.p)}>All the data displayed is sourced from
           <a href="https://coinmarketcap.com" target="_blank" rel="noopener noreferrer">Coinmarketcap</a>.</p>
