@@ -145,7 +145,7 @@ class DataTable extends PureComponent {
     });
 
 
-    return <Table  style={{ marginTop: '50px' }} columns={columns} dataSource={dataSource} />
+    return <Table  style={{ marginTop: '50px' }} pagination={false} columns={columns} dataSource={dataSource} />
 
   }
 }

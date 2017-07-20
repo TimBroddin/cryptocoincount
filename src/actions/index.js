@@ -55,4 +55,11 @@ const importCoins = (coins) => {
   }
 }
 
-export { setCurrency, fetchData, addCoin, changeCoinAmount, removeCoin, importCoins };
+const setScanning = (scanning) => {
+  return {
+    type: 'SET_SCANNING',
+    scanning
+  }
+}
+
+export { setCurrency, fetchData, addCoin, changeCoinAmount, removeCoin, importCoins, setScanning };

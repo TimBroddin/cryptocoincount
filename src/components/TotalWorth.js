@@ -1,5 +1,15 @@
 import React, { PureComponent } from 'react';
 import {connect} from 'react-redux';
+import { StyleSheet, css } from 'aphrodite';
+
+const styles = StyleSheet.create({
+  h1: {
+    textAlign: 'center',
+    fontSize: '36px',
+    marginBottom: '20px',
+    marginTop: '20px',
+  }
+});
 
 class TotalWorth extends PureComponent {
   render() {
@@ -16,7 +26,7 @@ class TotalWorth extends PureComponent {
     });
 
     return <div>
-      <h1 style={{ textAlign: 'center', fontSize: '36px'}}>Your total crypto worth is: {totalWorth.toFixed(2)} {currency}</h1>
+      <h1 className={css(styles.h1)}>Your total crypto worth is: {totalWorth.toFixed(2)} {currency}</h1>
     </div>
   }
 }

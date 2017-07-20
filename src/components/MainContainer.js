@@ -1,16 +1,18 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
-import {LocaleProvider, Layout, Modal, Button} from 'antd';
+import {LocaleProvider, Layout, Menu, Icon} from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 import { StyleSheet, css } from 'aphrodite';
-
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
 
 import CurrencyPicker from './CurrencyPicker';
-import TotalWorth from './TotalWorth';
-import Form from './Form';
-import Table from './Table';
-import ExportForm from './ExportForm';
-import ImportForm from './ImportForm';
+import ListPage from '../pages/List';
+import SyncPage from '../pages/Sync';
+import AboutPage from '../pages/About';
 
 import {fetchData} from '../actions';
 
@@ -35,68 +37,78 @@ const styles = StyleSheet.create({
       padding: '10px'
     }
   },
+  logo: {
+    display: 'flex',
+  },
   h1: {
     color: 'white',
     fontSize: '24px',
     '@media (max-width: 600px)': {
-      fontSize: '16px'
+      display: 'none'
     }
-  }
+  },
+  menu: {
+    lineHeight: '64px',
+    marginLeft: '20px',
+    '@media (max-width: 600px)': {
+      marginLeft: '0px'
+    }
+  },
+  menuLabel: {
+    '@media (max-width: 600px)': {
+      display: 'none'
+    }
+  },
+  menuItem: {
+    fontSize: '14px',
+    '@media (max-width: 600px)': {
+      padding: '0px 15px',
+    }
+  },
 })
 
 class MainContainer extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showExport: false
-    }
-  }
-
   componentDidMount() {
     const {fetchData, currency} = this.props;
     fetchData(currency);
   }
 
   render() {
-    return <LocaleProvider locale={enUS}>
+    return   <Router>
+    <LocaleProvider locale={enUS}>
       <Layout>
         <Header className={css(styles.header)}>
-
-          <h1 className={css(styles.h1)}>CryptocoinCount</h1>
-
+          <div className={css(styles.logo)}>
+            <h1 className={css(styles.h1)}>CryptocoinCount</h1>
+            <Menu
+                theme="dark"
+                mode="horizontal"
+                defaultSelectedKeys={[]}
+                className={css(styles.menu)}
+              >
+                <Menu.Item key="1" className={css(styles.menuItem)}><Link to="/"><Icon type="file-text" className={css(styles.menuIcon)} /> <span className={css(styles.menuLabel)}>List</span></Link></Menu.Item>
+                <Menu.Item key="2" className={css(styles.menuItem)}><Link to="/sync"><Icon type="sync" className={css(styles.menuIcon)}  /> <span className={css(styles.menuLabel)}>Import/Export</span></Link></Menu.Item>
+                <Menu.Item key="3" className={css(styles.menuItem)}><Link to="/about"><Icon type="question-circle-o" className={css(styles.menuIcon)}  /> <span className={css(styles.menuLabel)}>About</span></Link></Menu.Item>
+              </Menu>
+          </div>
           <div>
             <CurrencyPicker/>
           </div>
         </Header>
         <Content>
           <div className={css(styles.content)}>
-            <TotalWorth/>
-            <Form/>
-            <Table/>
-
-            <div style={{
-              marginTop: '100px'
-            }}>
-              <Button onClick={() => this.setState({showExport: true})}>Export</Button> {" "}
-              <Button onClick={() => this.setState({showImport: true})}>Import</Button>
-
-            </div>
+            <Route exact path="/" component={ListPage}/>
+            <Route path="/sync" component={SyncPage}/>
+            <Route path="/about" component={AboutPage}/>
 
           </div>
         </Content>
-
-        <Modal title="Export" visible={this.state.showExport} footer={null} onCancel={() => this.setState({showExport: false})} width="600">
-          <ExportForm />
-        </Modal>
-
-        <Modal title="Import" visible={this.state.showImport} footer={null} onCancel={() => this.setState({showImport: false})} width="600">
-          <ImportForm hide={() => this.setState({showImport: false})}/>
-        </Modal>
 
 
         <Footer>&copy; 2017 Tim Broddin</Footer>
       </Layout>
     </LocaleProvider>
+    </Router>
   }
 }
 

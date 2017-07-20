@@ -49,6 +49,8 @@
     "react-qr-reader": "^1.1.3",
     "react-qr-svg": "^2.0.1",
     "react-redux": "^5.0.5",
+    "react-router": "^4.1.2",
+    "react-router-dom": "^4.1.2",
     "redux": "^3.7.2",
     "redux-persist": "^4.8.2",
     "redux-persist-transform-compress": "^4.2.0",

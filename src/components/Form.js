@@ -87,7 +87,7 @@ class CoinForm extends PureComponent {
            htmlType="submit"
            disabled={hasErrors(getFieldsError())}
          >
-           <Icon type="plus-square-o" style={{ fontSize: 13 }} /> Add
+           <Icon type="plus-square-o"  />
          </Button>
        </FormItem>
 

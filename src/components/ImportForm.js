@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import { Row, Col, Input, Button, message } from 'antd';
 import JSON5 from 'json5';
-import {importCoins} from '../actions';
+import {importCoins, setScanning} from '../actions';
 import QrReader from 'react-qr-reader'
 import { StyleSheet, css } from 'aphrodite';
 
@@ -25,11 +25,9 @@ class ImportForm extends PureComponent {
 
 
   scan(result) {
-    const {hide, importCoins} = this.props;
+    const {hide, importCoins, setScanning, isScanning} = this.props;
 
-    if(this.state.imported) {
-      return;
-    }
+    if(!isScanning) return;
 
     let coins = {}
     if(result) {
@@ -39,14 +37,14 @@ class ImportForm extends PureComponent {
           let s = pair.split(':');
           coins[s[0]] = parseFloat(s[1]);
         })
-        this.setState({ imported: true });
+        setScanning(false);
 
 
         importCoins(coins);
         hide();
         message.success(`Import completed`);
       } catch(e) {
-        hide();
+        setScanning(false);
         message.error(`Something went wrong: ${result} ${e.message}`);
       }
     }
@@ -71,6 +69,7 @@ class ImportForm extends PureComponent {
   }
 
   render() {
+    const { isScanning, setScanning } = this.props;
     const previewStyle = {
           width: '100%',
         }
@@ -80,7 +79,8 @@ class ImportForm extends PureComponent {
       <Row gutter={16}>
         <Col md={24} lg={12} >
           <p className={css(styles.p)}>Scan QR-code:</p>
-          <div>
+          {(isScanning) ? <div>
+
           <QrReader
             delay={500}
             style={previewStyle}
@@ -97,6 +97,8 @@ class ImportForm extends PureComponent {
             {(this.state.legacy) ? <Button type="primary" onClick={() => this.refs.qrReader.openImageDialog()}>Take QR-code</Button> : null}
 
           </div>
+          : <Button type="primary" onClick={() => setScanning(true) }>Scan</Button>
+        }
         </Col>
         <Col md={24} lg={12}>
           <p className={css(styles.p)}>Or paste your code:</p>
@@ -120,6 +122,7 @@ class ImportForm extends PureComponent {
 
 const mapStateToProps = (state) => {
   return {
+    isScanning: state.sync.isScanning
   }
 }
 
@@ -127,6 +130,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     importCoins: (coins) => {
       dispatch(importCoins(coins))
+    },
+    setScanning: (scanning) => {
+      dispatch(setScanning(scanning));
     }
   }
 }
