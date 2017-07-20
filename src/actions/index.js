@@ -18,7 +18,7 @@ const setData = (data) => {
 
 const fetchData = (currency='USD') => {
   return (dispatch) => {
-    fetch(`https://api.coinmarketcap.com/v1/ticker/?convert=${currency}&limit=25`).then(res => res.json()).then((data) => {
+    fetch(`https://api.coinmarketcap.com/v1/ticker/?convert=${currency}&limit=75`).then(res => res.json()).then((data) => {
       dispatch(setData(data));
     })
   }
