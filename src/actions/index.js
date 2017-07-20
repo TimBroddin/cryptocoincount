@@ -62,4 +62,11 @@ const setScanning = (scanning) => {
   }
 }
 
-export { setCurrency, fetchData, addCoin, changeCoinAmount, removeCoin, importCoins, setScanning };
+const setPage = (page) => {
+  return {
+    type: 'SET_PAGE',
+    page
+  }
+}
+
+export { setCurrency, fetchData, addCoin, changeCoinAmount, removeCoin, importCoins, setScanning, setPage };

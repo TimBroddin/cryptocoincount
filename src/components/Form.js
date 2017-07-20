@@ -16,7 +16,13 @@ const styles = StyleSheet.create({
   select: {
     width: '200px',
     '@media (max-width: 600px)': {
-      width: '80px'
+      width: '100px'
+    }
+  },
+  input: {
+    width: '200px',
+    '@media (max-width: 600px)': {
+      width: '100px'
     }
   }
 });
@@ -76,7 +82,7 @@ class CoinForm extends PureComponent {
             }
           ]
         })(
-          <Input prefix={<Icon type="calculator" style={{ fontSize: 13 }} />} placeholder="Amount" />
+          <Input className={css(styles.input)} prefix={<Icon type="calculator" style={{ fontSize: 13 }} />} placeholder="Amount" />
 
         )}
       </FormItem>

@@ -9,9 +9,12 @@ const styles = StyleSheet.create({
   p: {
     marginBottom: '10px'
   },
+  center: {
+    textAlign: 'center',
+  },
   code: {
     opacity: 1,
-    transition: 'all 1s ease-in'
+    transition: 'all 1s ease-in',
   },
   hidden: {
     opacity: 0

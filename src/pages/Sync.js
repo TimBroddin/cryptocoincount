@@ -1,6 +1,8 @@
 import React, {PureComponent} from 'react';
 import {StyleSheet, css} from 'aphrodite';
 import { Alert } from 'antd';
+import { connect } from 'react-redux';
+import { setPage } from '../actions';
 
 import ImportForm from '../components/ImportForm';
 import ExportForm from '../components/ExportForm';
@@ -12,7 +14,10 @@ const styles = StyleSheet.create({
   },
   part: {
     padding: '0 0 50px 0',
-    marginTop: '25px'
+    marginTop: '25px',
+    '@media (max-width: 600px)': {
+      textAlign: 'center'
+    }
   },
   line: {
     borderBottom: '1px solid #DDD',
@@ -21,6 +26,11 @@ const styles = StyleSheet.create({
 });
 
 class SyncPage extends PureComponent {
+  componentDidMount() {
+    const {setPage} = this.props;
+    setPage('sync');
+  }
+
 
   render() {
     return <div className={css(styles.sync)}>
@@ -47,4 +57,13 @@ class SyncPage extends PureComponent {
   }
 }
 
-export default SyncPage;
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setPage: (page) => {
+      dispatch(setPage(page));
+    }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(SyncPage);
