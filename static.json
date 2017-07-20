@@ -1,7 +1,10 @@
 {
   "root": "build/",
   "routes": {
-    "/**": "index.html"
+    "/": "index.html",
+    "/sync": "index.html",
+    "/about": "index.html",
+
   },
   "headers": {
     "/service-worker.js": {
