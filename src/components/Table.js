@@ -4,6 +4,7 @@ import { Table, Input, Icon, Button, Popconfirm, message } from 'antd';
 import { StyleSheet, css } from 'aphrodite';
 
 import { changeCoinAmount, removeCoin } from '../actions';
+import sortBy from 'lodash/sortBy';
 
 const styles = StyleSheet.create({
   symbol: {
@@ -78,7 +79,7 @@ class DataTable extends PureComponent {
       key: 'name',
       render: (text, record) => {
         return <div>{record.name} <span className={css(styles.symbol)}>({record.symbol})</span></div>
-      }
+      },
     }, {
       title: 'Amount',
       dataIndex: 'amount',
@@ -97,20 +98,6 @@ class DataTable extends PureComponent {
       key: 'total',
     },
     {
-      title: <span>Change<br />(7D/24H/1H)</span>,
-      dataIndex: 'change',
-      render: (text, record) => {
-        return <div>
-          {(record.percent_change_7d > 0) ? <span style={{ color: 'green'}}>{record.percent_change_7d}%</span> : <span style={{ color: 'red'}}>{record.percent_change_7d}%</span> }
-          <br />
-          {(record.percent_change_24h > 0) ? <span style={{ color: 'green'}}>{record.percent_change_24h}%</span> : <span style={{ color: 'red'}}>{record.percent_change_24h}%</span> }
-           <br />
-          {(record.percent_change_1h > 0) ? <span style={{ color: 'green'}}>{record.percent_change_1h}%</span> : <span style={{ color: 'red'}}>{record.percent_change_1h}%</span> }
-        </div>
-      }
-
-    },
-    {
   title: '',
   key: 'action',
   render: (text, record) => (
@@ -125,7 +112,7 @@ class DataTable extends PureComponent {
   ];
 
 
-    coins.forEach((coin) => {
+    sortBy(coins, 'id').forEach((coin) => {
       data.forEach((d) => {
         if(coin && coin.id === d.id) {
             dataSource.push({
@@ -145,7 +132,18 @@ class DataTable extends PureComponent {
     });
 
 
-    return <Table  style={{ marginTop: '50px' }} pagination={false} columns={columns} dataSource={dataSource} />
+    return <Table
+      style={{ marginTop: '50px' }}
+      pagination={false}
+      columns={columns}
+      dataSource={dataSource}
+      expandedRowRender={record => <p><strong>Change (7D/24H/1H):</strong> {(record.percent_change_7d > 0) ? <span style={{ color: 'green'}}>{record.percent_change_7d}%</span> : <span style={{ color: 'red'}}>{record.percent_change_7d}%</span> }
+        { " / " }
+        {(record.percent_change_24h > 0) ? <span style={{ color: 'green'}}>{record.percent_change_24h}%</span> : <span style={{ color: 'red'}}>{record.percent_change_24h}%</span> }
+        { " / "}
+        {(record.percent_change_1h > 0) ? <span style={{ color: 'green'}}>{record.percent_change_1h}%</span> : <span style={{ color: 'red'}}>{record.percent_change_1h}%</span> }</p>}
+
+    />
 
   }
 }
