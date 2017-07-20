@@ -1,9 +1,9 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "CryptocoinCount",
+  "name": "CryptocoinCount",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "appicon.png",
       "sizes": "192x192",
       "type": "image/png"
     }
