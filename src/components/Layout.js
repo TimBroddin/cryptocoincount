@@ -176,7 +176,7 @@ class Layout extends PureComponent {
               <a className="twitter-share-button" data-size="large" href={`https://twitter.com/intent/tweet?url=${encodeURIComponent('https://cryptocoincount.com')}&text=${encodeURIComponent('Keep track of your cryptocoins with CryptocoinCount:')}`}>Tweet</a>
             </div>
             <div className={css(styles.noLine)}>
-              <GitHubButton type="stargazers" size="large" namespace="timbroddin" repo="cryptocoin" />
+              <GitHubButton type="stargazers" size="large" namespace="timbroddin" repo="cryptocoincount" />
             </div>
           </div>
 
