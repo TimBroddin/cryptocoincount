@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
-import {LocaleProvider, Layout, Menu, Icon} from 'antd';
+import {LocaleProvider, Layout as AntLayout, Menu, Icon} from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 import { StyleSheet, css } from 'aphrodite';
 import {
@@ -8,7 +8,9 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import createHistory from 'history/createBrowserHistory'
+import createHistory from 'history/createBrowserHistory';
+import GitHubButton from 'react-github-button';
+
 
 import CurrencyPicker from './CurrencyPicker';
 import ListPage from '../pages/List';
@@ -17,7 +19,9 @@ import AboutPage from '../pages/About';
 
 import {fetchData} from '../actions';
 
-const {Header, Content, Footer} = Layout;
+import '../css/github.css';
+
+const {Header, Content, Footer} = AntLayout;
 
 
 const styles = StyleSheet.create({
@@ -82,7 +86,7 @@ const styles = StyleSheet.create({
   },
   social: {
     margin: '0 auto',
-    maxWidth: '200px',
+    maxWidth: '320px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
@@ -102,7 +106,7 @@ history.listen((location, action) => {
 });
 
 
-class MainContainer extends PureComponent {
+class Layout extends PureComponent {
   componentDidMount() {
     const {fetchData, currency} = this.props;
     fetchData(currency);
@@ -121,7 +125,7 @@ class MainContainer extends PureComponent {
 
     return   <Router history={history} >
     <LocaleProvider locale={enUS}>
-      <Layout>
+      <AntLayout>
         <Header className={css(styles.header)}>
           <div className={css(styles.logo)}>
             <h1 className={css(styles.h1)}>
@@ -164,11 +168,15 @@ class MainContainer extends PureComponent {
             <div>
               <a className="twitter-share-button" data-size="large" href={`https://twitter.com/intent/tweet?url=${encodeURIComponent('https://cryptocoincount.com')}&text=${encodeURIComponent('Keep track of your cryptocoins with CryptocoinCount:')}`}>Tweet</a>
             </div>
+            <div>
+              <GitHubButton type="stargazers" size="large" namespace="timbroddin" repo="cryptocoincount" />
+
+                        </div>
           </div>
 
           <p>&copy; 2017 Tim Broddin</p>
         </Footer>
-      </Layout>
+      </AntLayout>
     </LocaleProvider>
     </Router>
   }
@@ -186,4 +194,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);

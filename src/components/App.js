@@ -10,7 +10,7 @@ import { persistStore, autoRehydrate } from 'redux-persist';
 import thunk from 'redux-thunk';
 import reducers from '../reducers';
 
-import MainContainer from './MainContainer';
+import Layout from './Layout';
 
 
 function configureStore(initialState, reducer) {
@@ -41,7 +41,7 @@ class App extends PureComponent {
   render() {
     return (
       <Provider store={store}>
-        {this.state.rehydrated ? <MainContainer /> : <div />}
+        {this.state.rehydrated ? <Layout /> : <div />}
     </Provider>
     );
   }

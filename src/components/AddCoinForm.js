@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
 });
 
 
-class CoinForm extends PureComponent {
+class AddCoinForm extends PureComponent {
   handleSubmit(e) {
     const {addCoin, form} = this.props;
 
@@ -115,4 +115,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(CoinForm));
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(AddCoinForm));
