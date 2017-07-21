@@ -89,8 +89,13 @@ const styles = StyleSheet.create({
     maxWidth: '320px',
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: '20px'
+    alignItems: 'flex-end',
+    marginBottom: '20px',
+    flexWrap: 'wrap'
+  },
+  noLine: {
+    lineHeight: 0,
+    marginBottom: '10px'
   }
 })
 
@@ -161,17 +166,18 @@ class Layout extends PureComponent {
 
 
           <div className={css(styles.social)}>
-            <div>
+            <div className={css(styles.noLine)}>
               <iframe title="Reddit" src={`//www.redditstatic.com/button/button2.html?url=${encodeURIComponent('https://cryptocoincount.com')}`} height="69" width="51" scrolling="no" frameBorder="0"></iframe>
             </div>
-            <div className="fb-like" data-href="https://cryptocoincount.com" data-layout="box_count" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
-            <div>
+            <div className={css(styles.noLine)}>
+              <div className="fb-like" data-href="https://cryptocoincount.com" data-layout="box_count" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
+            </div>
+            <div className={css(styles.noLine)}>
               <a className="twitter-share-button" data-size="large" href={`https://twitter.com/intent/tweet?url=${encodeURIComponent('https://cryptocoincount.com')}&text=${encodeURIComponent('Keep track of your cryptocoins with CryptocoinCount:')}`}>Tweet</a>
             </div>
-            <div>
-              <GitHubButton type="stargazers" size="large" namespace="timbroddin" repo="cryptocoincount" />
-
-                        </div>
+            <div className={css(styles.noLine)}>
+              <GitHubButton type="stargazers" size="large" namespace="timbroddin" repo="cryptocoin" />
+            </div>
           </div>
 
           <p>&copy; 2017 Tim Broddin</p>
