@@ -2,9 +2,13 @@ import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import { Row, Col, Input, Button, message } from 'antd';
 import JSON5 from 'json5';
-import {importCoins, setScanning} from '../actions';
 import QrReader from 'react-qr-reader'
 import { StyleSheet, css } from 'aphrodite';
+import LZ from "lz-string";
+
+
+import {importData, setScanning} from '../../actions';
+
 
 const styles = StyleSheet.create({
   p: {
@@ -25,27 +29,20 @@ class ImportForm extends PureComponent {
 
 
   scan(result) {
-    const {importCoins, setScanning, isScanning, history} = this.props;
+    const {importData, setScanning, isScanning, history} = this.props;
 
     if(!isScanning) return;
 
-    let coins = {}
     if(result) {
       try {
-        let pairs = result.split('|');
-        pairs.forEach((pair) => {
-          let s = pair.split(':');
-          coins[s[0]] = parseFloat(s[1]);
-        })
+        let data = JSON.parse(LZ.decompressFromBase64(result));
         setScanning(false);
-
-
-        importCoins(coins);
+        importData(data);
         history.push('/');
-
         message.success(`Import completed`);
       } catch(e) {
         setScanning(false);
+        console.log(e.message);
         message.error(`Something went wrong: ${result} ${e.message}`);
       }
     }
@@ -53,12 +50,12 @@ class ImportForm extends PureComponent {
 
   importCode() {
     const {importField} = this.state;
-    const {importCoins, history} = this.props;
+    const {importData, history} = this.props;
 
 
     try {
-      const coins = JSON5.parse(importField);
-      importCoins(coins);
+      const data = JSON5.parse(importField);
+      importData(data);
 
       message.success(`Import completed`);
       history.push('/');
@@ -129,8 +126,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    importCoins: (coins) => {
-      dispatch(importCoins(coins))
+    importData: (data) => {
+      dispatch(importData(data))
     },
     setScanning: (scanning) => {
       dispatch(setScanning(scanning));

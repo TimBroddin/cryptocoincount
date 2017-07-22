@@ -4,8 +4,8 @@ import { Alert } from 'antd';
 import { connect } from 'react-redux';
 import { setPage } from '../actions';
 
-import ImportForm from '../components/ImportForm';
-import ExportForm from '../components/ExportForm';
+import ImportForm from '../components/Sync/ImportForm';
+import ExportForm from '../components/Sync/ExportForm';
 
 const styles = StyleSheet.create({
   sync: {
@@ -34,7 +34,7 @@ class SyncPage extends PureComponent {
 
   render() {
     const {history} = this.props;
-    
+
     return <div className={css(styles.sync)}>
       <Alert
         message="Everything is safe!"

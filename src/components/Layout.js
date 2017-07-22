@@ -15,6 +15,7 @@ import GitHubButton from 'react-github-button';
 import CurrencyPicker from './CurrencyPicker';
 import ListPage from '../pages/List';
 import SyncPage from '../pages/Sync';
+import WatchListPage from '../pages/Watchlist';
 import AboutPage from '../pages/About';
 
 import {fetchData} from '../actions';
@@ -144,6 +145,7 @@ class Layout extends PureComponent {
                 className={css(styles.menu)}
               >
                 <Menu.Item key="nav-home" className={css(styles.menuItem)}><Link to="/"><Icon type="home" className={css(styles.menuIcon)} /> <span className={css(styles.menuLabel)}>Home</span></Link></Menu.Item>
+                <Menu.Item key="nav-watchlist" className={css(styles.menuItem)}><Link to="/watch"><Icon type="eye-o" className={css(styles.menuIcon)}  /> <span className={css(styles.menuLabel)}>Watchlist</span></Link></Menu.Item>
                 <Menu.Item key="nav-sync" className={css(styles.menuItem)}><Link to="/sync"><Icon type="sync" className={css(styles.menuIcon)}  /> <span className={css(styles.menuLabel)}>Import/Export</span></Link></Menu.Item>
                 <Menu.Item key="nav-about" className={css(styles.menuItem)}><Link to="/about"><Icon type="question-circle-o" className={css(styles.menuIcon)}  /> <span className={css(styles.menuLabel)}>About</span></Link></Menu.Item>
               </Menu>
@@ -156,6 +158,8 @@ class Layout extends PureComponent {
           <div className={css(styles.content)}>
             <Route exact path="/" component={ListPage}/>
             <Route path="/sync" history={history} component={SyncPage}/>
+            <Route path="/watch" component={WatchListPage}/>
+
             <Route path="/about" component={AboutPage}/>
 
           </div>

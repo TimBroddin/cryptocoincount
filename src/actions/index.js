@@ -39,7 +39,6 @@ const removeCoin = (coin) => {
   }
 }
 
-
 const changeCoinAmount = (coin, amount) => {
   return {
     type: 'CHANGE_COIN_AMOUNT',
@@ -48,10 +47,24 @@ const changeCoinAmount = (coin, amount) => {
   }
 }
 
-const importCoins = (coins) => {
+const addToWatchList = (coin) => {
   return {
-    type: 'IMPORT_COINS',
-    coins
+    type: 'ADD_TO_WATCHLIST',
+    coin,
+  }
+}
+
+const removeFromWatchList = (coin) => {
+  return {
+    type: 'REMOVE_FROM_WATCHLIST',
+    coin
+  }
+}
+
+const importData = (data) => {
+  return {
+    type: 'IMPORT',
+    data
   }
 }
 
@@ -69,4 +82,4 @@ const setPage = (page) => {
   }
 }
 
-export { setCurrency, fetchData, addCoin, changeCoinAmount, removeCoin, importCoins, setScanning, setPage };
+export { setCurrency, fetchData, addCoin, changeCoinAmount, removeCoin, addToWatchList, removeFromWatchList, importData, setScanning, setPage };

@@ -1,9 +1,9 @@
 import React, {PureComponent} from 'react';
-import {Form, Icon, Input, Button, Select} from 'antd';
+import {Form, Icon, Button, Select} from 'antd';
 import { StyleSheet, css } from 'aphrodite';
 
 import {connect} from 'react-redux';
-import {addCoin} from '../actions';
+import {addToWatchList} from '../../actions';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -13,29 +13,25 @@ function hasErrors(fieldsError) {
 }
 
 const styles = StyleSheet.create({
+  form: {
+    marginTop: '50px'
+  },
   select: {
     width: '200px',
     '@media (max-width: 600px)': {
       width: '100px'
     }
   },
-  input: {
-    width: '200px',
-    '@media (max-width: 600px)': {
-      width: '100px'
-    }
-  }
 });
 
 
-class AddCoinForm extends PureComponent {
+class AddWatchForm extends PureComponent {
   handleSubmit(e) {
-    const {addCoin, form} = this.props;
+    const {addToWatchList, form} = this.props;
 
     e.preventDefault();
       form.validateFields((err, values) => {
-        values.amount = parseFloat(values.amount.replace(',', '.'));
-        addCoin(values.coin, values.amount);
+        addToWatchList(values.coin);
         form.resetFields();
       });
   }
@@ -46,9 +42,8 @@ class AddCoinForm extends PureComponent {
     const {data} = this.props;
 
     const coinError = isFieldTouched('coin') && getFieldError('coin');
-    const amountError = isFieldTouched('amount') && getFieldError('amount');
 
-    return <div>
+    return <div className={css(styles.form)}>
       <h1>Add a coin</h1>
     <Form layout="inline" onSubmit={this.handleSubmit.bind(this)}>
       <FormItem validateStatus={coinError
@@ -68,21 +63,6 @@ class AddCoinForm extends PureComponent {
                 ({coin.symbol})</Option>
             })}
           </Select>
-
-        )}
-      </FormItem>
-      <FormItem validateStatus={amountError
-        ? 'error'
-        : ''} help={amountError || ''}>
-        {getFieldDecorator('amount', {
-          rules: [
-            {
-              required: true,
-              message: 'Please select an amount'
-            }
-          ]
-        })(
-          <Input className={css(styles.input)} prefix={<Icon type="calculator" style={{ fontSize: 13 }} />} placeholder="Amount" />
 
         )}
       </FormItem>
@@ -109,10 +89,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addCoin: (coin, amount) => {
-      dispatch(addCoin(coin, amount));
+    addToWatchList: (coin) => {
+      dispatch(addToWatchList(coin));
     }
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(AddCoinForm));
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(AddWatchForm));

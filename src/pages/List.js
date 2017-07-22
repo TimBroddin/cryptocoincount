@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
-import TotalWorth from '../components/TotalWorth';
-import AddCoinForm from '../components/AddCoinForm';
-import Table from '../components/Table';
+import TotalWorth from '../components/CoinList/TotalWorth';
+import AddCoinForm from '../components/CoinList/AddCoinForm';
+import Table from '../components/CoinList/Table';
 import { connect } from 'react-redux';
 import { setPage } from '../actions';
 

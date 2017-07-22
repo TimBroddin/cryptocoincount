@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import { Table, Input, Icon, Button, Popconfirm, message } from 'antd';
 import { StyleSheet, css } from 'aphrodite';
 
-import { changeCoinAmount, removeCoin } from '../actions';
+import { changeCoinAmount, removeCoin } from '../../actions';
 import sortBy from 'lodash/sortBy';
 
 const styles = StyleSheet.create({

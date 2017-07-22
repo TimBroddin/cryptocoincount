@@ -31,10 +31,10 @@ const coins = (state = [], action) => {
         }
       });
     return compact(clone);
-    case 'IMPORT_COINS':
+    case 'IMPORT':
       clone = [];
-      for(let id in action.coins) {
-        clone.push({ id, amount: action.coins[id] })
+      if(action.data && action.data.coins) {
+        clone = action.data.coins;
       }
       return clone;
     default:
