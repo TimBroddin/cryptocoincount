@@ -150,7 +150,7 @@ class DataTable extends PureComponent {
 
 const mapStateToProps = (state) => {
   return {
-    data: state.data,
+    data: (state.data && state.data.data) ? state.data.data : [],
     coins: state.coins,
     currency: state.currency
   }

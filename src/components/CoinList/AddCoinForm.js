@@ -104,7 +104,7 @@ class AddCoinForm extends PureComponent {
 }
 
 const mapStateToProps = (state) => {
-  return {data: state.data}
+  return {data: (state.data && state.data.data) ? state.data.data : []}
 }
 
 const mapDispatchToProps = (dispatch) => {

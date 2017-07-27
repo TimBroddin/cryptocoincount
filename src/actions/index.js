@@ -16,11 +16,24 @@ const setData = (data) => {
   }
 }
 
+
+const setDataLoading = (value) => {
+  return {
+    type: 'SET_DATA_LOADING',
+    value
+  }
+}
+
+
 const fetchData = (currency='USD') => {
   return (dispatch) => {
+    dispatch(setDataLoading(true));
     fetch(`https://api.coinmarketcap.com/v1/ticker/?convert=${currency}`).then(res => res.json()).then((data) => {
       dispatch(setData(data));
-    }).catch(err => console.log(err))
+    }).catch(err => {
+      dispatch(setDataLoading(false));
+
+    })
   }
 }
 
