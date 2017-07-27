@@ -14,7 +14,12 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: '0 auto'
+    margin: '0 auto',
+    '@media (max-width: 600px)': {
+      display: 'block',
+      textAlign: 'center',
+
+    }
   }
 });
 
