@@ -70,7 +70,7 @@ class AboutPage extends PureComponent {
           <Col md={12}>
             <p className={css(styles.coinName)}><strong>Bitcoin</strong></p>
             <p><img className={css(styles.qr)} alt="Bitcoin code" src={require('../images/bitcoin.png')} /></p>
-            <p className={css(styles.address)}>1Kw9yQLgJuz76sdXtQnVeEV1dBwForzNbM</p>
+            <p className={css(styles.address)}>1NNdEmBgnYzFoyV6517QUr8xkWCTsRgYfS</p>
           </Col>
 
           <Col md={12}>
