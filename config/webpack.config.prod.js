@@ -300,7 +300,7 @@ module.exports = {
 
     new AppCachePlugin({
           cache: [],
-          network: null,  // No network access allowed!
+          network: ['*'],  // No network access allowed!
           fallback: [],
           settings: ['prefer-online'],
           exclude: [],  // Exclude file.txt and all .js files
