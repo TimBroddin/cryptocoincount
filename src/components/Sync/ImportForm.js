@@ -31,7 +31,7 @@ class ImportForm extends PureComponent {
   scan(result) {
     const {importData, setScanning, isScanning, history} = this.props;
 
-    if(!isScanning) return;
+    if(!isScanning && !this.state.legacy) return;
 
     if(result) {
       try {
@@ -92,7 +92,7 @@ class ImportForm extends PureComponent {
 
             </QrReader>
 
-            {(this.state.legacy) ? <Button type="primary" onClick={() => this.refs.qrReader.openImageDialog()}>Take QR-code</Button> : null}
+            {(this.state.legacy) ? <Button type="primary" onClick={() => this.refs.qrReader.openImageDialog()}>Take picture of QR-code</Button> : null}
 
           </div>
           : <Button type="primary" onClick={() => setScanning(true) }>Scan</Button>
