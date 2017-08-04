@@ -17,10 +17,11 @@ class Changelog extends PureComponent {
     return (
       <div>
         <div className={css(styles.version)}>
-          <h1>1.1.2 (July 27th, 2017)</h1>
+          <h1>1.1.2 (August 4th, 2017)</h1>
           <ul className={css(styles.ul)}>
             <li>Added changelog</li>
             <li>You can now add CryptocoinCount to your iOS homescreen</li>
+            <li>Add Appcache manifest for iOS</li>
           </ul>
         </div>
 

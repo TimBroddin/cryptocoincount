@@ -10,6 +10,8 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const AppCachePlugin = require('appcache-webpack-plugin');
+
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
@@ -34,6 +36,8 @@ if (env.stringified['process.env'].NODE_ENV !== '"production"') {
 
 // Note: defined here because it will be used more than once.
 const cssFilename = 'static/css/[name].[contenthash:8].css';
+
+
 
 // ExtractTextPlugin expects the build output to be flat.
 // (See https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/27)
@@ -293,6 +297,16 @@ module.exports = {
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
     }),
+
+    new AppCachePlugin({
+          cache: [],
+          network: null,  // No network access allowed!
+          fallback: [],
+          settings: ['prefer-online'],
+          exclude: [],  // Exclude file.txt and all .js files
+          output: 'cryptocoincount.appcache'
+        }),
+
     // Generate a service worker script that will precache, and keep up to date,
     // the HTML & assets that are part of the Webpack build.
     new SWPrecacheWebpackPlugin({
