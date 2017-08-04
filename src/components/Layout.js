@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
-import {LocaleProvider, Layout as AntLayout, Menu, Icon} from 'antd';
+import {LocaleProvider, Layout as AntLayout, Menu, Modal, Icon} from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 import { StyleSheet, css } from 'aphrodite';
 import {
@@ -17,6 +17,7 @@ import ListPage from '../pages/List';
 import SyncPage from '../pages/Sync';
 import WatchListPage from '../pages/Watchlist';
 import AboutPage from '../pages/About';
+import Changelog from '../pages/Changelog';
 
 import {fetchData} from '../actions';
 
@@ -113,6 +114,13 @@ history.listen((location, action) => {
 
 
 class Layout extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      changelogVisible: false
+    }
+  }
+
   componentDidMount() {
     const {fetchData, currency} = this.props;
     fetchData(currency);
@@ -184,8 +192,19 @@ class Layout extends PureComponent {
             </div>
           </div>
 
-          <p>&copy; 2017 Tim Broddin</p>
+          <p><a href="#changelog" onClick={(e) => { e.preventDefault(); this.setState({ changelogVisible: true }) }}>version 1.1.2</a> &mdash; &copy; 2017 Tim Broddin</p>
         </Footer>
+
+        <Modal
+                  title="Changelog"
+                  visible={this.state.changelogVisible}
+                  onOk={() => this.setState({ changelogVisible: false })}
+                  onCancel={() => this.setState({ changelogVisible: false })}
+                  footer={null}
+                >
+                  <Changelog />
+                </Modal>
+
       </AntLayout>
     </LocaleProvider>
     </Router>
