@@ -29,9 +29,13 @@ class ImportForm extends PureComponent {
 
 
   scan(result) {
+
     const {importData, setScanning, isScanning, history} = this.props;
 
-    if(!isScanning && !this.state.legacy) return;
+    console.log('scan');
+
+
+    if(!isScanning) return;
 
     if(result) {
       try {
@@ -92,7 +96,11 @@ class ImportForm extends PureComponent {
 
             </QrReader>
 
-            {(this.state.legacy) ? <Button type="primary" onClick={() => this.refs.qrReader.openImageDialog()}>Take picture of QR-code</Button> : null}
+            {(this.state.legacy) ? <div>
+              <p className={css(styles.p)}>Your browser does not support QR-code scanning. Use the button below to take a picture of a QR-code. If nothing happens, try again with a better picture or copy/paste the code.</p>
+              <p className={css(styles.p)}><Button type="primary" onClick={() => this.refs.qrReader.openImageDialog()}>Take picture of QR-code</Button></p></div> : null}
+
+
 
           </div>
           : <Button type="primary" onClick={() => setScanning(true) }>Scan</Button>
