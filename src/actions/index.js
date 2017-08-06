@@ -60,6 +60,7 @@ const changeCoinAmount = (coin, amount) => {
   }
 }
 
+
 const addToWatchList = (coin) => {
   return {
     type: 'ADD_TO_WATCHLIST',

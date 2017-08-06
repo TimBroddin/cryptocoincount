@@ -17,6 +17,13 @@ class Changelog extends PureComponent {
     return (
       <div>
         <div className={css(styles.version)}>
+          <h1>1.2 (August 6th, 2017)</h1>
+          <ul className={css(styles.ul)}>
+            <li>Charts!</li>
+          </ul>
+        </div>
+
+        <div className={css(styles.version)}>
           <h1>1.1.2 (August 4th, 2017)</h1>
           <ul className={css(styles.ul)}>
             <li>Added changelog</li>

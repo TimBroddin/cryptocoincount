@@ -17,6 +17,7 @@ import ListPage from '../pages/List';
 import SyncPage from '../pages/Sync';
 import WatchListPage from '../pages/Watchlist';
 import AboutPage from '../pages/About';
+import ChartsPage from '../pages/Charts';
 import Changelog from '../pages/Changelog';
 
 import {fetchData} from '../actions';
@@ -154,7 +155,10 @@ class Layout extends PureComponent {
               >
                 <Menu.Item key="nav-home" className={css(styles.menuItem)}><Link to="/"><Icon type="home" className={css(styles.menuIcon)} /> <span className={css(styles.menuLabel)}>Home</span></Link></Menu.Item>
                 <Menu.Item key="nav-watchlist" className={css(styles.menuItem)}><Link to="/watch"><Icon type="eye-o" className={css(styles.menuIcon)}  /> <span className={css(styles.menuLabel)}>Watchlist</span></Link></Menu.Item>
+                <Menu.Item key="nav-chart" className={css(styles.menuItem)}><Link to="/charts"><Icon type="area-chart" className={css(styles.menuIcon)}  /> <span className={css(styles.menuLabel)}>Charts</span></Link></Menu.Item>
+
                 <Menu.Item key="nav-sync" className={css(styles.menuItem)}><Link to="/sync"><Icon type="sync" className={css(styles.menuIcon)}  /> <span className={css(styles.menuLabel)}>Import/Export</span></Link></Menu.Item>
+
                 <Menu.Item key="nav-about" className={css(styles.menuItem)}><Link to="/about"><Icon type="question-circle-o" className={css(styles.menuIcon)}  /> <span className={css(styles.menuLabel)}>About</span></Link></Menu.Item>
               </Menu>
           </div>
@@ -167,9 +171,9 @@ class Layout extends PureComponent {
             <Route exact path="/" component={ListPage}/>
             <Route path="/sync" history={history} component={SyncPage}/>
             <Route path="/watch" component={WatchListPage}/>
+            <Route path="/charts" component={ChartsPage}/>
 
             <Route path="/about" component={AboutPage}/>
-
           </div>
         </Content>
 
@@ -192,7 +196,7 @@ class Layout extends PureComponent {
             </div>
           </div>
 
-          <p><a href="#changelog" onClick={(e) => { e.preventDefault(); this.setState({ changelogVisible: true }) }}>version 1.1.2</a> &mdash; &copy; 2017 Tim Broddin</p>
+          <p><a href="#changelog" onClick={(e) => { e.preventDefault(); this.setState({ changelogVisible: true }) }}>version 1.2</a> &mdash; &copy; 2017 Tim Broddin</p>
         </Footer>
 
         <Modal
