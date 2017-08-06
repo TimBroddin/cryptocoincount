@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   menuItem: {
     fontSize: '14px',
     '@media (max-width: 600px)': {
-      padding: '0px 15px',
+      padding: '0px 10px',
     }
   },
   footer: {
