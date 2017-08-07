@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Alert, Spin } from 'antd';
+import { Alert, Checkbox, Spin } from 'antd';
 import { connect } from "react-redux";
 import { css, StyleSheet } from 'aphrodite';
 
@@ -15,6 +15,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  stackLabel: {
+    marginTop: '20px',
+    marginBottom: '20px'
   }
 });
 
@@ -22,8 +26,10 @@ class WorthChart extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true
+      loading: true,
+      stacked: true
     };
+    this.chart = null;
   }
 
   componentDidMount() {
@@ -68,12 +74,12 @@ class WorthChart extends PureComponent {
             shared: true
           },
           showCheckbox: true,
-          stacking: 'normal'
+          stacking: (this.state.stacked) ? 'normal' : null
         });
       }
 
       this.setState({ loading: false });
-      Highcharts.stockChart("container", {
+      this.chart = Highcharts.stockChart("container", {
         rangeSelector: {
           selected: 1
         },
@@ -121,8 +127,19 @@ class WorthChart extends PureComponent {
     });
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    if(nextState.stacked !== this.state.stacked && this.chart) {
+      this.chart.series.forEach((serie) => {
+        serie.update({
+          stacking: (nextState.stacked) ? 'normal' : null
+        }, false);
+      });
+      this.chart.redraw();
+    }
+  }
+
   render() {
-    const { loading } = this.state;
+    const { loading, stacked } = this.state;
 
     return <div>
       <Alert
@@ -138,6 +155,12 @@ class WorthChart extends PureComponent {
         </div>
         : null}
       <div id="container" />
+
+      <p className={css(styles.stackLabel)}>
+        <Checkbox checked={stacked} onClick={() => this.setState({ stacked: !stacked })} />{' '}
+        Stack coins
+
+      </p>
     </div>
 
   }
