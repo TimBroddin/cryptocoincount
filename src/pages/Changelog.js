@@ -17,6 +17,13 @@ class Changelog extends PureComponent {
     return (
       <div>
         <div className={css(styles.version)}>
+          <h1>1.2.2 (August 7th, 2017)</h1>
+          <ul className={css(styles.ul)}>
+            <li>Sort columns</li>
+          </ul>
+        </div>
+
+        <div className={css(styles.version)}>
           <h1>1.2.1 (August 7th, 2017)</h1>
           <ul className={css(styles.ul)}>
             <li>Portfolio evolution chart can now be unstacked</li>

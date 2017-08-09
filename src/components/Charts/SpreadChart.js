@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { css, StyleSheet } from "aphrodite";
 
 import Highcharts from "highcharts";
-import moment from "moment";
 
 const styles = StyleSheet.create({
   alert: {

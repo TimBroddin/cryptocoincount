@@ -196,7 +196,7 @@ class Layout extends PureComponent {
             </div>
           </div>
 
-          <p><a href="#changelog" onClick={(e) => { e.preventDefault(); this.setState({ changelogVisible: true }) }}>version 1.2.1</a> &mdash; &copy; 2017 Tim Broddin</p>
+          <p><a href="#changelog" onClick={(e) => { e.preventDefault(); this.setState({ changelogVisible: true }) }}>version 1.2.2</a> &mdash; &copy; 2017 Tim Broddin</p>
         </Footer>
 
         <Modal

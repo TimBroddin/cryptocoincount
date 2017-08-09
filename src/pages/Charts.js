@@ -1,5 +1,4 @@
 import React, {PureComponent} from 'react';
-import { Row, Col, Icon } from 'antd';
 import {StyleSheet, css} from 'aphrodite';
 import { connect } from 'react-redux';
 import WorthChart from '../components/Charts/WorthChart';
