@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import { Table, Modal, Input, Icon, Button, Popconfirm, message } from "antd";
+import { Table, Modal, Input, Icon, Button, Popconfirm, Tooltip, message } from "antd";
 import { StyleSheet, css } from "aphrodite";
 
 import { changeCoinAmount, removeCoin } from "../../actions";
@@ -110,6 +110,22 @@ class DataTable extends PureComponent {
     });
   }
 
+  renderUpDown(record) {
+    const { history } = this.props;
+    if(history && history.data && history.data[record.id]) {
+      const title = <p>Price now: <strong>{record.price}</strong><br />Price an hour ago: <strong>{history.data[record.id].price.toFixed(3)}</strong></p>;
+
+      if(record.price > history.data[record.id].price) {
+        return <span><Tooltip title={title}><Icon type="arrow-up" style={{ color: 'green'}}/></Tooltip> </span>
+      } else {
+        return <span><Tooltip title={title}><Icon type="arrow-down"  style={{ color: 'red'}} /></Tooltip> </span>
+
+      }
+    } else {
+      return <span><Icon type="loading" /> </span>;
+    }
+  }
+
   render() {
     const { data, coins, currency, changeCoinAmount } = this.props;
     let { sortedInfo } = this.state;
@@ -128,6 +144,7 @@ class DataTable extends PureComponent {
         render: (text, record) => {
           return (
             <div>
+              {this.renderUpDown(record)}
               {record.name}{" "}
               <span className={css(styles.symbol)}>({record.symbol})</span>
             </div>
@@ -278,7 +295,8 @@ const mapStateToProps = state => {
   return {
     data: state.data && state.data.data ? state.data.data : [],
     coins: state.coins,
-    currency: state.currency
+    currency: state.currency,
+    history: state.history
   };
 };
 

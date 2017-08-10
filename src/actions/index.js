@@ -30,19 +30,49 @@ const fetchData = (currency='USD') => {
     dispatch(setDataLoading(true));
     fetch(`https://api.coinmarketcap.com/v1/ticker/?convert=${currency}`).then(res => res.json()).then((data) => {
       dispatch(setData(data));
+      dispatch(fetchHistory());
     }).catch(err => {
       dispatch(setDataLoading(false));
-
     })
   }
 }
 
-const addCoin = (coin, amount) => {
+const setHistoryLoading = (value) => {
   return {
-    type: 'ADD_COIN',
-    coin,
-    amount
+    type: 'SET_HISTORY_LOADING',
+    value
   }
+}
+
+const setHistory = (data) => {
+  return {
+    type: 'SET_HISTORY',
+    data
+  }
+}
+
+const fetchHistory = () => {
+  return (dispatch, getState) => {
+    const { currency, coins } = getState();
+    dispatch(setHistoryLoading(true));
+    fetch(`https://h.cryptocoincount.com/last?coins=${coins.map((c) => c.id).join(',')}&convert=${currency}`).then(res => res.json()).then((data) => {
+      dispatch(setHistory(data));
+    }).catch((err) => {
+      dispatch(setHistoryLoading(false));
+    });
+  }
+}
+
+const addCoin = (coin, amount) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'ADD_COIN',
+      coin,
+      amount
+    });
+    dispatch(fetchHistory());
+  }
+
 }
 
 const removeCoin = (coin) => {
@@ -96,4 +126,4 @@ const setPage = (page) => {
   }
 }
 
-export { setCurrency, fetchData, addCoin, changeCoinAmount, removeCoin, addToWatchList, removeFromWatchList, importData, setScanning, setPage };
+export { setCurrency, fetchData, addCoin, changeCoinAmount, removeCoin, addToWatchList, removeFromWatchList, importData, setScanning, setPage, fetchHistory };

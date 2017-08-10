@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {Form, Icon, Input, Button, Select} from 'antd';
+import {Form, Icon, Input, Button, Select, message} from 'antd';
 import { StyleSheet, css } from 'aphrodite';
 
 import {connect} from 'react-redux';
@@ -34,9 +34,17 @@ class AddCoinForm extends PureComponent {
 
     e.preventDefault();
       form.validateFields((err, values) => {
-        values.amount = parseFloat(values.amount.replace(',', '.'));
-        addCoin(values.coin, values.amount);
-        form.resetFields();
+        if(!err) {
+          values.amount = parseFloat(values.amount.replace(',', '.'));
+          addCoin(values.coin, values.amount);
+          form.resetFields();
+          message.success('Coin added.');
+
+        } else {
+          //form.resetFields();
+          message.error('Please fill in all required fields.');
+
+        }
       });
   }
 

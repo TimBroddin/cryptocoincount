@@ -163,19 +163,9 @@ class CoinChart extends PureComponent {
     });
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    if(nextState.stacked !== this.state.stacked && this.chart) {
-      this.chart.series.forEach((serie) => {
-        serie.update({
-          stacking: (nextState.stacked) ? 'normal' : null
-        }, false);
-      });
-      this.chart.redraw();
-    }
-  }
 
   render() {
-    const { loading, stacked } = this.state;
+    const { loading } = this.state;
 
     return <div>
       {(loading) ?

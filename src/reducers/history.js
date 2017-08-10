@@ -1,11 +1,11 @@
-const data = (state = { loading: false, data: []}, action) => {
+const history = (state = { loading: false, data: {}}, action) => {
   switch (action.type) {
-    case 'SET_DATA_LOADING':
+    case 'SET_HISTORY_LOADING':
     return {
       data: state.data,
       loading: action.value
     }
-    case 'SET_DATA':
+    case 'SET_HISTORY':
       return {
         data: action.data,
         loading: false
@@ -16,4 +16,4 @@ const data = (state = { loading: false, data: []}, action) => {
   }
 };
 
-export default data;
+export default history;

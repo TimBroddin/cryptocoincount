@@ -33,7 +33,7 @@ class App extends PureComponent {
   }
 
   componentWillMount(){
-    persistStore(store, {storage: localForage, blacklist: ['sync', 'navigation'],  transforms: [compressor]} , () => {
+    persistStore(store, {storage: localForage, blacklist: ['sync', 'navigation', 'history'],  transforms: [compressor]} , () => {
       this.setState({ rehydrated: true });
     });
 }
