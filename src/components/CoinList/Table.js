@@ -1,12 +1,13 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import { Table, Input, Icon, Button, Popconfirm, message } from "antd";
+import { Table, Modal, Input, Icon, Button, Popconfirm, message } from "antd";
 import { StyleSheet, css } from "aphrodite";
 
 import { changeCoinAmount, removeCoin } from "../../actions";
+import CoinChart from "../Charts/CoinChart";
 
 function sortFn(a, b, field) {
-  if(a[field]===b[field]) {
+  if (a[field] === b[field]) {
     return 0;
   } else if (a[field] > b[field]) {
     return 1;
@@ -89,7 +90,8 @@ class DataTable extends PureComponent {
     super(props);
     this.state = {
       filteredInfo: null,
-      sortedInfo: null
+      sortedInfo: null,
+      coinChart: null
     };
   }
 
@@ -110,13 +112,12 @@ class DataTable extends PureComponent {
 
   render() {
     const { data, coins, currency, changeCoinAmount } = this.props;
-    let { sortedInfo, filteredInfo } = this.state;
+    let { sortedInfo } = this.state;
     sortedInfo = sortedInfo || {
-      field: 'name',
-      columnKey: 'name',
-      order: 'ascend'
+      field: "name",
+      columnKey: "name",
+      order: "ascend"
     };
-    // filteredInfo = filteredInfo || {};
 
     const dataSource = [];
     const columns = [
@@ -133,9 +134,9 @@ class DataTable extends PureComponent {
           );
         },
         sorter: (a, b) => {
-          return sortFn(a, b, 'name');
+          return sortFn(a, b, "name");
         },
-        sortOrder: sortedInfo.columnKey === "name" && sortedInfo.order,
+        sortOrder: sortedInfo.columnKey === "name" && sortedInfo.order
       },
       {
         title: "Amount",
@@ -151,18 +152,21 @@ class DataTable extends PureComponent {
           );
         },
         sorter: (a, b) => {
-          return sortFn(a, b, 'amount');
+          return sortFn(a, b, "amount");
         },
-        sortOrder: sortedInfo.columnKey === "amount" && sortedInfo.order,
+        sortOrder: sortedInfo.columnKey === "amount" && sortedInfo.order
       },
       {
         title: "Price",
         dataIndex: "price",
         key: "price",
         sorter: (a, b) => {
-          return sortFn(a, b, 'price');
+          return sortFn(a, b, "price");
         },
         sortOrder: sortedInfo.columnKey === "price" && sortedInfo.order,
+        render: (text, record) => {
+          return <span>{text} <a href="#chart" onClick={(e) => { e.preventDefault(); this.setState({ coinChart: { name: record.name, id: record.id, symbol: record.symbol, worth: false }})}}><Icon type="line-chart" /></a></span>
+        }
       },
       {
         title: "Total",
@@ -172,9 +176,12 @@ class DataTable extends PureComponent {
           let c = Object.assign({}, { total: parseFloat(a.total) });
           let d = Object.assign({}, { total: parseFloat(b.total) });
 
-          return sortFn(c, d, 'total');
+          return sortFn(c, d, "total");
         },
         sortOrder: sortedInfo.columnKey === "total" && sortedInfo.order,
+        render: (text, record) => {
+          return <span>{text} <a href="#chart" onClick={(e) => { e.preventDefault(); this.setState({ coinChart: { name: record.name, id: record.id, symbol: record.symbol, worth: true }})}}><Icon type="line-chart" /></a></span>
+        }
       },
       {
         title: "",
@@ -203,7 +210,7 @@ class DataTable extends PureComponent {
             name: d.name,
             symbol: d.symbol,
             amount: parseFloat(coin.amount),
-            price: parseFloat(d[`price_${currency.toLowerCase()}`]),
+            price: parseFloat(d[`price_${currency.toLowerCase()}`]).toFixed(3),
             total: (parseFloat(coin.amount) *
               parseFloat(d[`price_${currency.toLowerCase()}`])).toFixed(2),
             percent_change_1h: parseFloat(d.percent_change_1h),
@@ -216,40 +223,53 @@ class DataTable extends PureComponent {
     });
 
     return (
-      <Table
-        style={{ marginTop: "50px" }}
-        pagination={false}
-        columns={columns}
-        dataSource={dataSource}
-        onChange={this.handleChange.bind(this)}
-        expandedRowRender={record =>
-          <p>
-            <strong>Change (7D/24H/1H):</strong>{" "}
-            {record.percent_change_7d > 0
-              ? <span style={{ color: "green" }}>
-                  {record.percent_change_7d}%
-                </span>
-              : <span style={{ color: "red" }}>
-                  {record.percent_change_7d}%
-                </span>}
-            {" / "}
-            {record.percent_change_24h > 0
-              ? <span style={{ color: "green" }}>
-                  {record.percent_change_24h}%
-                </span>
-              : <span style={{ color: "red" }}>
-                  {record.percent_change_24h}%
-                </span>}
-            {" / "}
-            {record.percent_change_1h > 0
-              ? <span style={{ color: "green" }}>
-                  {record.percent_change_1h}%
-                </span>
-              : <span style={{ color: "red" }}>
-                  {record.percent_change_1h}%
-                </span>}
-          </p>}
-      />
+      <div>
+        <Table
+          style={{ marginTop: "50px" }}
+          pagination={false}
+          columns={columns}
+          dataSource={dataSource}
+          onChange={this.handleChange.bind(this)}
+          expandedRowRender={record =>
+            <p>
+              <strong>Change (7D/24H/1H):</strong>{" "}
+              {record.percent_change_7d > 0
+                ? <span style={{ color: "green" }}>
+                    {record.percent_change_7d}%
+                  </span>
+                : <span style={{ color: "red" }}>
+                    {record.percent_change_7d}%
+                  </span>}
+              {" / "}
+              {record.percent_change_24h > 0
+                ? <span style={{ color: "green" }}>
+                    {record.percent_change_24h}%
+                  </span>
+                : <span style={{ color: "red" }}>
+                    {record.percent_change_24h}%
+                  </span>}
+              {" / "}
+              {record.percent_change_1h > 0
+                ? <span style={{ color: "green" }}>
+                    {record.percent_change_1h}%
+                  </span>
+                : <span style={{ color: "red" }}>
+                    {record.percent_change_1h}%
+                  </span>}
+            </p>}
+        />
+        <Modal
+          visible={this.state.coinChart ? true : false}
+          title={`${ (this.state.coinChart && this.state.coinChart.worth) ? 'Worth' : 'Price' } evolution of ${(this.state.coinChart)
+            ? this.state.coinChart.name
+            : ''}`}
+          onCancel={() => this.setState({ coinChart: false })}
+          footer={null}
+        >
+          {(this.state.coinChart) ? <CoinChart coin={this.state.coinChart.id} worth={this.state.coinChart.worth} /> : null}
+
+        </Modal>
+      </div>
     );
   }
 }

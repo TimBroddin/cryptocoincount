@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Alert, Checkbox, Spin } from 'antd';
+import { Spin } from 'antd';
 import { connect } from "react-redux";
 import { css, StyleSheet } from 'aphrodite';
 
@@ -22,21 +22,18 @@ const styles = StyleSheet.create({
   }
 });
 
-class WorthChart extends PureComponent {
+class CoinChart extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       loading: true,
-      stacked: true
     };
     this.chart = null;
   }
 
   componentDidMount() {
-    const { coins, currency, data } = this.props;
-    const url = `https://h.cryptocoincount.com/?coins=${coins
-      .map(c => c.id)
-      .join(",")}&convert=${currency}`;
+    const { coin, coins, currency, data, worth } = this.props;
+    const url = `https://h.cryptocoincount.com/?coins=${coin}&convert=${currency}`;
 
     let series = [];
 
@@ -62,7 +59,8 @@ class WorthChart extends PureComponent {
         }
 
         rows.forEach(row => {
-          seriesData.push([new Date(row.date).getTime(), row.price * amount]);
+
+          seriesData.push([new Date(row.date).getTime(), (worth) ? row.price * amount : row.price]);
         });
 
         series.push({
@@ -73,15 +71,13 @@ class WorthChart extends PureComponent {
 
             shared: true
           },
-          showCheckbox: true,
-          stacking: (this.state.stacked) ? 'normal' : null
         });
       }
 
       this.setState({ loading: false });
       this.chart = Highcharts.stockChart("container", {
         title: {
-          text: "Portfolio evolution"
+          text: ``
         },
 
         series,
@@ -182,25 +178,12 @@ class WorthChart extends PureComponent {
     const { loading, stacked } = this.state;
 
     return <div>
-      <Alert
-        message="What was your portfolio worth in the past?"
-        description={ <div>This chart gives you an overview of your different coins through time. All your coins are multiplied by the amount you own, and converted to their historical prices.</div>}
-        type="info"
-        showIcon
-        className={css(styles.alert)}
-      />
       {(loading) ?
         <div className={css(styles.loadingContainer)}>
             <Spin />
         </div>
         : null}
       <div id="container" />
-
-      <p className={css(styles.stackLabel)}>
-        <Checkbox checked={stacked} onClick={() => this.setState({ stacked: !stacked })} />{' '}
-        Stack coins
-
-      </p>
     </div>
 
   }
@@ -208,10 +191,10 @@ class WorthChart extends PureComponent {
 
 const mapStateToProps = state => {
   return {
-    coins: state.coins,
     currency: state.currency,
-    data: state.data
+    data: state.data,
+    coins: state.coins
   };
 };
 
-export default connect(mapStateToProps)(WorthChart);
+export default connect(mapStateToProps)(CoinChart);

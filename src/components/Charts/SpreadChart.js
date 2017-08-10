@@ -48,8 +48,7 @@ class SpreadChart extends PureComponent {
 
       Highcharts.chart("spread-container", {
         chart: {
-          type: "pie",
-
+          type: "pie"
         },
         title: {
           text: "Your coin spread"
@@ -92,10 +91,10 @@ class SpreadChart extends PureComponent {
               }
             }
           ]
-        }
+        },
+        
       });
-    }, 1500)
-
+    }, 1500);
   }
 
   render() {
@@ -107,7 +106,8 @@ class SpreadChart extends PureComponent {
           message="How is your portfolio spread?"
           description={
             <div>
-              This chart gives you an overview of how much you own of everything.
+              This chart gives you an overview of how much you own of
+              everything.
             </div>
           }
           type="info"
@@ -119,7 +119,7 @@ class SpreadChart extends PureComponent {
               <Spin />
             </div>
           : null}
-        <div id="spread-container" style={{ width: '100% !important'}} />
+        <div id="spread-container" style={{ width: "100% !important" }} />
       </div>
     );
   }
