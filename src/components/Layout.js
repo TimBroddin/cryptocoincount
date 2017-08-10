@@ -120,11 +120,12 @@ class Layout extends PureComponent {
     this.state = {
       changelogVisible: false
     }
+    this.fetchInterval = null;
   }
 
   componentDidMount() {
-    const {fetchData, currency} = this.props;
-    fetchData(currency);
+    const {fetchData } = this.props;
+    fetchData();
 
     if(window.FB) {
       window.FB.XFBML.parse();
@@ -133,6 +134,14 @@ class Layout extends PureComponent {
     if(window.twttr && window.twttr.widgets) {
       window.twttr.widgets.load();
     }
+
+    setInterval(() => {
+      fetchData();
+    }, 1000*60);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.fetchInterval);
   }
 
   render() {

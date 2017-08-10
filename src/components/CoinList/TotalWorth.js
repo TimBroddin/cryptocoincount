@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
 class TotalWorth extends PureComponent {
   fetch() {
     const { fetchData, currency } = this.props;
-    fetchData(currency);
+    fetchData();
   }
 
   renderUpDown(totalWorth, totalHistoryWorth) {
@@ -91,8 +91,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchData: (currency) => {
-      dispatch(fetchData(currency))
+    fetchData: () => {
+      dispatch(fetchData())
     }
   }
 }

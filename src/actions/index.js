@@ -5,7 +5,7 @@ const setCurrency = (currency) => {
       currency
     });
 
-    dispatch(fetchData(currency));
+    dispatch(fetchData());
   }
 }
 
@@ -25,8 +25,10 @@ const setDataLoading = (value) => {
 }
 
 
-const fetchData = (currency='USD') => {
-  return (dispatch) => {
+const fetchData = () => {
+  return (dispatch, getState) => {
+    const {currency} = getState();
+
     dispatch(setDataLoading(true));
     fetch(`https://api.coinmarketcap.com/v1/ticker/?convert=${currency}`).then(res => res.json()).then((data) => {
       dispatch(setData(data));
