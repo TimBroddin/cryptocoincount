@@ -16,6 +16,8 @@ React, Redux, ServiceWorker, [LocalForage](https://github.com/localForage/localF
 
 ## Running it
 
+`npm install yarn -g`
+`yarn install`
 `yarn start`
 
 ## Donate
