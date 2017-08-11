@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 
 class TotalWorth extends PureComponent {
   fetch() {
-    const { fetchData, currency } = this.props;
+    const { fetchData } = this.props;
     fetchData();
   }
 

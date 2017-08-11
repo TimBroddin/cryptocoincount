@@ -1,48 +1,79 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from "react";
 
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
-import localForage from 'localforage';
-import createCompressor from 'redux-persist-transform-compress';
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware, compose } from "redux";
+import localForage from "localforage";
+import createCompressor from "redux-persist-transform-compress";
 
-import { persistStore, autoRehydrate } from 'redux-persist';
+import { Router } from "react-router-dom";
+import createHistory from "history/createBrowserHistory";
 
-import thunk from 'redux-thunk';
-import reducers from '../reducers';
+import { persistStore, autoRehydrate } from "redux-persist";
 
-import Layout from './Layout';
+import thunk from "redux-thunk";
+import reducers from "../reducers";
 
+import Layout from "./Layout";
 
 function configureStore(initialState, reducer) {
-  const store = createStore(reducer, undefined, compose(applyMiddleware(thunk), autoRehydrate(), typeof window === 'object' && typeof window.devToolsExtension !== 'undefined'
-    ? window.devToolsExtension()
-    : f => f));
+  const store = createStore(
+    reducer,
+    undefined,
+    compose(
+      applyMiddleware(thunk),
+      autoRehydrate(),
+      typeof window === "object" &&
+      typeof window.devToolsExtension !== "undefined"
+        ? window.devToolsExtension()
+        : f => f
+    )
+  );
   return store;
 }
 
 const store = configureStore({}, reducers);
 const compressor = createCompressor();
 
+const history = createHistory();
+history.listen((location, action) => {
+  if (window.ga) {
+    setTimeout(() => {
+      window.ga("gtm1.set", "location", window.location.href);
+      window.ga("gtm1.set", "page", location.pathname);
+      window.ga("gtm1.send", "pageview", location.pathname);
+    }, 500);
+  }
+});
 
-class App extends PureComponent {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       rehydrated: false
-    }
+    };
   }
 
-  componentWillMount(){
-    persistStore(store, {storage: localForage, blacklist: ['sync', 'navigation', 'history'],  transforms: [compressor]} , () => {
-      this.setState({ rehydrated: true });
-    });
-}
+  componentWillMount() {
+    persistStore(
+      store,
+      {
+        storage: localForage,
+        blacklist: ["sync", "navigation", "history"],
+        transforms: [compressor]
+      },
+      () => {
+        this.setState({ rehydrated: true });
+      }
+    );
+  }
 
   render() {
     return (
       <Provider store={store}>
-        {this.state.rehydrated ? <Layout /> : <div />}
-    </Provider>
+        <Router history={history}>
+          {this.state.rehydrated ? <Layout /> : <div />}
+        </Router>
+      </Provider>
     );
   }
 }

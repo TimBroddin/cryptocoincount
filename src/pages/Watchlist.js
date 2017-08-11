@@ -5,6 +5,7 @@ import { Alert } from 'antd';
 import { connect } from 'react-redux';
 import { setPage } from '../actions';
 
+
 class WatchlistPage extends PureComponent {
   componentDidMount() {
     const {setPage} = this.props;
