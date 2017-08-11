@@ -69,13 +69,13 @@ class AboutPage extends PureComponent {
         <Row gutter={16} className={css(styles.row)}>
           <Col md={12}>
             <p className={css(styles.coinName)}><strong>Bitcoin</strong></p>
-            <p><img className={css(styles.qr)} alt="Bitcoin code" src={require('../images/bitcoin.png')} /></p>
+            <p><img className={css(styles.qr)} alt="Bitcoin code" src="/images/bitcoin.png" /></p>
             <p className={css(styles.address)}>1NNdEmBgnYzFoyV6517QUr8xkWCTsRgYfS</p>
           </Col>
 
           <Col md={12}>
             <p className={css(styles.coinName)}><strong>Ethereum</strong></p>
-            <p><img className={css(styles.qr)} alt="Ethereum code" src={require('../images/ethereum.png')} /></p>
+            <p><img className={css(styles.qr)} alt="Ethereum code" src="/images/ethereum.png" /></p>
             <p className={css(styles.address)}>0x4f46b7fDDc29A6BCAD07c73D98FBB101CaFAb58d</p>
           </Col>
         </Row>
@@ -84,7 +84,7 @@ class AboutPage extends PureComponent {
 
           <Col md={12}>
             <p className={css(styles.coinName)}><strong>Litecoin</strong></p>
-            <p><img className={css(styles.qr)} alt="Litecoin code" src={require('../images/litecoin.png')} /></p>
+            <p><img className={css(styles.qr)} alt="Litecoin code" src="/images/litecoin.png" /></p>
             <p className={css(styles.address)}>LUyVHHoALwr2hznHTrmLRMXLVyUR28y1TJ</p>
           </Col>
 

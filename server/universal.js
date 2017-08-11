@@ -48,7 +48,7 @@ module.exports = function universalLoader(req, res) {
       redirect(301, context.url)
     } else {
       // we're good, send the response
-      const RenderedApp = htmlData.replace('{{SSR}}', html).replace('{{CSS}}', css.content);
+      const RenderedApp = htmlData.replace('{{SSR}}', html).replace('{{CSS}}', `<style>${css.content}</style>`);
       res.send(RenderedApp)
     }
   })
