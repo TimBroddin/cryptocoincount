@@ -38,7 +38,7 @@ module.exports = function universalLoader(req, res) {
         location={req.url}
         context={context}
       >
-        <Layout />
+        <Layout ready={false} />
       </StaticRouter>
     </Provider>));
 
