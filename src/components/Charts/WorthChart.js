@@ -99,11 +99,9 @@ class WorthChart extends PureComponent {
           },
         },
         xAxis: {
-            type: 'datetime'
+            type: 'datetime',
+            ordinal: false
         },
-        chart: {
-    zoomType: 'x'
-},
         rangeSelector: {
           allButtonsEnabled: true,
           selected: 3,
