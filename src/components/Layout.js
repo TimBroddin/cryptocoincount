@@ -6,7 +6,7 @@ import {
   Menu,
   message,
   Modal,
-  Icon,
+  Icon
 } from "antd";
 import enUS from "antd/lib/locale-provider/en_US";
 import { StyleSheet, css } from "aphrodite";
@@ -24,8 +24,6 @@ import ChartsPage from "../pages/Charts";
 import Changelog from "../pages/Changelog";
 
 import { fetchData } from "../actions";
-
-
 
 import "../css/github.css";
 
@@ -146,16 +144,22 @@ class Layout extends Component {
       this.setState({ updateVisible: true });
     }
 
-    if(typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       // service worker support
-      window.addEventListener("message", (msg) => {
-        if(msg.data === 'refresh') {
-          this.updateReady();
-        }
-        if(msg.data === 'offline') {
-          message.warning('No Internet connection available. Working in offline mode.');
-        }
-      }, false);
+      window.addEventListener(
+        "message",
+        msg => {
+          if (msg.data === "refresh") {
+            this.updateReady();
+          }
+          if (msg.data === "offline") {
+            message.warning(
+              "No Internet connection available. Working in offline mode."
+            );
+          }
+        },
+        false
+      );
     }
   }
 
@@ -170,7 +174,7 @@ class Layout extends Component {
   componentWillReceiveProps(nextProps) {
     const { fetchData } = this.props;
 
-    if(nextProps.loading !== this.props.loading) {
+    if (nextProps.loading !== this.props.loading) {
       fetchData();
     }
   }
@@ -243,16 +247,14 @@ class Layout extends Component {
             </div>
           </Header>
           <Content>
-            {(loading)
-              ? null
-              : <div className={css(styles.content)}>
-                  <Route exact path="/" component={ListPage} />
-                  <Route path="/sync" component={SyncPage} />
-                  <Route path="/watch" component={WatchListPage} />
-                  <Route path="/charts" component={ChartsPage} />
+            <div className={css(styles.content)}>
+              <Route exact path="/" component={ListPage} />
+              <Route path="/sync" component={SyncPage} />
+              <Route path="/watch" component={WatchListPage} />
+              <Route path="/charts" component={ChartsPage} />
 
-                  <Route path="/about" component={AboutPage} />
-                </div>}
+              <Route path="/about" component={AboutPage} />
+            </div>
           </Content>
 
           <Footer className={css(styles.footer)}>
@@ -327,17 +329,21 @@ class Layout extends Component {
             <Changelog />
           </Modal>
 
-
           <Modal
             title="Update available"
             visible={this.state.updateVisible}
-            onOk={() => { if(typeof window !== 'undefined') { window.location.reload() } }}
+            onOk={() => {
+              if (typeof window !== "undefined") {
+                window.location.reload();
+              }
+            }}
             onCancel={() => this.setState({ updateVisible: false })}
           >
-            <p>An update is available for <strong>CryptocoinCount</strong>. Please click ok to reload this page.</p>
-
+            <p>
+              An update is available for <strong>CryptocoinCount</strong>.
+              Please click ok to reload this page.
+            </p>
           </Modal>
-
         </AntLayout>
       </LocaleProvider>
     );
