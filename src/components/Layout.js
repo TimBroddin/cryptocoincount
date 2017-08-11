@@ -245,9 +245,7 @@ class Layout extends Component {
           </Header>
           <Content>
             {(loading)
-              ? <div className={css(styles.loading)}>
-                  <Spin size="large" />
-                </div>
+              ? null
               : <div className={css(styles.content)}>
                   <Route exact path="/" component={ListPage} />
                   <Route path="/sync" component={SyncPage} />
