@@ -125,8 +125,10 @@ class Layout extends Component {
   }
 
   componentDidMount() {
-    const { fetchData } = this.props;
-    fetchData();
+    const { fetchData, loading } = this.props;
+    if(!loading) {
+      fetchData();
+    }
 
     if (window.FB) {
       window.FB.XFBML.parse();
