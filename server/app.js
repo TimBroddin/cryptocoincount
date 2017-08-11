@@ -11,7 +11,6 @@ require('babel-register')({
   presets: ['env', 'react-app']
 })
 
-const static = require('./static');
 
 // routes
 const index = require('./routes/index')
