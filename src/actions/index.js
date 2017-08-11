@@ -57,7 +57,7 @@ const fetchHistory = () => {
   return (dispatch, getState) => {
     const { currency, coins } = getState();
     dispatch(setHistoryLoading(true));
-    if(coins.length) {
+    if(coins && coins.length) {
       fetch(`https://h.cryptocoincount.com/last?coins=${coins.map((c) => c.id).join(',')}&convert=${currency}`).then(res => res.json()).then((data) => {
         dispatch(setHistory(data));
       }).catch((err) => {
