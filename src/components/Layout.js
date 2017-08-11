@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { LocaleProvider, Layout as AntLayout, Menu, Modal, Icon, Spin } from "antd";
+import { LocaleProvider, Layout as AntLayout, Menu, Modal, Icon } from "antd";
 import enUS from "antd/lib/locale-provider/en_US";
 import { StyleSheet, css } from "aphrodite";
 import { Route, Link } from "react-router-dom";
@@ -41,17 +41,6 @@ const styles = StyleSheet.create({
       padding: "10px"
     }
   },
-  loading: {
-    padding: "50px",
-    minHeight: "80vh",
-    "@media (max-width: 600px)": {
-      padding: "10px"
-    },
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-around'
-  },
-
   logo: {
     display: "flex"
   },
@@ -118,7 +107,7 @@ class Layout extends Component {
   }
 
   componentDidMount() {
-    const { fetchData } = this.props;
+    const { fetchData, ready } = this.props;
     fetchData();
 
     if (window.FB) {
@@ -134,20 +123,12 @@ class Layout extends Component {
     }, 1000 * 60);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { fetchData } = this.props;
-
-    if(nextProps.loading !== this.props.loading) {
-      fetchData();
-    }
-  }
-
   componentWillUnmount() {
     clearInterval(this.fetchInterval);
   }
 
   render() {
-    const { navigation, loading } = this.props;
+    const { navigation } = this.props;
     return (
       <LocaleProvider locale={enUS}>
         <AntLayout>
@@ -214,7 +195,7 @@ class Layout extends Component {
             </div>
           </Header>
           <Content>
-          {(!loading) ?
+          
             <div className={css(styles.content)}>
               <Route exact path="/" component={ListPage} />
               <Route path="/sync" component={SyncPage} />
@@ -223,18 +204,6 @@ class Layout extends Component {
 
               <Route path="/about" component={AboutPage} />
             </div>
-
-            :
-
-            <div className={css(styles.loading)}>
-
-              <Spin size="large" />
-
-            </div>
-
-
-          }
-
           </Content>
 
           <Footer className={css(styles.footer)}>
