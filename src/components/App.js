@@ -71,7 +71,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router history={history}>
-          <Layout ready={this.state.rehydrated} />
+          <Layout loading={!this.state.rehydrated} />
         </Router>
       </Provider>
     );

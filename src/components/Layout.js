@@ -137,7 +137,7 @@ class Layout extends Component {
   componentWillReceiveProps(nextProps) {
     const { fetchData } = this.props;
 
-    if(nextProps.ready !== this.props.ready) {
+    if(nextProps.loading !== this.props.loading) {
       fetchData();
     }
   }
@@ -147,7 +147,7 @@ class Layout extends Component {
   }
 
   render() {
-    const { navigation, ready } = this.props;
+    const { navigation, loading } = this.props;
     return (
       <LocaleProvider locale={enUS}>
         <AntLayout>
@@ -214,7 +214,7 @@ class Layout extends Component {
             </div>
           </Header>
           <Content>
-          {(ready) ?
+          {(!loading) ?
             <div className={css(styles.content)}>
               <Route exact path="/" component={ListPage} />
               <Route path="/sync" component={SyncPage} />
