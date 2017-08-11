@@ -140,10 +140,6 @@ class Layout extends Component {
       fetchData();
     }, 1000 * 60);
 
-    function onUpdateReady() {
-      this.setState({ updateVisible: true });
-    }
-
     if (typeof window !== "undefined") {
       // service worker support
       window.addEventListener(
@@ -180,7 +176,7 @@ class Layout extends Component {
   }
 
   render() {
-    const { navigation, loading } = this.props;
+    const { navigation } = this.props;
     return (
       <LocaleProvider locale={enUS}>
         <AntLayout>

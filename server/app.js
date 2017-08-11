@@ -30,9 +30,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // Setup logger
 app.use(morgan('combined'))
 
-app.use('/', index);
+//app.use('/', index);
 
-app.use('/index.html', index);
+//app.use('/index.html', index);
 
 // Serve static assets
 app.use('/', express.static(path.resolve(__dirname, '..', 'build')))
@@ -40,6 +40,6 @@ app.use('/', express.static(path.resolve(__dirname, '..', 'build')))
 //app.use('/api', api)
 
 // Always return the main index.html, so react-router render the route in the client
-app.use('/', universalLoader)
+// app.use('/', universalLoader)
 
 module.exports = app
