@@ -79,9 +79,9 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "dev": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "start:server": "NODE_ENV=development node server/index.js",
+    "start": "NODE_ENV=development node server/index.js",
     "postinstall": "npm run build"
   },
   "jest": {
