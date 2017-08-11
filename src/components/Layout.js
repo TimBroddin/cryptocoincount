@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { LocaleProvider, Layout as AntLayout, Menu, Modal, Icon } from "antd";
+import {
+  LocaleProvider,
+  Layout as AntLayout,
+  Menu,
+  message,
+  Modal,
+  Icon,
+  Spin
+} from "antd";
 import enUS from "antd/lib/locale-provider/en_US";
 import { StyleSheet, css } from "aphrodite";
 import { Route, Link } from "react-router-dom";
@@ -17,6 +25,8 @@ import ChartsPage from "../pages/Charts";
 import Changelog from "../pages/Changelog";
 
 import { fetchData } from "../actions";
+
+
 
 import "../css/github.css";
 
@@ -40,6 +50,16 @@ const styles = StyleSheet.create({
     "@media (max-width: 600px)": {
       padding: "10px"
     }
+  },
+  loading: {
+    padding: "50px",
+    minHeight: "80vh",
+    "@media (max-width: 600px)": {
+      padding: "10px"
+    },
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
   },
   logo: {
     display: "flex"
@@ -101,13 +121,14 @@ class Layout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      changelogVisible: false
+      changelogVisible: false,
+      updateVisible: false
     };
     this.fetchInterval = null;
   }
 
   componentDidMount() {
-    const { fetchData, ready } = this.props;
+    const { fetchData } = this.props;
     fetchData();
 
     if (window.FB) {
@@ -121,14 +142,42 @@ class Layout extends Component {
     setInterval(() => {
       fetchData();
     }, 1000 * 60);
+
+    function onUpdateReady() {
+      this.setState({ updateVisible: true });
+    }
+
+    if(typeof window !== 'undefined') {
+      // service worker support
+      window.addEventListener("message", (msg) => {
+        if(msg.data === 'refresh') {
+          this.updateReady();
+        }
+        if(msg.data === 'offline') {
+          message.warning('No Internet connection available. Working in offline mode.');
+        }
+      }, false);
+    }
+  }
+
+  updateReady() {
+    this.setState({ updateVisible: true });
   }
 
   componentWillUnmount() {
     clearInterval(this.fetchInterval);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { fetchData } = this.props;
+
+    if(nextProps.loading !== this.props.loading) {
+      fetchData();
+    }
+  }
+
   render() {
-    const { navigation } = this.props;
+    const { navigation, loading } = this.props;
     return (
       <LocaleProvider locale={enUS}>
         <AntLayout>
@@ -195,15 +244,18 @@ class Layout extends Component {
             </div>
           </Header>
           <Content>
-          
-            <div className={css(styles.content)}>
-              <Route exact path="/" component={ListPage} />
-              <Route path="/sync" component={SyncPage} />
-              <Route path="/watch" component={WatchListPage} />
-              <Route path="/charts" component={ChartsPage} />
+            {(loading)
+              ? <div className={css(styles.loading)}>
+                  <Spin size="large" />
+                </div>
+              : <div className={css(styles.content)}>
+                  <Route exact path="/" component={ListPage} />
+                  <Route path="/sync" component={SyncPage} />
+                  <Route path="/watch" component={WatchListPage} />
+                  <Route path="/charts" component={ChartsPage} />
 
-              <Route path="/about" component={AboutPage} />
-            </div>
+                  <Route path="/about" component={AboutPage} />
+                </div>}
           </Content>
 
           <Footer className={css(styles.footer)}>
@@ -277,6 +329,18 @@ class Layout extends Component {
           >
             <Changelog />
           </Modal>
+
+
+          <Modal
+            title="Update available"
+            visible={this.state.updateVisible}
+            onOk={() => { if(typeof window !== 'undefined') { window.location.reload() } }}
+            onCancel={() => this.setState({ updateVisible: false })}
+          >
+            <p>An update is available for <strong>CryptocoinCount</strong>. Please click ok to reload this page.</p>
+
+          </Modal>
+
         </AntLayout>
       </LocaleProvider>
     );

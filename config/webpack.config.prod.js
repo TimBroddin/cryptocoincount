@@ -297,7 +297,7 @@ module.exports = {
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
     }),
-
+    /*
     new AppCachePlugin({
           cache: [],
           network: ['*'],  // No network access allowed!
@@ -306,7 +306,7 @@ module.exports = {
           exclude: [],  // Exclude file.txt and all .js files
           output: 'cryptocoincount.appcache'
         }),
-
+*/
     // Generate a service worker script that will precache, and keep up to date,
     // the HTML & assets that are part of the Webpack build.
     new SWPrecacheWebpackPlugin({
@@ -330,7 +330,7 @@ module.exports = {
       },
       minify: true,
       // For unknown URLs, fallback to the index page
-      navigateFallback: publicUrl + '/index.html',
+      navigateFallback: publicUrl + '/',
       // Ignores URLs starting from /__ (useful for Firebase):
       // https://github.com/facebookincubator/create-react-app/issues/2237#issuecomment-302693219
       navigateFallbackWhitelist: [/^(?!\/__).*/],

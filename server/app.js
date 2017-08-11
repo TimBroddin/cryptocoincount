@@ -11,6 +11,8 @@ require('babel-register')({
   presets: ['env', 'react-app']
 })
 
+const static = require('./static');
+
 // routes
 const index = require('./routes/index')
 // const api = require('./routes/api')
@@ -29,10 +31,12 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // Setup logger
 app.use(morgan('combined'))
 
-app.use('/', index)
+app.use('/', index);
+
+app.use('/index.html', index);
 
 // Serve static assets
-app.use(express.static(path.resolve(__dirname, '..', 'build')))
+app.use('/', express.static(path.resolve(__dirname, '..', 'build')))
 
 //app.use('/api', api)
 
