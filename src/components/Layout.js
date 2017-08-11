@@ -156,6 +156,14 @@ class Layout extends Component {
         },
         false
       );
+
+      // appcache support
+      if(typeof window['applicationCache'] !== 'undefined') {
+        window.applicationCache.addEventListener('updateready', this.updateReady.bind(this));
+        if(window.applicationCache.status === window.applicationCache.UPDATEREADY) {
+          this.updateReady();
+        }
+      }
     }
   }
 
