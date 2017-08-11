@@ -49,7 +49,6 @@ module.exports = function universalLoader(req, res) {
     } else {
       // we're good, send the response
       const RenderedApp = htmlData.replace('{{SSR}}', html).replace('{{CSS}}', css.content);
-      console.log(html);
       res.send(RenderedApp)
     }
   })
