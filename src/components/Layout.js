@@ -129,7 +129,6 @@ class Layout extends Component {
 
   render() {
     const { navigation } = this.props;
-    console.log(this.context);
     return (
       <LocaleProvider locale={enUS}>
         <AntLayout>
