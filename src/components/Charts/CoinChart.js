@@ -79,9 +79,11 @@ class CoinChart extends PureComponent {
         title: {
           text: ``
         },
-
+        xAxis: {
+            type: 'datetime',
+            ordinal: false
+        },
         series,
-
         tooltip: {
           formatter: function() {
               var s = `<strong>${new moment(this.x).format('MMMM Do YYYY')}</strong><br/>`;
