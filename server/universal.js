@@ -28,6 +28,9 @@ module.exports = function universalLoader(req, res) {
   const filePath = path.resolve(__dirname, '..', 'build', 'index.html')
 
   fs.readFile(filePath, 'utf8', (err, htmlData)=>{
+    res.send(htmlData);
+    return;
+    /*
     if (err) {
       console.error('read err', err)
       return res.status(404).end()
@@ -51,5 +54,7 @@ module.exports = function universalLoader(req, res) {
       const RenderedApp = htmlData.replace('{{SSR}}', html).replace('{{CSS}}', `<style>${css.content}</style>`);
       res.send(RenderedApp)
     }
+      */
   })
+
 }

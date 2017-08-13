@@ -1,7 +1,7 @@
 const db = require('./lib/db');
-const { getExchangeRates, getCoins, getLiveCoins, cleanLiveCoins } = require('./lib/populate');
+const { getExchangeRates, getCoins, getLiveCoins, cleanLiveCoins, cleanSync } = require('./lib/populate');
 
-db().then(({ CoinHistory, ExchangeRates }) => {
+db().then(({ CoinHistory, ExchangeRates, Sync }) => {
   function updateData() {
     getExchangeRates(ExchangeRates).then(() => {
       console.log('Updated exchange rates');
@@ -33,7 +33,12 @@ db().then(({ CoinHistory, ExchangeRates }) => {
     updateLive();
   }, 1000*60*30);
 
+  setInterval(() => {
+    cleanSync(Sync);
+  }, 1000*30)
+
   updateData();
   updateLive();
+  cleanSync(Sync);
 
 });

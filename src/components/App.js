@@ -58,7 +58,7 @@ class App extends Component {
       store,
       {
         storage: localForage,
-        blacklist: ["sync", "navigation", "history"],
+        blacklist: ["sync", "navigation", "history", "export", "import"],
         transforms: [compressor]
       },
       () => {

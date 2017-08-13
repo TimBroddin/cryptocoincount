@@ -8,7 +8,8 @@ const db = () => {
     }).then((db) => {
       const CoinHistory = db.model('CoinHistory', { coin: String, date: Date, price: Number, live: Boolean });
       const ExchangeRates = db.model('ExchangeRates', { currency: String, amount: Number });
-      resolve({CoinHistory, ExchangeRates});
+      const Sync = db.model('Sync', { data: String, expires: Date, code: String });
+      resolve({CoinHistory, ExchangeRates, Sync});
     });
 
   });

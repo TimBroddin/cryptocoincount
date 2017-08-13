@@ -133,5 +133,12 @@ const cleanLiveCoins = (CoinHistory) => {
     CoinHistory.remove({ live: true, date: { $lte: new moment().subtract(2, 'days').toDate() }});
 }
 
+const cleanSync = (Sync) => {
+  console.log('Removing stale sync sessions');
+  Sync.remove({ expires:  { $lte: new Date() }}).then(() => {
+  }).catch((err) => {
+  });
+}
 
-module.exports = { getExchangeRates, getCoins, getLiveCoins, cleanLiveCoins };
+
+module.exports = { getExchangeRates, getCoins, getLiveCoins, cleanLiveCoins, cleanSync };

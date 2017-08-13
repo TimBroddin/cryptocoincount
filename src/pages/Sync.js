@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react';
 import {StyleSheet, css} from 'aphrodite';
-import { Alert } from 'antd';
 import { connect } from 'react-redux';
 import { setPage } from '../actions';
 
@@ -36,12 +35,7 @@ class SyncPage extends PureComponent {
     const {history} = this.props;
 
     return <div className={css(styles.sync)}>
-      <Alert
-        message="Everything is safe!"
-        description={ <div><strong>CryptocoinCount.com</strong> saves all its data locally on your device. Because we value your privacy nothing gets sent to our server ever. If you want to sync data between two devices you can use the QR-code below, or copy the code.</div>}
-        type="info"
-        showIcon
-      />
+
 
             <div className={css(styles.part, styles.line)}>
               <h1>Export your currencies to another device</h1>

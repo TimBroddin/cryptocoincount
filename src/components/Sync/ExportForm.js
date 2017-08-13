@@ -1,67 +1,83 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
-import { QRCode } from 'react-qr-svg';
-import { Row, Col, Input } from 'antd';
-import JSON5 from 'json5';
-import LZ from "lz-string";
-import stringify from "json-stringify-safe";
+import { Alert, Button, Spin } from 'antd';
+import { exportData } from '../../actions';
 
 import { StyleSheet, css } from 'aphrodite';
 
 const styles = StyleSheet.create({
   p: {
     marginBottom: '10px'
+  },
+  alert: {
+    margin: '20px 0px',
+  },
+  characters: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: '10px 50px',
+    margin: '50px 0px',
+  },
+  character: {
+    backgroundColor: 'white',
+    padding: '30px 40px',
+    fontSize: '36px',
+    borderRadius: '30px',
+    "@media (max-width: 600px)": {
+      padding: '10px',
+      fontSize: '18px'
+    }
+  },
+  center: {
+    textAlign: 'center'
   }
 })
 
 class ExportForm extends PureComponent {
-  render() {
-    const { coins, watchlist } = this.props;
-    let json = {
-      coins,
-      watchlist
-    };
+  componentDidMount() {
+    const {exportData} = this.props;
+    exportData();
+  }
 
-    const code =  LZ.compressToBase64(stringify(json));
+  renderCode() {
+    const characters = this.props.exportProps.code.split('');
+
+    return <div className={css(styles.characters)}>
+      {characters.map((l, k) => {
+        return <div key={`char-${l}-${k}`} className={css(styles.character)}>{l}</div>
+      })}
+    </div>
+
+  }
+
+  render() {
+    const { exportProps, exportData } = this.props;
 
 
     return <div>
-      <Row gutter={16}>
-        <Col md={24} lg={12}>
-          <p className={css(styles.p)}>Scan this QR-code:</p>
-          <QRCode
-                              bgColor="#FFFFFF"
-                              fgColor="#000000"
-                              level="L"
-                              style={{ width: 256 }}
-                              value={code}
-                               className={css(styles.p)}
-                          />
-        </Col>
-        <Col  md={24} lg={12}>
-          <p className={css(styles.p)}>Or copy this code:</p>
-          <Input
-                      type="textarea" placeholder="Code" value={JSON5.stringify(json, null, 4)} autosize={{
-                        minRows: 6,
-                        maxRows: 10,
-                      }}
-                    />
-
-        </Col>
-
-      </Row>
-
-
-
+      <Alert className={css(styles.alert)} message="Surf to this page on another device and copy the code below." type="info" showIcon />
+      {(exportProps.loading || !exportProps.code) ? <Spin /> : <div>
+        {this.renderCode()}
+        <p className={css(styles.p, styles.center)}>
+          <Button type="primary" onClick={() => exportData()}>Refresh</Button>
+        </p>
+      </div>}
     </div>
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    coins: state.coins,
-    watchlist: state.watchlist
+    exportProps: state.export
   }
 }
 
-export default connect(mapStateToProps)(ExportForm);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    exportData: () => {
+      dispatch(exportData());
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExportForm);

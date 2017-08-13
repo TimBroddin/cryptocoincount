@@ -111,12 +111,6 @@ const removeFromWatchList = (coin) => {
   }
 }
 
-const importData = (data) => {
-  return {
-    type: 'IMPORT',
-    data
-  }
-}
 
 const setScanning = (scanning) => {
   return {
@@ -132,4 +126,90 @@ const setPage = (page) => {
   }
 }
 
-export { setCurrency, fetchData, addCoin, changeCoinAmount, removeCoin, addToWatchList, removeFromWatchList, importData, setScanning, setPage, fetchHistory };
+/* Export */
+const exportData = () => {
+  return (dispatch, getState) => {
+    const { coins, watchlist, currency } = getState();
+    const data = { coins, watchlist, currency };
+
+    dispatch(setExportLoading(true));
+
+    let body = new URLSearchParams();
+    body.append('data', JSON.stringify(data));
+
+    fetch(`${config.api_base}sync`, { method: 'POST', body }).then(res => res.json()).then((data) => {
+      dispatch(setExportCode(data.code));
+      dispatch(setExportLoading(false));
+    }).catch((err) => {
+      dispatch(setExportError(err));
+      dispatch(setExportLoading(false));
+    })
+
+
+  }
+}
+
+const setExportLoading = (value) => {
+  return {
+    type: 'SET_EXPORT_LOADING',
+    value
+  }
+}
+
+const setExportError = (value) => {
+  return {
+    type: 'SET_EXPORT_ERROR',
+    value
+  }
+}
+
+const setExportCode = (value) => {
+  return {
+    type: 'SET_EXPORT_CODE',
+    value
+  }
+}
+
+/* Import */
+const importData = (code) => {
+  return (dispatch, getState) => {
+    dispatch(setImportLoading(true));
+
+
+    fetch(`${config.api_base}sync/${code}`).then(res => res.json()).then((data) => {
+      console.log(data);
+      dispatch(setImportLoading(false));
+      dispatch(setImportSuccess(true));
+    }).catch((err) => {
+      dispatch(setImportError(err));
+      dispatch(setImportLoading(false));
+      dispatch(setImportSuccess(false));
+
+    })
+
+
+  }
+}
+
+const setImportLoading = (value) => {
+  return {
+    type: 'SET_IMPORT_LOADING',
+    value
+  }
+}
+
+const setImportSuccess = (value) => {
+  return {
+    type: 'SET_IMPORT_SUCCESS',
+    value
+  }
+}
+
+const setImportError = (value) => {
+  return {
+    type: 'SET_IMPORT_ERROR',
+    value
+  }
+}
+
+export { setCurrency, fetchData, addCoin, changeCoinAmount, removeCoin, addToWatchList, removeFromWatchList, importData, setScanning, setPage, fetchHistory, exportData };
