@@ -341,18 +341,7 @@ module.exports = {
               name: "cmarket-cache"
             }
           }
-        },
-        {
-          urlPattern: /^https:\/\/h\.Cryptocoincount\.com/,
-          handler: "networkFirst",
-          options: {
-            cache: {
-              maxEntries: 10,
-              name: "cmarket-cache"
-            }
-          }
-        },
-
+        }
       ]
     }),
     // Moment.js is an extremely popular library that bundles large locale files
