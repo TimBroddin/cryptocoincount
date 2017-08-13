@@ -171,13 +171,20 @@ const setExportCode = (value) => {
 }
 
 /* Import */
+const doImport = (data) => {
+  return {
+    type: 'IMPORT',
+    data
+  }
+}
+
 const importData = (code) => {
   return (dispatch, getState) => {
     dispatch(setImportLoading(true));
 
 
     fetch(`${config.api_base}sync/${code}`).then(res => res.json()).then((data) => {
-      console.log(data);
+      dispatch(doImport(data));
       dispatch(setImportLoading(false));
       dispatch(setImportSuccess(true));
     }).catch((err) => {

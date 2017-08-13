@@ -319,7 +319,7 @@ class Layout extends Component {
                   this.setState({ changelogVisible: true });
                 }}
               >
-                version 1.4
+                version 1.4.1
               </a>{" "}
               &mdash; &copy; 2017 Tim Broddin
             </p>
