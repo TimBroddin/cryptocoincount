@@ -194,7 +194,7 @@ class Layout extends Component {
             <div className={css(styles.logo)}>
               <h1 className={css(styles.h1)}>
                 <img
-                  src="/images/coin.png"
+                  src={ require('../images/coin.png') }
                   alt="Coin"
                   className={css(styles.logoImage)}
                 />
@@ -319,7 +319,7 @@ class Layout extends Component {
                   this.setState({ changelogVisible: true });
                 }}
               >
-                version 1.3.2
+                version 1.3.3
               </a>{" "}
               &mdash; &copy; 2017 Tim Broddin
             </p>

@@ -6,6 +6,8 @@ import { css, StyleSheet } from 'aphrodite';
 import Highcharts from "highcharts/highstock";
 import moment from 'moment';
 
+import config from '../../config';
+
 const styles = StyleSheet.create({
   alert: {
     marginBottom: '20px'
@@ -34,7 +36,7 @@ class WorthChart extends PureComponent {
 
   componentDidMount() {
     const { coins, currency, data } = this.props;
-    const url = `https://h.cryptocoincount.com/?coins=${coins
+    const url = `${config.api_base}history?coins=${coins
       .map(c => c.id)
       .join(",")}&convert=${currency}`;
 

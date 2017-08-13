@@ -110,6 +110,14 @@ class DataTable extends PureComponent {
     });
   }
 
+  checkNumber(n) {
+    if(!isNaN(n)) {
+      return n;
+    } else {
+      return <Icon type="loading" />
+    }
+  }
+
   renderUpDown(record) {
     const { history } = this.props;
     if(history && history.data && history.data[record.id]) {
@@ -182,7 +190,7 @@ class DataTable extends PureComponent {
         },
         sortOrder: sortedInfo.columnKey === "price" && sortedInfo.order,
         render: (text, record) => {
-          return <span>{text} <a href="#chart" onClick={(e) => { e.preventDefault(); this.setState({ coinChart: { name: record.name, id: record.id, symbol: record.symbol, worth: false }})}}><Icon type="line-chart" /></a></span>
+          return <span>{this.checkNumber(text)} <a href="#chart" onClick={(e) => { e.preventDefault(); this.setState({ coinChart: { name: record.name, id: record.id, symbol: record.symbol, worth: false }})}}><Icon type="line-chart" /></a></span>
         }
       },
       {
@@ -197,7 +205,7 @@ class DataTable extends PureComponent {
         },
         sortOrder: sortedInfo.columnKey === "total" && sortedInfo.order,
         render: (text, record) => {
-          return <span>{text} <a href="#chart" onClick={(e) => { e.preventDefault(); this.setState({ coinChart: { name: record.name, id: record.id, symbol: record.symbol, worth: true }})}}><Icon type="line-chart" /></a></span>
+          return <span>{this.checkNumber(text)} <a href="#chart" onClick={(e) => { e.preventDefault(); this.setState({ coinChart: { name: record.name, id: record.id, symbol: record.symbol, worth: true }})}}><Icon type="line-chart" /></a></span>
         }
       },
       {

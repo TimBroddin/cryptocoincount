@@ -1,3 +1,5 @@
+import config from '../config';
+
 const setCurrency = (currency) => {
   return (dispatch) => {
     dispatch({
@@ -30,7 +32,7 @@ const fetchData = () => {
     const {currency} = getState();
 
     dispatch(setDataLoading(true));
-    fetch(`https://api.coinmarketcap.com/v1/ticker/?convert=${currency}`).then(res => res.json()).then((data) => {
+    fetch(`${config.api_base}ticker/?convert=${currency}`).then(res => res.json()).then((data) => {
       dispatch(setData(data));
       dispatch(fetchHistory());
     }).catch(err => {
@@ -58,7 +60,7 @@ const fetchHistory = () => {
     const { currency, coins } = getState();
     dispatch(setHistoryLoading(true));
     if(coins && coins.length) {
-      fetch(`https://h.cryptocoincount.com/last?coins=${coins.map((c) => c.id).join(',')}&convert=${currency}`).then(res => res.json()).then((data) => {
+      fetch(`${config.api_base}previous?coins=${coins.map((c) => c.id).join(',')}&convert=${currency}`).then(res => res.json()).then((data) => {
         dispatch(setHistory(data));
       }).catch((err) => {
         dispatch(setHistoryLoading(false));

@@ -287,16 +287,16 @@ module.exports = {
     new ManifestPlugin({
       fileName: "asset-manifest.json"
     }),
-    /*
+
     new AppCachePlugin({
           cache: [],
           network: ['*'],  // No network access allowed!
           fallback: [],
           settings: ['prefer-online'],
-          exclude: [],  // Exclude file.txt and all .js files
+          exclude: ['/api/', /\/api\/.*/],  // Exclude file.txt and all .js files
           output: 'cryptocoincount.appcache'
         }),
-        */
+
     // Generate a service worker script that will precache, and keep up to date,
     // the HTML & assets that are part of the Webpack build.
     new SWPrecacheWebpackPlugin({
@@ -333,12 +333,12 @@ module.exports = {
       ],
       runtimeCaching: [
         {
-          urlPattern: /^https:\/\/api\.coinmarketcap\.com/,
+          urlPattern: /\/api\//,
           handler: "networkFirst",
           options: {
             cache: {
-              maxEntries: 10,
-              name: "cmarket-cache"
+              maxEntries: 20,
+              name: "api"
             }
           }
         }

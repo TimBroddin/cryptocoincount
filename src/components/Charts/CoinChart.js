@@ -5,6 +5,7 @@ import { css, StyleSheet } from 'aphrodite';
 
 import Highcharts from "highcharts/highstock";
 import moment from 'moment';
+import config from '../../config';
 
 const styles = StyleSheet.create({
   alert: {
@@ -33,7 +34,7 @@ class CoinChart extends PureComponent {
 
   componentDidMount() {
     const { coin, coins, currency, data, worth } = this.props;
-    const url = `https://h.cryptocoincount.com/?coins=${coin}&convert=${currency}`;
+    const url = `${config.api_base}history?coins=${coin}&convert=${currency}`;
 
     let series = [];
 

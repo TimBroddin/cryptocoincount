@@ -71,9 +71,8 @@ class TotalWorth extends PureComponent {
     });
 
 
-
     return <div className={css(styles.row)}>
-      <h1 className={css(styles.h1)}>Your total crypto worth is: {this.renderUpDown(totalWorth, totalHistoryWorth)} {totalWorth.toFixed(2)} {currency}</h1>
+      <h1 className={css(styles.h1)}>Your total crypto worth is: {this.renderUpDown(totalWorth, totalHistoryWorth)} {(!isNaN(totalWorth)) ? totalWorth.toFixed(2) : <Icon type="loading" />} {currency}</h1>
       {button}
     </div>
   }

@@ -4,7 +4,8 @@ const compression = require('compression')
 const express = require('express')
 const morgan = require('morgan')
 const path = require('path')
-const fs = require('fs')
+const db = require('./lib/db');
+const api = require('./routes/api');
 
 require('babel-register')({
   ignore: /\/(build|node_modules)\//,
@@ -36,6 +37,10 @@ app.use(morgan('combined'))
 
 // Serve static assets
 app.use('/', express.static(path.resolve(__dirname, '..', 'build')))
+
+db().then((collections) => {
+  app.use('/api', api(collections));
+})
 
 //app.use('/api', api)
 
