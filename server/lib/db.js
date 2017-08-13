@@ -3,7 +3,7 @@ mongoose.Promise = global.Promise;
 
 const db = () => {
   return new Promise((resolve, reject) => {
-    mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/coinhistory', {
+    mongoose.connect(process.env.MONGOHQ_URL|| 'mongodb://localhost/coinhistory', {
       useMongoClient: true,
     }).then((db) => {
       const CoinHistory = db.model('CoinHistory', { coin: String, date: Date, price: Number, live: Boolean });
