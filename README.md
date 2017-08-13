@@ -17,8 +17,27 @@ React, Redux, ServiceWorker, [LocalForage](https://github.com/localForage/localF
 ## Running it
 
 `npm install yarn -g`
-`yarn install`
+`yarn`
+`yarn run build`
 `yarn start`
+
+## Backend
+
+In order to populate the backend, make sure MongoDB is installed and run:
+
+`yarn run worker`
+
+OR:
+
+You can change api_base in `/src/config.js` to `https://cryptocoincount.com/api/` and use the Cryptocoincount backend.
+
+## Development
+
+You can run in development mode (code reload, etc) by running:
+
+`yarn run dev`
+
+Make sure to change api_base to a running API.
 
 ## Donate
 
