@@ -1,40 +1,20 @@
 import React, { Component } from "react";
 
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware, compose } from "redux";
 import localForage from "localforage";
 import createCompressor from "redux-persist-transform-compress";
-
 import { Router } from "react-router-dom";
-import createHistory from "history/createBrowserHistory";
-
-import { persistStore, autoRehydrate } from "redux-persist";
-
-import thunk from "redux-thunk";
-import reducers from "../reducers";
+import { persistStore } from "redux-persist";
 
 import Layout from "./Layout";
+import Auth from '../Auth';
+import history from '../history';
+import store from '../store';
 
-function configureStore(initialState, reducer) {
-  const store = createStore(
-    reducer,
-    undefined,
-    compose(
-      applyMiddleware(thunk),
-      autoRehydrate(),
-      typeof window === "object" &&
-      typeof window.devToolsExtension !== "undefined"
-        ? window.devToolsExtension()
-        : f => f
-    )
-  );
-  return store;
-}
-
-const store = configureStore({}, reducers);
 const compressor = createCompressor();
 
-const history = createHistory();
+const auth = new Auth(store);
+
 history.listen((location, action) => {
   if (window.ga) {
     setTimeout(() => {
@@ -71,7 +51,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router history={history}>
-           {(this.state.rehydrated) ? <Layout loading={!this.state.rehydrated} /> : <div /> }
+           {(this.state.rehydrated) ? <Layout auth={auth} loading={!this.state.rehydrated} /> : <div /> }
         </Router>
       </Provider>
     );
