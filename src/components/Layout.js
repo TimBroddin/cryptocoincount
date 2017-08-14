@@ -6,7 +6,7 @@ import {
   Menu,
   message,
   Modal,
-  Icon
+  Icon,
 } from "antd";
 import enUS from "antd/lib/locale-provider/en_US";
 import { StyleSheet, css } from "aphrodite";
@@ -22,10 +22,21 @@ import WatchListPage from "../pages/Watchlist";
 import AboutPage from "../pages/About";
 import ChartsPage from "../pages/Charts";
 import Changelog from "../pages/Changelog";
+import Callback from "../pages/Callback";
 
-import { fetchData } from "../actions";
-
+import { fetchData, loadUserData, saveUserData } from "../actions";
+import store from "../store";
 import "../css/github.css";
+
+import Auth from "../Auth";
+
+const auth = new Auth(store);
+
+const handleAuthentication = (nextState, replace) => {
+  if (/access_token|id_token|error/.test(nextState.location.hash)) {
+    auth.handleAuthentication();
+  }
+};
 
 const { Header, Content, Footer } = AntLayout;
 
@@ -125,8 +136,8 @@ class Layout extends Component {
   }
 
   componentDidMount() {
-    const { fetchData, loading } = this.props;
-    if(!loading) {
+    const { fetchData, loading, loadUserData } = this.props;
+    if (!loading) {
       fetchData();
     }
 
@@ -160,13 +171,20 @@ class Layout extends Component {
       );
 
       // appcache support
-      if(typeof window['applicationCache'] !== 'undefined') {
-        window.applicationCache.addEventListener('updateready', this.updateReady.bind(this));
-        if(window.applicationCache.status === window.applicationCache.UPDATEREADY) {
+      if (typeof window["applicationCache"] !== "undefined") {
+        window.applicationCache.addEventListener(
+          "updateready",
+          this.updateReady.bind(this)
+        );
+        if (
+          window.applicationCache.status === window.applicationCache.UPDATEREADY
+        ) {
           this.updateReady();
         }
       }
     }
+
+    loadUserData();
   }
 
   updateReady() {
@@ -185,8 +203,20 @@ class Layout extends Component {
     }
   }
 
+  login(e) {
+    e.preventDefault();
+    this.props.auth.login();
+  }
+
+  logout(e) {
+    e.preventDefault();
+    this.props.auth.logout();
+  }
+
   render() {
-    const { navigation } = this.props;
+    const { navigation, auth } = this.props;
+    const { isAuthenticated } = this.props.auth;
+
     return (
       <LocaleProvider locale={enUS}>
         <AntLayout>
@@ -194,7 +224,7 @@ class Layout extends Component {
             <div className={css(styles.logo)}>
               <h1 className={css(styles.h1)}>
                 <img
-                  src={ require('../images/coin.png') }
+                  src={require("../images/coin.png")}
                   alt="Coin"
                   className={css(styles.logoImage)}
                 />
@@ -233,18 +263,22 @@ class Layout extends Component {
                 <Menu.Item key="nav-sync" className={css(styles.menuItem)}>
                   <Link to="/sync">
                     <Icon type="sync" className={css(styles.menuIcon)} />{" "}
-                    <span className={css(styles.menuLabel)}>Import/Export</span>
+                    <span className={css(styles.menuLabel)}>Sync</span>
                   </Link>
                 </Menu.Item>
 
                 <Menu.Item key="nav-about" className={css(styles.menuItem)}>
-                  <Link to="/about">
-                    <Icon
-                      type="question-circle-o"
-                      className={css(styles.menuIcon)}
-                    />{" "}
-                    <span className={css(styles.menuLabel)}>About</span>
-                  </Link>
+                  {isAuthenticated()
+                    ? <a href="#logout" onClick={this.logout.bind(this)}>
+                        <Icon type="logout" />{" "}
+                        <span className={css(styles.menuLabel)}>Logout</span>
+                      </a>
+                    : <a href="#login" onClick={this.login.bind(this)}>
+                        <Icon type="user" />{" "}
+                        <span className={css(styles.menuLabel)}>
+                          Log in/Register
+                        </span>
+                      </a>}
                 </Menu.Item>
               </Menu>
             </div>
@@ -254,12 +288,24 @@ class Layout extends Component {
           </Header>
           <Content>
             <div className={css(styles.content)}>
-              <Route exact path="/" component={ListPage} />
+              <Route
+                exact
+                path="/"
+                render={props => <ListPage auth={auth} />}
+              />
               <Route path="/sync" component={SyncPage} />
               <Route path="/watch" component={WatchListPage} />
               <Route path="/charts" component={ChartsPage} />
 
               <Route path="/about" component={AboutPage} />
+
+              <Route
+                path="/callback"
+                render={props => {
+                  handleAuthentication(props);
+                  return <Callback {...props} />;
+                }}
+              />
             </div>
           </Content>
 
@@ -319,9 +365,10 @@ class Layout extends Component {
                   this.setState({ changelogVisible: true });
                 }}
               >
-                version 1.4.1
+                version 1.5
               </a>{" "}
-              &mdash; &copy; 2017 Tim Broddin
+              &mdash; <Link to="/about">About/donate</Link> &mdash; &copy; 2017
+              Tim Broddin
             </p>
           </Footer>
 
@@ -364,6 +411,12 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchData: currency => {
       dispatch(fetchData(currency));
+    },
+    loadUserData: () => {
+      dispatch(loadUserData());
+    },
+    saveUserData: () => {
+      dispatch(saveUserData());
     }
   };
 };
