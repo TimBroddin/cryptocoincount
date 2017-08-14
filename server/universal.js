@@ -1,3 +1,5 @@
+import {StyleSheetServer} from 'aphrodite'
+
 const path = require('path')
 const fs = require('fs')
 
@@ -8,7 +10,6 @@ const {renderToString} = require('react-dom/server')
 const {StaticRouter} = require('react-router-dom')
 
 
-import {StyleSheetServer} from 'aphrodite'
 
 import thunk from 'redux-thunk';
 import reducers from '../src/reducers';

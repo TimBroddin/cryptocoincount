@@ -14,7 +14,7 @@ require('babel-register')({
 
 
 // routes
-const index = require('./routes/index')
+//const index = require('./routes/index')
 // const api = require('./routes/api')
 const universalLoader = require('./universal')
 
