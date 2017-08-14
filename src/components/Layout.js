@@ -7,7 +7,6 @@ import {
   message,
   Modal,
   Icon,
-  Button
 } from "antd";
 import enUS from "antd/lib/locale-provider/en_US";
 import { StyleSheet, css } from "aphrodite";
