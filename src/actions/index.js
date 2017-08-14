@@ -1,4 +1,7 @@
 import config from '../config';
+import Auth from '../Auth';
+
+const auth = new Auth();
 
 const setCurrency = (currency) => {
   return (dispatch) => {
@@ -8,6 +11,7 @@ const setCurrency = (currency) => {
     });
 
     dispatch(fetchData());
+    dispatch(saveUserData());
   }
 }
 
@@ -77,37 +81,50 @@ const addCoin = (coin, amount) => {
       amount
     });
     dispatch(fetchHistory());
+    dispatch(saveUserData());
   }
 
 }
 
 const removeCoin = (coin) => {
-  return {
-    type: 'REMOVE_COIN',
-    coin,
+  return (dispatch) => {
+    dispatch({
+      type: 'REMOVE_COIN',
+      coin,
+    });
+    dispatch(saveUserData());
   }
 }
 
 const changeCoinAmount = (coin, amount) => {
-  return {
-    type: 'CHANGE_COIN_AMOUNT',
-    coin,
-    amount
+  return (dispatch) => {
+    dispatch({
+      type: 'CHANGE_COIN_AMOUNT',
+      coin,
+      amount
+    });
+    dispatch(saveUserData());
   }
 }
 
 
 const addToWatchList = (coin) => {
-  return {
-    type: 'ADD_TO_WATCHLIST',
-    coin,
+  return (dispatch) => {
+    dispatch({
+      type: 'ADD_TO_WATCHLIST',
+      coin,
+    });
+    dispatch(saveUserData());
   }
 }
 
 const removeFromWatchList = (coin) => {
-  return {
-    type: 'REMOVE_FROM_WATCHLIST',
-    coin
+  return (dispatch) => {
+    dispatch({
+      type: 'REMOVE_FROM_WATCHLIST',
+      coin
+    });
+    dispatch(saveUserData());
   }
 }
 
@@ -172,10 +189,15 @@ const setExportCode = (value) => {
 
 /* Import */
 const doImport = (data) => {
-  return {
-    type: 'IMPORT',
-    data
+  return (dispatch) => {
+    dispatch({
+      type: 'IMPORT',
+      data
+    });
+    dispatch(fetchData());
+    //dispatch(fetchHistory());
   }
+
 }
 
 const importData = (code) => {
@@ -219,4 +241,44 @@ const setImportError = (value) => {
   }
 }
 
-export { setCurrency, fetchData, addCoin, changeCoinAmount, removeCoin, addToWatchList, removeFromWatchList, importData, setScanning, setPage, fetchHistory, exportData };
+/* Load / save data */
+
+const loadUserData = () => {
+  return (dispatch, getState) => {
+    if(auth.isAuthenticated()) {
+        const { getAccessToken } = auth;
+        const headers = new Headers();
+        headers.append('Authorization', `Bearer ${getAccessToken()}`);
+
+        fetch(`${config.api_base}secure/load`, { headers }).then(res => res.json()).then((data) => {
+          if(data) {
+            dispatch(doImport(data));
+          } else {
+            // no data, create user Profile
+            dispatch(saveUserData());
+          }
+        });
+    }
+  }
+}
+
+
+const saveUserData = () => {
+  return (dispatch, getState) => {
+    if(auth.isAuthenticated()) {
+        const { getAccessToken } = auth;
+        const { coins, wishlist, currency } = getState();
+
+        const headers = new Headers();
+        headers.append('Authorization', `Bearer ${getAccessToken()}`);
+
+        const body = new URLSearchParams();
+        body.append('data', JSON.stringify( { coins, wishlist, currency }));
+
+        fetch(`${config.api_base}secure/save`, { headers, body, method: 'POST' }).then(res => res.json()).then((data) => {
+        });
+    }
+  }
+}
+
+export { setCurrency, fetchData, addCoin, changeCoinAmount, removeCoin, addToWatchList, removeFromWatchList, importData, setScanning, setPage, fetchHistory, exportData, loadUserData, saveUserData };
