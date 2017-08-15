@@ -38,7 +38,7 @@ app.use(morgan('combined'))
 // Serve static assets
 
 db().then((collections) => {
-  app.use('/', express.static(path.resolve(__dirname, '..', 'build')))
+  app.use('/', express.static(path.resolve(__dirname, '..', 'build'), { maxAge: 0 }))
   app.use('/api', api(collections));
   app.use('/', universalLoader)
 

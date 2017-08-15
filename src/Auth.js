@@ -9,7 +9,7 @@ export default class Auth {
     redirectUri: 'https://cryptocoincount.com/callback',
     audience: 'https://cryptocoincount.com/api',
     responseType: 'token id_token',
-    scope: 'openid read:portfolio save:portfolio'
+    scope: 'openid read:portfolio save:portfolio offline_access'
   });
 
   constructor(store) {
