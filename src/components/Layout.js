@@ -29,6 +29,7 @@ import store from "../store";
 import "../css/github.css";
 
 import Auth from "../Auth";
+import changelog from '../changelog';
 
 const auth = new Auth(store);
 
@@ -342,7 +343,7 @@ class Layout extends Component {
                     "https://cryptocoincount.com"
                   )}&text=${encodeURIComponent(
                     "Keep track of your cryptocoins with CryptocoinCount:"
-                  )}`}
+                  )}&via=CryptocoinCount`}
                 >
                   Tweet
                 </a>
@@ -365,7 +366,7 @@ class Layout extends Component {
                   this.setState({ changelogVisible: true });
                 }}
               >
-                version 1.5
+                version {changelog.slice(0).pop().version}
               </a>{" "}
               &mdash; <Link to="/about">About/donate</Link> &mdash; &copy; 2017
               Tim Broddin

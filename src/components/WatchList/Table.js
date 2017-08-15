@@ -1,10 +1,11 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
-import { Table, Icon, Popconfirm, message } from 'antd';
+import { Table, Icon, Modal, Popconfirm, message } from 'antd';
 import { StyleSheet, css } from 'aphrodite';
+import sortBy from 'lodash/sortBy';
 
 import { removeFromWatchList } from '../../actions';
-import sortBy from 'lodash/sortBy';
+import CoinChart from '../Charts/CoinChart';
 
 const styles = StyleSheet.create({
   symbol: {
@@ -18,6 +19,13 @@ const styles = StyleSheet.create({
 
 
 class DataTable extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      coinChart: null
+    };
+  }
+
   removeCoin(coin, e) {
     const {removeFromWatchList} = this.props;
     e.preventDefault();
@@ -40,6 +48,9 @@ class DataTable extends PureComponent {
       title: 'Price',
       dataIndex: 'price',
       key: 'price',
+      render: (text, record) => {
+        return <span>{text} <a href="#chart" onClick={(e) => { e.preventDefault(); this.setState({ coinChart: { name: record.name, id: record.id, symbol: record.symbol, worth: false }})}}><Icon type="line-chart" /></a></span>
+      }
     },
     {
        title: 'Change (7D/24H/1H)',
@@ -87,12 +98,24 @@ class DataTable extends PureComponent {
     });
 
 
-    return <Table
+    return <div><Table
       style={{ marginTop: '50px' }}
       pagination={false}
       columns={columns}
       dataSource={dataSource}
     />
+    <Modal
+      visible={this.state.coinChart ? true : false}
+      title={`${ (this.state.coinChart && this.state.coinChart.worth) ? 'Worth' : 'Price' } evolution of ${(this.state.coinChart)
+        ? this.state.coinChart.name
+        : ''}`}
+      onCancel={() => this.setState({ coinChart: false })}
+      footer={null}
+    >
+      {(this.state.coinChart) ? <CoinChart coin={this.state.coinChart.id} worth={this.state.coinChart.worth} /> : null}
+
+    </Modal>
+  </div>
 
   }
 }
