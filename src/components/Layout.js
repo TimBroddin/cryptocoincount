@@ -172,7 +172,7 @@ class Layout extends Component {
       );
 
       // appcache support
-      if (typeof window["applicationCache"] !== "undefined") {
+      if (typeof window["applicationCache"] !== "undefined" && typeof navigator['serviceWorker'] === "undefined") {
         window.applicationCache.addEventListener(
           "updateready",
           this.updateReady.bind(this)

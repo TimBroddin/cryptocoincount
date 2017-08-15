@@ -123,4 +123,11 @@ export default [
       "Graphs in the watchlist"
     ]
   },
+  {
+    "version": "1.5.1.1",
+    "date": "2017-08-15",
+    "changes": [
+      "Bugfix"
+    ]
+  },
 ]
