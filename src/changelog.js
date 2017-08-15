@@ -124,10 +124,10 @@ export default [
     ]
   },
   {
-    "version": "1.5.1.1",
+    "version": "1.5.2",
     "date": "2017-08-15",
     "changes": [
-      "Bugfix"
+      "Bugfixes"
     ]
   },
 ]

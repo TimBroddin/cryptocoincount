@@ -273,13 +273,13 @@ const saveUserData = () => {
   return (dispatch, getState) => {
     if (auth.isAuthenticated()) {
       const { getAccessToken } = auth;
-      const { coins, wishlist, currency } = getState();
+      const { coins, watchlist, currency } = getState();
 
       const headers = new Headers();
       headers.append("Authorization", `Bearer ${getAccessToken()}`);
 
       const body = new URLSearchParams();
-      body.append("data", JSON.stringify({ coins, wishlist, currency }));
+      body.append("data", JSON.stringify({ coins, watchlist, currency }));
 
       fetch(`${config.api_base}secure/save`, { headers, body, method: "POST" })
         .then(res => res.json())
