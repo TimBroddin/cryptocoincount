@@ -326,7 +326,7 @@ class Layout extends Component {
               <div className={css(styles.noLine)}>
                 <div
                   className="fb-like"
-                  data-href="https://cryptocoincount.com"
+                  data-href="https://www.facebook.com/cryptocoincount/"
                   data-layout="box_count"
                   data-action="like"
                   data-size="small"
