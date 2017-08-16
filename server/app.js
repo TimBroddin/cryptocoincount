@@ -12,6 +12,8 @@ require('babel-register')({
   presets: ['env', 'react-app']
 })
 
+const index = require('./routes/index');
+
 
 // routes
 //const index = require('./routes/index')
@@ -31,21 +33,18 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // Setup logger
 app.use(morgan('combined'))
 
-//app.use('/', index);
 
-//app.use('/index.html', index);
 
 // Serve static assets
 
 db().then((collections) => {
+  app.use('/', index);
+  app.use('/index.html', index);
   app.use('/', express.static(path.resolve(__dirname, '..', 'build'), { maxAge: 0 }))
   app.use('/api', api(collections));
-  app.use('/', universalLoader)
-
-
+  app.use('/', universalLoader);
 })
 
-//app.use('/api', api)
 
 // Always return the main index.html, so react-router render the route in the client
 

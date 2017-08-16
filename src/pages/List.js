@@ -36,7 +36,7 @@ class ListPage extends PureComponent {
 
   showRegister() {
     const { auth } = this.props;
-    if (!auth.isAuthenticated() && !localStorage.getItem("hide_register_cta")) {
+    if (!auth.isAuthenticated() && (typeof localStorage === "undefined" || !localStorage.getItem("hide_register_cta"))) {
       return true;
     }
   }

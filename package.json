@@ -60,6 +60,7 @@
     "qrcode-js": "^0.0.2",
     "qrcode-reader": "^1.0.2",
     "randomstring": "^1.1.5",
+    "rapscallion": "^2.1.13",
     "react": "^15.6.1",
     "react-dev-utils": "^3.1.1",
     "react-dom": "^15.6.1",
