@@ -305,15 +305,6 @@ module.exports = {
       dontCacheBustUrlsMatching: /\.\w{8}\./,
       filename: "service-worker.js",
       logger(message) {
-        if (message.indexOf("Total precache size is") === 0) {
-          // This message occurs for every build and is a bit too noisy.
-          return;
-        }
-        if (message.indexOf("Skipping static resource") === 0) {
-          // This message obscures real errors so we ignore it.
-          // https://github.com/facebookincubator/create-react-app/issues/2612
-          return;
-        }
         console.log(message);
       },
       minify: true,
