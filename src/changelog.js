@@ -130,4 +130,12 @@ export default [
       "Bugfixes"
     ]
   },
+  {
+    "version": "1.5.3",
+    "date": "2017-08-16",
+    "changes": [
+      "Handle version conflicts with user accounts",
+      "Some cleanups"
+    ]
+  },
 ]

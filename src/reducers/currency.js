@@ -1,8 +1,10 @@
+import { SET_CURRENCY, IMPORT } from "../actions/constants";
+
 const currency = (state = "USD", action) => {
   switch (action.type) {
-    case "SET_CURRENCY":
+    case SET_CURRENCY:
       return action.currency;
-    case "IMPORT":
+    case IMPORT:
       if (action.data && action.data.currency) {
         return action.data.currency;
       }

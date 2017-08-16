@@ -1,12 +1,13 @@
 import auth0 from 'auth0-js';
 import history from './history';
+import config from './config';
 import { loadUserData } from './actions';
 
 export default class Auth {
   auth0 = new auth0.WebAuth({
     domain: 'cryptocoincount.auth0.com',
     clientID: 'hjg6LjUvVfJodlRTIGFH7QYMPC211xmo',
-    redirectUri: 'https://cryptocoincount.com/callback',
+    redirectUri: config.authUrl,
     audience: 'https://cryptocoincount.com/api',
     responseType: 'token id_token',
     scope: 'openid read:portfolio save:portfolio offline_access'
