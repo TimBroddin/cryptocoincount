@@ -28,7 +28,6 @@ const loadUserData = (skipVersionCheck=false) => {
         .then(res => res.json())
         .then(data => {
           if (data) {
-            console.log(data.version, version);
             if(data.version && data.version < version && !skipVersionCheck) {
               dispatch(setCloudConflict(true));
             } else {
