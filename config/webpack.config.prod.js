@@ -1,5 +1,3 @@
-"use strict";
-
 const autoprefixer = require("autoprefixer");
 const path = require("path");
 const webpack = require("webpack");
@@ -287,8 +285,15 @@ module.exports = {
     new ManifestPlugin({
       fileName: "asset-manifest.json"
     }),
+    new AppCachePlugin({
+          cache: [],
+          network: ['*'],  // No network access allowed!
+          fallback: [],
+          settings: ['prefer-online'],
+          exclude: ['/api/', /\/api\/.*/],  // Exclude file.txt and all .js files
+          output: 'cryptocoincount.appcache'
+        }),
 
-    
 
     // Generate a service worker script that will precache, and keep up to date,
     // the HTML & assets that are part of the Webpack build.
