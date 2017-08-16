@@ -7,9 +7,9 @@ import { Router } from "react-router-dom";
 import { persistStore } from "redux-persist";
 
 import Layout from "./Layout";
-import Auth from '../Auth';
-import history from '../history';
-import store from '../store';
+import Auth from "../Auth";
+import history from "../history";
+import store from "../store";
 
 const compressor = createCompressor();
 
@@ -38,7 +38,7 @@ class App extends Component {
       store,
       {
         storage: localForage,
-        blacklist: ["sync", "navigation", "history", "export", "import"],
+        whitelist: ["coins", "watchlist", "currency", "version"],
         transforms: [compressor]
       },
       () => {
@@ -51,7 +51,9 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router history={history}>
-           {(this.state.rehydrated) ? <Layout auth={auth} loading={!this.state.rehydrated} /> : <div /> }
+          {this.state.rehydrated
+            ? <Layout auth={auth} loading={!this.state.rehydrated} />
+            : <div />}
         </Router>
       </Provider>
     );

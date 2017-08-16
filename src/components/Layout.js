@@ -4,7 +4,6 @@ import {
   LocaleProvider,
   Layout as AntLayout,
   Menu,
-  message,
   Modal,
   Icon,
 } from "antd";
@@ -23,6 +22,9 @@ import AboutPage from "../pages/About";
 import ChartsPage from "../pages/Charts";
 import Changelog from "../pages/Changelog";
 import Callback from "../pages/Callback";
+
+import UpdateNotification from './Notifications/UpdateNotification';
+import ConflictNotification from './Notifications/ConflictNotification';
 
 import { fetchData, loadUserData, saveUserData } from "../actions";
 import store from "../store";
@@ -154,43 +156,12 @@ class Layout extends Component {
       fetchData();
     }, 1000 * 60);
 
-    if (typeof window !== "undefined") {
-      // service worker support
-      window.addEventListener(
-        "message",
-        msg => {
-          if (msg.data === "refresh") {
-            this.updateReady();
-          }
-          if (msg.data === "offline") {
-            message.warning(
-              "No Internet connection available. Working in offline mode."
-            );
-          }
-        },
-        false
-      );
 
-      // appcache support
-      if (typeof window["applicationCache"] !== "undefined" && typeof navigator['serviceWorker'] === "undefined") {
-        window.applicationCache.addEventListener(
-          "updateready",
-          this.updateReady.bind(this)
-        );
-        if (
-          window.applicationCache.status === window.applicationCache.UPDATEREADY
-        ) {
-          this.updateReady();
-        }
-      }
-    }
 
     loadUserData();
   }
 
-  updateReady() {
-    this.setState({ updateVisible: true });
-  }
+
 
   componentWillUnmount() {
     clearInterval(this.fetchInterval);
@@ -383,21 +354,9 @@ class Layout extends Component {
             <Changelog />
           </Modal>
 
-          <Modal
-            title="Update available"
-            visible={this.state.updateVisible}
-            onOk={() => {
-              if (typeof window !== "undefined") {
-                window.location.reload();
-              }
-            }}
-            onCancel={() => this.setState({ updateVisible: false })}
-          >
-            <p>
-              An update is available for <strong>CryptocoinCount</strong>.
-              Please click ok to reload this page.
-            </p>
-          </Modal>
+          <UpdateNotification />
+          <ConflictNotification />
+
         </AntLayout>
       </LocaleProvider>
     );

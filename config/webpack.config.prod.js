@@ -288,14 +288,7 @@ module.exports = {
       fileName: "asset-manifest.json"
     }),
 
-    new AppCachePlugin({
-          cache: [],
-          network: ['*'],  // No network access allowed!
-          fallback: [],
-          settings: ['prefer-online'],
-          exclude: ['/api/', /\/api\/.*/],  // Exclude file.txt and all .js files
-          output: 'cryptocoincount.appcache'
-        }),
+    
 
     // Generate a service worker script that will precache, and keep up to date,
     // the HTML & assets that are part of the Webpack build.

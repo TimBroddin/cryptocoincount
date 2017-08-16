@@ -6,6 +6,7 @@ import { addToWatchList, removeFromWatchList } from './watchlist';
 import { importData, exportData } from './sync';
 import { setPage } from './navigation';
 import { loadUserData, saveUserData } from './cloud';
+import { bumpVersion } from './version';
 
 export {
   setCurrency,
@@ -20,5 +21,6 @@ export {
   fetchHistory,
   exportData,
   loadUserData,
-  saveUserData
+  saveUserData,
+  bumpVersion 
 };

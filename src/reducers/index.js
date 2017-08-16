@@ -7,8 +7,10 @@ import navigation from './navigation';
 import watchlist from './watchlist';
 import exportReducer from './export';
 import importReducer from './import';
+import version from './version';
+import cloud from './cloud';
 
 
-const reducers = combineReducers({ currency, coins, watchlist, data, history, navigation, export: exportReducer, import: importReducer });
+const reducers = combineReducers({ currency, coins, watchlist, data, history, navigation, export: exportReducer, import: importReducer, version, cloud });
 
 export default reducers;
