@@ -186,8 +186,9 @@ class Layout extends Component {
   }
 
   render() {
-    const { navigation, auth } = this.props;
+    const { navigation, auth, loading } = this.props;
     const { isAuthenticated } = this.props.auth;
+
 
     return (
       <LocaleProvider locale={enUS}>
@@ -263,7 +264,7 @@ class Layout extends Component {
               <Route
                 exact
                 path="/"
-                render={props => <ListPage auth={auth} />}
+                render={props => <ListPage auth={auth} loading={loading} />}
               />
               <Route path="/sync" component={SyncPage} />
               <Route path="/watch" component={WatchListPage} />
