@@ -1,5 +1,3 @@
-"use strict";
-
 const autoprefixer = require("autoprefixer");
 const path = require("path");
 const webpack = require("webpack");
@@ -287,8 +285,15 @@ module.exports = {
     new ManifestPlugin({
       fileName: "asset-manifest.json"
     }),
+    new AppCachePlugin({
+          cache: [],
+          network: ['*'],  // No network access allowed!
+          fallback: [],
+          settings: ['prefer-online'],
+          exclude: ['/api/', /\/api\/.*/],  // Exclude file.txt and all .js files
+          output: 'cryptocoincount.appcache'
+        }),
 
-    
 
     // Generate a service worker script that will precache, and keep up to date,
     // the HTML & assets that are part of the Webpack build.
@@ -300,15 +305,6 @@ module.exports = {
       dontCacheBustUrlsMatching: /\.\w{8}\./,
       filename: "service-worker.js",
       logger(message) {
-        if (message.indexOf("Total precache size is") === 0) {
-          // This message occurs for every build and is a bit too noisy.
-          return;
-        }
-        if (message.indexOf("Skipping static resource") === 0) {
-          // This message obscures real errors so we ignore it.
-          // https://github.com/facebookincubator/create-react-app/issues/2612
-          return;
-        }
         console.log(message);
       },
       minify: true,
