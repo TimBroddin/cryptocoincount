@@ -138,4 +138,11 @@ export default [
       "Some cleanups"
     ]
   },
+  {
+    "version": "1.6",
+    "date": "2017-08-16",
+    "changes": [
+      "Server side rendering"
+    ]
+  },
 ]
