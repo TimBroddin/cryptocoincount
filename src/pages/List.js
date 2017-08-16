@@ -4,7 +4,7 @@ import AddCoinForm from "../components/CoinList/AddCoinForm";
 import Table from "../components/CoinList/Table";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { Alert } from "antd";
+import { Alert, Spin } from "antd";
 import { setPage } from "../actions";
 import { StyleSheet, css } from "aphrodite";
 
@@ -42,6 +42,11 @@ class ListPage extends PureComponent {
   }
 
   render() {
+    const {loading} = this.props;
+    if(loading) {
+      return <Spin />
+    }
+
     return (
       <div>
         {this.showRegister()
