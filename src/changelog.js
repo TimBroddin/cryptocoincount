@@ -145,4 +145,11 @@ export default [
       "Server side rendering"
     ]
   },
+  {
+    "version": "1.6.1",
+    "date": "2017-08-17",
+    "changes": [
+      "Add legacy import/export"
+    ]
+  },
 ]
