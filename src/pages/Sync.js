@@ -5,6 +5,7 @@ import { setPage } from '../actions';
 
 import ImportForm from '../components/Sync/ImportForm';
 import ExportForm from '../components/Sync/ExportForm';
+import LegacySync from '../components/Sync/Legacy';
 
 const styles = StyleSheet.create({
   sync: {
@@ -43,10 +44,14 @@ class SyncPage extends PureComponent {
             </div>
 
 
-            <div className={css(styles.part)}>
+            <div className={css(styles.part, styles.line)}>
 
             <h1>Import your currencies from another device</h1>
             <ImportForm history={history} />
+            </div>
+            <div className={css(styles.part)}>
+
+              <LegacySync  />
             </div>
           </div>
 
