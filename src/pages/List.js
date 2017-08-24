@@ -34,9 +34,20 @@ class ListPage extends PureComponent {
     localStorage.setItem("hide_register_cta", true);
   }
 
+  closeBeta() {
+    localStorage.setItem("hide_beta_cta", true);
+  }
+
+
   showRegister() {
     const { auth } = this.props;
     if (!auth.isAuthenticated() && (typeof localStorage === "undefined" || !localStorage.getItem("hide_register_cta"))) {
+      return true;
+    }
+  }
+
+  showBeta() {
+    if ((typeof localStorage === "undefined" || !localStorage.getItem("hide_beta_cta"))) {
       return true;
     }
   }
@@ -49,6 +60,30 @@ class ListPage extends PureComponent {
 
     return (
       <div>
+        {this.showBeta() ?
+        <Alert
+            className={css(styles.alert)}
+            type="info"
+            showIcon
+            message="📱 CryptocoinCount is coming to your mobile device!"
+            description={
+              <div>
+              <p>
+                I'm currently working on a native version of CryptocoinCount. This will pack everything you've come to love about the site, and add a bunch more.
+              </p>
+              <p>
+                Want to join the iOS beta? <a href="https://tim546.typeform.com/to/MwZMpU" rel="noopener noreferrer"  className={css(styles.link)} target="_blank">Apply now!</a>
+              </p>
+
+            </div>
+            }
+            closable
+            onClose={this.closeBeta.bind(this)}
+          />
+
+          : null }
+
+
         {this.showRegister()
           ? <Alert
               className={css(styles.alert)}

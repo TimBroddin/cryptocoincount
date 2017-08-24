@@ -152,4 +152,11 @@ export default [
       "Add legacy import/export"
     ]
   },
+  {
+    "version": "1.6.2",
+    "date": "2017-08-24",
+    "changes": [
+      "Add a banner to promote the mobile beta"
+    ]
+  },
 ]

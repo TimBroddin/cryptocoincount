@@ -129,8 +129,7 @@ const getLiveCoins = (CoinHistory) => {
 
 const cleanLiveCoins = (CoinHistory) => {
     console.log('Cleaning live coins');
-    CoinHistory.remove({ live: true });
-    CoinHistory.remove({ live: true, date: { $lte: new moment().subtract(2, 'days').toDate() }});
+    CoinHistory.remove({ live: true, date: { $lte: new moment().subtract(2, 'months').toDate() }});
 }
 
 const cleanSync = (Sync) => {
