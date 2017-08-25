@@ -22,7 +22,10 @@ function api(collections) {
     next();
   });
 
+  router.get("/history/daily", historyApi.daily({ CoinHistory, ExchangeRates }, cache));
+
   router.get("/history", historyApi.history({ CoinHistory, ExchangeRates }, cache));
+
   router.get("/previous", historyApi.previous({ CoinHistory, ExchangeRates}, cache));
   router.get("/ticker", tickerApi.ticker(cache));
   router.post("/sync", syncApi.syncPost(Sync));

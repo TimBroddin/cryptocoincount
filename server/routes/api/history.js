@@ -1,3 +1,6 @@
+const moment = require('moment');
+const  findWhere = require('lodash.findwhere');
+
 const history = ({ExchangeRates, CoinHistory}, cache) => (req, res) => {
     const { coins, convert } = req.query;
     let output = {};
@@ -41,6 +44,63 @@ const history = ({ExchangeRates, CoinHistory}, cache) => (req, res) => {
         });
       }
     });
+}
+
+const daily =  ({ExchangeRates, CoinHistory}, cache) => (req, res) => {
+  let { coins, convert, limit } = req.query;
+  let output = {};
+
+  console.log(req.query);
+
+  if (!coins || !coins.length || !coins.split(",").length) {
+    res.sendStatus(404);
+    //res.send('');
+    return;
+  }
+
+  if(!limit) {
+    limit = 31;
+  }
+
+  cache.get(`daily-${coins}-${convert}-${limit}`, (err, value) => {
+    if (value) {
+      res.send(value);
+    } else {
+      ExchangeRates.findOne({
+        currency: convert ? convert.toLowerCase() : "usd"
+      }).then(currency => {
+        if (!currency) {
+          res.sendStatus(404);
+          return;
+        }
+
+        let limitDate = new moment().subtract(parseInt(limit, 10), 'day').startOf('day').toDate();
+
+        CoinHistory.find({ coin: { $in: coins.split(",") } , date: { $gte: limitDate }})
+          .sort({ date: 1 })
+          .then(rows => {
+            rows.forEach(row => {
+              const { coin, date, price } = row;
+              if (!output[coin]) {
+                output[coin] = [];
+              }
+              let normalizedDate = new moment(date).startOf('day').toDate();
+              if(!findWhere(output[coin], { date: normalizedDate })) {
+                output[coin].push({ date: normalizedDate, price: price / currency.amount });
+              }
+            });
+            cache.set(`daily-${coins}-${convert}-${limit}`, output);
+            res.send(output);
+          })
+          .catch(err => {
+            console.log(err);
+            res.sendStatus(500);
+            return;
+          });
+      });
+    }
+  });
+
 }
 
 const previous = ({ExchangeRates, CoinHistory}, cache) => (req, res) => {
@@ -104,4 +164,4 @@ const previous = ({ExchangeRates, CoinHistory}, cache) => (req, res) => {
   });
 }
 
-module.exports = { history, previous }
+module.exports = { history, previous, daily }
