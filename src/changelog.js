@@ -166,4 +166,11 @@ export default [
       "Show total worth in URL"
     ]
   },
+  {
+    "version": "1.6.4",
+    "date": "2017-08-29",
+    "changes": [
+      "Add BTC to currencies."
+    ]
+  },
 ]
