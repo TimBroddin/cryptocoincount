@@ -159,4 +159,18 @@ export default [
       "Add a banner to promote the mobile beta"
     ]
   },
+  {
+    "version": "1.6.3",
+    "date": "2017-08-29",
+    "changes": [
+      "Show total worth in URL"
+    ]
+  },
+  {
+    "version": "1.6.4",
+    "date": "2017-08-29",
+    "changes": [
+      "Add BTC to currencies."
+    ]
+  },
 ]

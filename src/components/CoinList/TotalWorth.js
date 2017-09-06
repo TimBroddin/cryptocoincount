@@ -54,7 +54,7 @@ class TotalWorth extends PureComponent {
 
     let button = (dataLoading) ? <Button icon="loading" shape="circle"  /> : <Button onClick={this.fetch.bind(this)} icon="reload" shape="circle" />
 
-
+    // TODO: move this somewhere else
     coins.forEach((coin) => {
       data.forEach((d) => {
         if(coin && coin.id === d.id) {
@@ -66,9 +66,11 @@ class TotalWorth extends PureComponent {
       if(history[coin.id]) {
         totalHistoryWorth += coin.amount * history[coin.id].price;
       }
-
-
     });
+
+    if(typeof window !== "undefined" && typeof window.document !== "undefined") {
+      window.document.title = `[${totalWorth.toFixed(2)} ${currency}] CryptocoinCount - crypto portfolio manager`;
+    }
 
 
     return <div className={css(styles.row)}>
