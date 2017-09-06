@@ -76,19 +76,34 @@ const daily =  ({ExchangeRates, CoinHistory}, cache) => (req, res) => {
 
         let limitDate = new moment().subtract(parseInt(limit, 10), 'day').startOf('day').toDate();
 
-        CoinHistory.find({ coin: { $in: coins.split(",") } , date: { $gte: limitDate }})
+        CoinHistory.find({ coin: { $in: coins.split(",") } , date: { $gte: limitDate }}, null, { sort: { date: 1 }})
           .sort({ date: 1 })
           .then(rows => {
-            rows.forEach(row => {
+            let last = {};
+            rows.forEach((row, k) => {
               const { coin, date, price } = row;
               if (!output[coin]) {
                 output[coin] = [];
               }
               let normalizedDate = new moment(date).startOf('day').toDate();
-              if(!findWhere(output[coin], { date: normalizedDate })) {
+              if(!findWhere(output[coin], { date: normalizedDate }) && !new moment(date).startOf('day').isSame(new moment().startOf('day'))) {
                 output[coin].push({ date: normalizedDate, price: price / currency.amount });
+              } else if(new moment(date).startOf('day').isSame(new moment().startOf('day'))) {
+                console.log('match');
+                if(!last[coin]) last[coin] = {}
+                last[coin] = { date: normalizedDate, price: price / currency.amount };
+              } else {
+                console.log(normalizedDate, new moment().startOf('day').toDate());
               }
             });
+            console.log(last);
+            for(let coin in output) {
+              if(last[coin]) {
+                console.log('push last');
+                output[coin].push(last[coin]);
+              }
+            }
+
             cache.set(`daily-${coins}-${convert}-${limit}`, output);
             res.send(output);
           })
