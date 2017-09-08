@@ -69,7 +69,12 @@ class TotalWorth extends PureComponent {
     });
 
     if(typeof window !== "undefined" && typeof window.document !== "undefined") {
-      window.document.title = `[${totalWorth.toFixed(2)} ${currency}] CryptocoinCount - crypto portfolio manager`;
+      if(totalWorth) {
+        window.document.title = `[${totalWorth.toFixed(2)} ${currency}] CryptocoinCount - crypto portfolio manager`;
+      } else {
+        window.document.title = `CryptocoinCount - crypto portfolio manager`;
+
+      }
     }
 
 
