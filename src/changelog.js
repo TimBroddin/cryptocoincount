@@ -130,5 +130,13 @@ export default [
     version: "1.6.5",
     date: "2017-09-12",
     changes: ["CryptocoinCount is now available on iOS."]
+  },
+  {
+    version: "1.7",
+    date: "2017-09-27",
+    changes: [
+      "Upgraded all packages.",
+      "React 16 should make this more snappy."
+    ]
   }
 ];
