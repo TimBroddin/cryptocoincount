@@ -8,37 +8,37 @@
     "aphrodite": "^1.2.3",
     "appcache-webpack-plugin": "^1.3.0",
     "auth0-js": "^8.9.1",
-    "autoprefixer": "7.1.4",
-    "babel-core": "6.26.0",
-    "babel-eslint": "8.0.1",
-    "babel-jest": "21.2.0",
-    "babel-loader": "7.1.2",
+    "autoprefixer": "7.1.2",
+    "babel-core": "6.25.0",
+    "babel-eslint": "7.2.3",
+    "babel-jest": "20.0.3",
+    "babel-loader": "7.0.0",
     "babel-plugin-import": "^1.2.1",
     "babel-preset-react-app": "^3.0.1",
-    "babel-runtime": "6.26.0",
+    "babel-runtime": "6.23.0",
     "body-parser": "^1.17.2",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
-    "chalk": "2.1.0",
+    "chalk": "1.1.3",
     "cheerio": "^1.0.0-rc.2",
     "compression": "^1.7.0",
-    "css-loader": "0.28.7",
+    "css-loader": "0.28.4",
     "dotenv": "4.0.0",
-    "eslint": "4.7.2",
-    "eslint-config-react-app": "^2.0.1",
-    "eslint-loader": "1.9.0",
-    "eslint-plugin-flowtype": "2.36.0",
-    "eslint-plugin-import": "2.7.0",
-    "eslint-plugin-jsx-a11y": "6.0.2",
-    "eslint-plugin-react": "7.4.0",
+    "eslint": "3.19.0",
+    "eslint-config-react-app": "^1.0.5",
+    "eslint-loader": "1.7.1",
+    "eslint-plugin-flowtype": "2.34.0",
+    "eslint-plugin-import": "2.2.0",
+    "eslint-plugin-jsx-a11y": "5.0.3",
+    "eslint-plugin-react": "7.1.0",
     "express-jwt": "^5.3.0",
-    "extract-text-webpack-plugin": "3.0.0",
+    "extract-text-webpack-plugin": "2.1.2",
     "file-loader": "0.11.2",
-    "fs-extra": "4.0.2",
+    "fs-extra": "3.0.1",
     "highcharts": "^5.0.14",
-    "html-webpack-plugin": "2.30.1",
+    "html-webpack-plugin": "2.29.0",
     "ignore-styles": "^5.0.1",
     "instascan": "^1.0.0",
-    "jest": "21.2.0",
+    "jest": "20.0.4",
     "json-stringify-safe": "^5.0.1",
     "json5": "^0.5.1",
     "jwks-rsa": "^1.2.0",
@@ -52,9 +52,9 @@
     "node-cache": "^4.1.1",
     "object-assign": "4.1.1",
     "parseurl": "^1.3.1",
-    "postcss-flexbugs-fixes": "3.2.0",
+    "postcss-flexbugs-fixes": "3.0.0",
     "postcss-loader": "2.0.6",
-    "promise": "8.0.1",
+    "promise": "7.1.1",
     "promise.series": "^0.2.0",
     "pson": "^2.0.0",
     "qcode-decoder": "^0.1.0",
@@ -64,19 +64,16 @@
     "randomstring": "^1.1.5",
     "rapscallion": "^2.1.13",
     "react": "^16.0.0",
-    "react-dev-utils": "^4.1.0",
+    "react-dev-utils": "^3.1.1",
     "react-dom": "^16.0.0",
     "react-error-overlay": "^1.0.10",
     "react-ga": "^2.2.0",
     "react-github-button": "^0.1.11",
-    "react-qr-reader": "timbroddin/react-qr-reader",
-    "react-qr-svg": "^2.0.1",
     "react-redux": "^5.0.6",
     "react-router": "^4.1.2",
     "react-router-dom": "^4.1.2",
-    "react-scripts": "^1.0.14",
     "redux": "^3.7.2",
-    "redux-persist": "^4.8.3",
+    "redux-persist": "^4.10.1",
     "redux-persist-transform-compress": "^4.2.0",
     "redux-thunk": "^2.2.0",
     "request": "^2.81.0",
@@ -86,9 +83,9 @@
     "text-encoding-utf-8": "^1.0.1",
     "underscore": "^1.8.3",
     "url-loader": "0.5.9",
-    "webpack": "3.6.0",
-    "webpack-dev-server": "2.8.2",
-    "webpack-manifest-plugin": "1.3.2",
+    "webpack": "2.6.1",
+    "webpack-dev-server": "2.5.0",
+    "webpack-manifest-plugin": "1.1.0",
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
@@ -99,8 +96,12 @@
     "heroku-postbuild": "npm run build"
   },
   "jest": {
-    "collectCoverageFrom": ["src/**/*.{js,jsx}"],
-    "setupFiles": ["<rootDir>/config/polyfills.js"],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ],
+    "setupFiles": [
+      "<rootDir>/config/polyfills.js"
+    ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.js?(x)",
       "<rootDir>/src/**/?(*.)(spec|test).js?(x)"
@@ -112,14 +113,24 @@
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
-    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"],
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
+    ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web"
     },
-    "moduleFileExtensions": ["web.js", "js", "json", "web.jsx", "jsx"]
+    "moduleFileExtensions": [
+      "web.js",
+      "js",
+      "json",
+      "web.jsx",
+      "jsx"
+    ]
   },
   "babel": {
-    "presets": ["react-app"]
+    "presets": [
+      "react-app"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"
