@@ -141,7 +141,12 @@ export default [
   },
   {
     version: "1.7.1",
+    date: "2017-09-27",
+    changes: ["Bugfix"]
+  },
+  {
+    version: "1.7.2",
     date: "2017-11-08",
-    changes: ["Fix retrieving coins from Coinmarketcap"]
+    changes: ["Bugfix"]
   }
 ];

@@ -8,7 +8,7 @@ import {
   BUMP_VERSION
 } from "../actions/constants";
 
-const d = new Date().getTime();
+const d = 0;
 
 const version = (state = d, action) => {
   switch (action.type) {
