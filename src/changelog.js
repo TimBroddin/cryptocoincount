@@ -138,5 +138,10 @@ export default [
       "Upgraded all packages.",
       "React 16 should make this more snappy."
     ]
+  },
+  {
+    version: "1.7.1",
+    date: "2017-11-08",
+    changes: ["Fix retrieving coins from Coinmarketcap"]
   }
 ];

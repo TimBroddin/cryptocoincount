@@ -1,7 +1,6 @@
-import { SET_DATA, SET_DATA_LOADING } from './constants';
-import { fetchHistory } from './history';
-import config from '../config';
-
+import { SET_DATA, SET_DATA_LOADING } from "./constants";
+import { fetchHistory } from "./history";
+import config from "../config";
 
 const setData = data => {
   return {
@@ -34,4 +33,4 @@ const fetchData = () => {
   };
 };
 
-export { fetchData }
+export { fetchData };
