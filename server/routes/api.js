@@ -1,13 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const NodeCache = require("node-cache");
+const redis = require("redis");
+const CachemanRedis = require("cacheman-redis");
 
 const syncApi = require("./api/sync");
 const historyApi = require("./api/history");
 const tickerApi = require("./api/ticker");
 const securedApi = require("./api/secured");
 
-const cache = new NodeCache({ stdTTL: 180, checkperiod: 180 });
+const redisClient = (client = redis.createClient(process.env.REDIS_URL));
+const cache = new CachemanRedis(redisClient);
 
 function api(collections) {
   const { CoinHistory, ExchangeRates, Sync } = collections;

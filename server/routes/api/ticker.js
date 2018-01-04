@@ -7,15 +7,23 @@ const ticker = cache => (req, res) => {
     if (value) {
       res.send(value);
     } else {
+      let start = new Date().getTime();
       request
         .get(
-          `https://api.coinmarketcap.com/v1/ticker/?limit=10000&convert=${convert
+          `https://api.coinmarketcap.com/v1/ticker/?limit=0&convert=${convert
             ? convert.toUpperCase()
             : ""}`
         )
         .then(json => {
-          cache.set(`ticker-${convert}`, json);
-          res.send(json);
+          console.log("done");
+          console.log((new Date().getTime() - start) / 10000);
+
+          cache.set(`ticker-${convert}`, json, 60, (err, v) => {
+            if (err) {
+              console.log(err);
+            }
+            res.send(json);
+          });
         });
     }
   });
