@@ -147,7 +147,7 @@ class Layout extends Component {
 
     setInterval(() => {
       fetchData();
-    }, 1000 * 60);
+    }, 1000 * 180);
 
     loadUserData();
   }
