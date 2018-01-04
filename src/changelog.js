@@ -153,5 +153,10 @@ export default [
     version: "1.8",
     date: "2018-01-04",
     changes: ["Update to Antd 3.1"]
+  },
+  {
+    version: "1.8.1",
+    date: "2018-01-04",
+    changes: ["Slightly increased cache duration for better UX."]
   }
 ];
