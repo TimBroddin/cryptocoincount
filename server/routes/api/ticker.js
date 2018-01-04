@@ -18,7 +18,7 @@ const ticker = cache => (req, res) => {
           console.log("done");
           console.log((new Date().getTime() - start) / 10000);
 
-          cache.set(`ticker-${convert}`, json, 60, (err, v) => {
+          cache.set(`ticker-${convert}`, json, 120, (err, v) => {
             if (err) {
               console.log(err);
             }

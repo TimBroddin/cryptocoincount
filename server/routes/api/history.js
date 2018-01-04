@@ -34,7 +34,7 @@ const history = ({ ExchangeRates, CoinHistory }, cache) => (req, res) => {
 
               output[coin].push({ date, price: price / currency.amount });
             });
-            cache.set(`history-${coins}-${convert}`, output, 60, err => {
+            cache.set(`history-${coins}-${convert}`, output, 1200, err => {
               res.send(output);
             });
           })
@@ -130,9 +130,14 @@ const daily = ({ ExchangeRates, CoinHistory }, cache) => (req, res) => {
               }
             }
 
-            cache.set(`daily-${coins}-${convert}-${limit}`, output, 60, err => {
-              res.send(output);
-            });
+            cache.set(
+              `daily-${coins}-${convert}-${limit}`,
+              output,
+              1200,
+              err => {
+                res.send(output);
+              }
+            );
           })
           .catch(err => {
             console.log(err);
@@ -196,7 +201,7 @@ const previous = ({ ExchangeRates, CoinHistory }, cache) => (req, res) => {
           values.forEach(
             v => (json[v.coin] = { price: v.price, date: v.date })
           );
-          cache.set(`previous-${coins}-${convert}`, json, 60, err => {
+          cache.set(`previous-${coins}-${convert}`, json, 1200, err => {
             res.send(json);
           });
           return;
