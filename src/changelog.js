@@ -163,5 +163,10 @@ export default [
     version: "1.8.2",
     date: "2018-01-04",
     changes: ["Upgrade some more packages."]
+  },
+  {
+    version: "1.8.3",
+    date: "2018-01-04",
+    changes: ["Some data fetching fixes"]
   }
 ];
