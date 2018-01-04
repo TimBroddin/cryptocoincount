@@ -148,5 +148,10 @@ export default [
     version: "1.7.2",
     date: "2017-11-08",
     changes: ["Bugfix"]
+  },
+  {
+    version: "1.8",
+    date: "2018-01-04",
+    changes: ["Update to Antd 3.1"]
   }
 ];

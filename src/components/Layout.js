@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  LocaleProvider,
-  Layout as AntLayout,
-  Menu,
-  Modal,
-  Icon,
-} from "antd";
+import { LocaleProvider, Layout as AntLayout, Menu, Modal, Icon } from "antd";
 import enUS from "antd/lib/locale-provider/en_US";
 import { StyleSheet, css } from "aphrodite";
 import { Route, Link } from "react-router-dom";
@@ -23,15 +17,15 @@ import ChartsPage from "../pages/Charts";
 import Changelog from "../pages/Changelog";
 import Callback from "../pages/Callback";
 
-import UpdateNotification from './Notifications/UpdateNotification';
-import ConflictNotification from './Notifications/ConflictNotification';
+import UpdateNotification from "./Notifications/UpdateNotification";
+import ConflictNotification from "./Notifications/ConflictNotification";
 
 import { fetchData, loadUserData, saveUserData } from "../actions";
 import store from "../store";
 import "../css/github.css";
 
 import Auth from "../Auth";
-import changelog from '../changelog';
+import changelog from "../changelog";
 
 const auth = new Auth(store);
 
@@ -45,7 +39,6 @@ const { Header, Content, Footer } = AntLayout;
 
 const styles = StyleSheet.create({
   header: {
-    background: "#404040",
     padding: "0 50px",
     height: "64px",
     lineHeight: "64px",
@@ -156,12 +149,8 @@ class Layout extends Component {
       fetchData();
     }, 1000 * 60);
 
-
-
     loadUserData();
   }
-
-
 
   componentWillUnmount() {
     clearInterval(this.fetchInterval);
@@ -188,7 +177,6 @@ class Layout extends Component {
   render() {
     const { navigation, auth, loading } = this.props;
     const { isAuthenticated } = this.props.auth;
-
 
     return (
       <LocaleProvider locale={enUS}>
@@ -241,17 +229,19 @@ class Layout extends Component {
                 </Menu.Item>
 
                 <Menu.Item key="nav-about" className={css(styles.menuItem)}>
-                  {isAuthenticated()
-                    ? <a href="#logout" onClick={this.logout.bind(this)}>
-                        <Icon type="logout" />{" "}
-                        <span className={css(styles.menuLabel)}>Logout</span>
-                      </a>
-                    : <a href="#login" onClick={this.login.bind(this)}>
-                        <Icon type="user" />{" "}
-                        <span className={css(styles.menuLabel)}>
-                          Log in/Register
-                        </span>
-                      </a>}
+                  {isAuthenticated() ? (
+                    <a href="#logout" onClick={this.logout.bind(this)}>
+                      <Icon type="logout" />{" "}
+                      <span className={css(styles.menuLabel)}>Logout</span>
+                    </a>
+                  ) : (
+                    <a href="#login" onClick={this.login.bind(this)}>
+                      <Icon type="user" />{" "}
+                      <span className={css(styles.menuLabel)}>
+                        Log in/Register
+                      </span>
+                    </a>
+                  )}
                 </Menu.Item>
               </Menu>
             </div>
@@ -340,8 +330,8 @@ class Layout extends Component {
               >
                 version {changelog.slice(0).pop().version}
               </a>{" "}
-              &mdash; <Link to="/about">About/donate</Link> &mdash; &copy; 2017
-              Tim Broddin
+              &mdash; <Link to="/about">About/donate</Link> &mdash; &copy;
+              2017-2018 Tim Broddin
             </p>
           </Footer>
 
@@ -357,7 +347,6 @@ class Layout extends Component {
 
           <UpdateNotification />
           <ConflictNotification />
-
         </AntLayout>
       </LocaleProvider>
     );
