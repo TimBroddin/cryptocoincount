@@ -168,5 +168,10 @@ export default [
     version: "1.8.5",
     date: "2018-01-04",
     changes: ["Some data fetching fixes"]
+  },
+  {
+    version: "1.8.6",
+    date: "2018-01-08",
+    changes: ["Added a small ad in order to pay for the hosting bills."]
   }
 ];
