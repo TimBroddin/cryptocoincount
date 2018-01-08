@@ -1,10 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { LocaleProvider, Layout as AntLayout, Menu, Modal, Icon } from "antd";
+import {
+  LocaleProvider,
+  Layout as AntLayout,
+  Menu,
+  Modal,
+  Icon,
+  Row,
+  Col
+} from "antd";
 import enUS from "antd/lib/locale-provider/en_US";
 import { StyleSheet, css } from "aphrodite";
 import { Route, Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
+import AdSense from "react-adsense";
 
 import GitHubButton from "react-github-button";
 
@@ -35,7 +44,7 @@ const handleAuthentication = (nextState, replace) => {
   }
 };
 
-const { Header, Content, Footer } = AntLayout;
+const { Header, Content, Footer, Sider } = AntLayout;
 
 const styles = StyleSheet.create({
   header: {
@@ -54,6 +63,9 @@ const styles = StyleSheet.create({
     "@media (max-width: 600px)": {
       padding: "10px"
     }
+  },
+  ad: {
+    margin: "0 auto"
   },
   loading: {
     padding: "50px",
@@ -271,6 +283,12 @@ class Layout extends Component {
               />
             </div>
           </Content>
+          <div className={css(styles.ad)}>
+            <AdSense.Google
+              client="ca-pub-4111628699519217"
+              slot="5613323950"
+            />
+          </div>
 
           <Footer className={css(styles.footer)}>
             <div className={css(styles.social)}>
